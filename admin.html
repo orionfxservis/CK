@@ -44,10 +44,10 @@
 
   <!-- Background Slideshow -->
   <div class="slideshow" id="slideshow">
-    <img src="images/bg1.jpg" class="active">
-    <img src="images/bg2.jpg">
-    <img src="images/bg3.jpg">
-    <img src="images/bg4.jpg">
+    <img src="images/BG/bg1.jpg" class="active">
+    <img src="images/BG/bg2.jpg">
+    <img src="images/BG/bg3.jpg">
+    <img src="images/BG/bg4.jpg">
   </div>
 
   <div class="content">
@@ -125,6 +125,34 @@
     <span onclick="closeLightbox()">&times;</span>
     <img id="lightboxImg" src="">
   </div>
+
+<h2>Manage Side Banners (120×480px)</h2>
+
+<label>Left Banner:</label><br>
+<input type="file" id="leftBannerInput" accept="image/*">
+<button onclick="saveBanner('left')">Save Left Banner</button>
+<br><br>
+
+<label>Right Banner:</label><br>
+<input type="file" id="rightBannerInput" accept="image/*">
+<button onclick="saveBanner('right')">Save Right Banner</button>
+
+<script>
+  function saveBanner(side) {
+    const input = document.getElementById(side + "BannerInput");
+    const file = input.files[0];
+    if (!file) { alert("Please select an image!"); return; }
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      localStorage.setItem(side + "Banner", e.target.result); // save Base64
+      alert(side.charAt(0).toUpperCase() + side.slice(1) + " banner updated!");
+    };
+    reader.readAsDataURL(file);
+  }
+</script>
+
+
 
   <script>
     // Background slideshow
