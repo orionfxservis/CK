@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Click Worx - Cars for Sale</title>
+  <style>
+    body { margin: 0; font-family: Arial, sans-serif; background: #000; color: #fff; }
+
+    header {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 10; display: flex; justify-content: space-between;
+      align-items: center; padding: 15px 40px;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(6px);
+    }
+    header h1 { font-size: 28px; color: #e60000; margin: 0; }
+    nav a { margin-left: 20px; text-decoration: none; font-weight: bold; color: #fff; }
+    nav a.admin { background:#e60000; padding:6px 10px; border-radius:5px; }
+
+    .page-top { margin-top: 80px; }
+
+    .slideshow { position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      overflow: hidden; z-index: -1; }
+    .slideshow img { position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      object-fit: cover; opacity: 0; transition: opacity 1s ease-in-out; }
+    .slideshow img.active { opacity: 1; }
+
+    .search-section {
+      max-width: 720px;
+      background: rgba(20,20,20,0.9); padding: 25px; border-radius: 10px;
+      position: relative; z-index: 5;
+      flex: 1;
+    }
+    .search-section h2 { margin-top: 0; color: #e60000; text-align:center; }
+    .search-bar { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-top: 15px; }
+    .search-bar input, .search-bar select, .search-bar textarea {
+      padding: 10px; border-radius: 6px; border: none; font-size: 14px; width: 100%;
+      box-sizing: border-box;
+    }
+    .search-bar textarea { grid-column: span 3; height: 80px; resize: none; }
+    .search-btn { grid-column: span 3; background: #e60000; color: #fff; padding: 12px; border: none;
+      border-radius: 6px; cursor: pointer; font-weight: bold; text-align:center; width: 100%; }
+    .search-btn:hover { background: #c00000; }
+
+    .main-layout { display: flex; justify-content: center; align-items: stretch;
+      gap: 20px; padding: 20px 40px; position: relative; z-index: 5; }
+    .side-box { width: 120px; background: rgba(255,255,255,0.1); border-radius: 8px;
+      text-align:center; padding: 10px; border: 1px solid #e60000; display:flex; align-items:center; justify-content:center; }
+
+    .banner-box { max-width: 720px; margin: 20px auto; display: flex; justify-content: center; }
+    .banner-box img { width: 100%; max-height: 120px; border-radius: 8px; object-fit: cover; }
+
+    .urgent-sale-section { max-width: 1300px; margin: 30px auto; padding: 15px;
+      border: 1px solid #e60000; border-radius: 10px; background: rgba(20,20,20,0.85); }
+    .urgent-sale-section h2 { margin: 0 0 15px; color: #e60000; text-align: center; }
+    .cars-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+    .car-card { background: rgba(30,30,30,0.85); border-radius: 10px; padding: 12px; text-align: center;
+      position: relative; overflow: hidden; height: 220px; display: flex; flex-direction: column; justify-content: space-between; }
+    .car-card img { width: 100%; height: 120px; object-fit: cover; border-radius: 6px; cursor:pointer; }
+    .ribbon { position: absolute; top: 25px; right: -35px; width: 140px; transform: rotate(45deg);
+      text-align: center; background: #e60000; color: #fff; font-size: 11px; font-weight: bold; padding: 4px 0; }
+    .car-info { font-size: 13px; line-height: 1.4; margin-top: 5px; }
+    .btn { padding: 6px; background: #e60000; color: #fff; border: none; border-radius: 5px;
+      cursor: pointer; font-size: 12px; text-decoration:none; }
+    .btn:hover { background: #c00000; }
+
+    /* Modal */
+    .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+      background:rgba(0,0,0,0.8); z-index:20; justify-content:center; align-items:center; }
+    .modal-content { background:#222; padding:20px; border-radius:10px; max-width:900px;
+      width:90%; display:flex; gap:20px; position:relative; }
+    .modal-images { flex:1; position:relative; }
+    .modal-images img { width:100%; max-height:400px; object-fit:contain; display:none; }
+    .modal-images img.active { display:block; }
+    .arrow { position:absolute; top:50%; transform:translateY(-50%); font-size:28px; color:#fff; cursor:pointer; padding:5px; }
+    .arrow.left{ left:10px; } .arrow.right{ right:10px; }
+    .modal-details { flex:1; font-size:14px; }
+    .close-btn { position:absolute; top:15px; right:20px; font-size:24px; color:#fff; cursor:pointer; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Click Worx</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="search.html">Search</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="#" class="admin" onclick="adminLogin()">Admin</a>
+    </nav>
+  </header>
+
+  <div class="page-top"></div>
+
+  <!-- Background slideshow -->
+  <div class="slideshow">
+    <img src="images/BG/bg1.jpg" class="active">
+    <img src="images/BG/bg2.jpg">
+    <img src="images/BG/bg3.jpg">
+    <img src="images/BG/bg4.jpg">
+  </div>
+
+  <!-- Search Section -->
+  <div class="main-layout">
+    <div class="side-box">Left Box</div>
+    <div class="search-section">
+      <h2>Find Your Car</h2>
+      <div class="search-bar">
+        <input type="text" id="searchName" placeholder="Name of Car">
+        <input type="text" id="searchModel" placeholder="Model">
+        <input type="text" id="searchColor" placeholder="Color">
+        <input type="text" id="searchSpecs" placeholder="Specs">
+        <input type="text" id="searchEstate" placeholder="Estate">
+        <input type="number" id="searchPrice" placeholder="Max Price">
+        <textarea id="autosized-area" placeholder="Describe what you're looking for"></textarea>
+        <button class="search-btn" onclick="applySearch()">Search</button>
+      </div>
+    </div>
+    <div class="side-box">Right Box</div>
+  </div>
+
+  <!-- Banner -->
+  <div class="banner-box"><img src="images/sample/banner_01.jpg"></div>
+
+  <!-- Urgent Cars -->
+  <div class="urgent-sale-section">
+    <h2>Urgent Sale Cars</h2>
+    <div class="cars-container" id="carsContainer"></div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="carModal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal()">&times;</span>
+      <div class="modal-images" id="modalImages">
+        <span class="arrow left" onclick="prevImage()">&#10094;</span>
+        <span class="arrow right" onclick="nextImage()">&#10095;</span>
+      </div>
+      <div class="modal-details" id="modalDetails"></div>
+    </div>
+  </div>
+
+  <script>
+    function adminLogin(){
+      const pass=prompt("Enter admin password:");
+      if(pass==="1234"){ window.location.href="admin.html"; }
+      else{ alert("Wrong password!"); }
+    }
+
+    // Slideshow
+    const slides=document.querySelectorAll('.slideshow img');
+    let curSlide=0;
+    setInterval(()=>{ slides[curSlide].classList.remove('active');
+      curSlide=(curSlide+1)%slides.length;
+      slides[curSlide].classList.add('active');
+    },4000);
+
+    // Cars
+    let cars=JSON.parse(localStorage.getItem("cars")||"[]");
+    const container=document.getElementById("carsContainer");
+
+    function renderCars(list){
+      container.innerHTML="";
+      list.forEach((car,i)=>{ 
+        const card=document.createElement("div");
+        card.className="car-card";
+        card.innerHTML=`
+          ${car.ribbon?`<div class="ribbon">${car.ribbon}</div>`:""}
+          ${car.images && car.images[0] ? `<img src="images/${car.images[0]}" onclick="openModal(${i},0)">` : ""}
+          <div class="car-info"><strong>${car.name||"Unnamed Car"}</strong><br>AED ${car.price||"-"}</div>
+          <button class="btn" onclick="openModal(${i},0)">Show Details</button>`;
+        container.appendChild(card);
+      });
+    }
+
+    // Modal
+    let curCar=null, curImg=0;
+    function openModal(i,j){ curCar=cars[i]; curImg=j; document.getElementById("carModal").style.display="flex"; renderModal(); }
+    function closeModal(){ document.getElementById("carModal").style.display="none"; }
+    function renderModal(){
+      const imgs=document.getElementById("modalImages");
+      imgs.innerHTML=`<span class="arrow left" onclick="prevImage()">&#10094;</span>
+                      <span class="arrow right" onclick="nextImage()">&#10095;</span>`;
+      curCar.images.forEach((img,k)=>{ 
+        const el = document.createElement("img"); 
+        el.src = "images/" + img;   // ✅ fixed
+        if(k===curImg) el.classList.add("active");
+        imgs.appendChild(el);
+      });
+      const d=document.getElementById("modalDetails");
+      d.innerHTML=`
+        <h2>${curCar.name}</h2>
+        <p><b>Model:</b> ${curCar.model||"-"}</p>
+        <p><b>Specs:</b> ${curCar.specs||"-"}</p>
+        <p><b>Color:</b> ${curCar.color||"-"}</p>
+        <p><b>Mileage:</b> ${curCar.mileage||"-"}</p>
+        <p><b>Milkiya:</b> ${curCar.milkiya||"-"}</p>
+        <p><b>Location:</b> ${curCar.location||"-"}</p>
+        <p><b>Price:</b> AED ${curCar.price||"-"} ${curCar.negotiable?"(Negotiable)":""}</p>
+        <p><b>Details:</b><br>${curCar.features||""}</p>
+        <div style="margin-top:15px; display:flex; gap:10px;">
+          <a class="btn" href="https://wa.me/?text=I%20want%20to%20book%20${encodeURIComponent(curCar.name)}" target="_blank">Book Now</a>
+          <a class="btn" href="https://wa.me/?text=I%20am%20interested%20in%20${encodeURIComponent(curCar.name)}" target="_blank">Contact Us</a>
+        </div>`;
+    }
+    function prevImage(){ curImg=(curImg-1+curCar.images.length)%curCar.images.length; renderModal(); }
+    function nextImage(){ curImg=(curImg+1)%curCar.images.length; renderModal(); }
+
+    // Search
+    function applySearch(){
+      const name=document.getElementById("searchName").value.toLowerCase();
+      const model=document.getElementById("searchModel").value.toLowerCase();
+      const color=document.getElementById("searchColor").value.toLowerCase();
+      const specs=document.getElementById("searchSpecs").value.toLowerCase();
+      const estate=document.getElementById("searchEstate").value.toLowerCase();
+      const price=parseFloat(document.getElementById("searchPrice").value);
+      const desc=document.getElementById("autosized-area").value.toLowerCase();
+      const filtered=cars.filter(c=>{
+        return (!name||c.name.toLowerCase().includes(name)) &&
+               (!model||c.model.toLowerCase().includes(model)) &&
+               (!color||c.color.toLowerCase().includes(color)) &&
+               (!specs||c.specs.toLowerCase().includes(specs)) &&
+               (!estate||c.location.toLowerCase().includes(estate)) &&
+               (!price||parseFloat(c.price)<=price) &&
+               (!desc||c.features.toLowerCase().includes(desc));
+      });
+      renderCars(filtered);
+    }
+
+    // Initial render
+    renderCars(cars);
+  </script>
+</body>
+</html>

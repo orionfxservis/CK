@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Panel - Click Worx</title>
+  <style>
+    body { margin:0; font-family:Arial,sans-serif; background:#000; color:#fff; }
+    header { display:flex; justify-content:space-between; align-items:center; padding:15px 40px; background:rgba(0,0,0,0.6);}
+    header h1 { font-size:28px; color:#e60000; margin:0; }
+    nav a { margin-left:20px; text-decoration:none; font-weight:bold; color:#fff; }
+    nav a.admin-btn { color:#e60000; }
+    .slideshow { position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1; }
+    .slideshow img { position:absolute; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity 1s; filter:blur(6px) brightness(0.4); }
+    .slideshow img.active { opacity:1; }
+    .content { position:relative; z-index:5; padding:40px; }
+    form { max-width:400px; background:rgba(30,30,30,0.9); padding:20px; border-radius:10px; margin-bottom:40px; }
+    form input,form textarea,form select { width:100%; margin-bottom:10px; padding:8px; border:none; border-radius:5px; }
+    form label { font-size:14px; display:block; margin-bottom:3px; }
+    .negotiable-row { display:flex; align-items:center; justify-content:space-between; margin:10px 0; }
+    form button { background:#e60000; color:#fff; padding:10px; border:none; border-radius:5px; cursor:pointer; }
+    form button:hover { background:#c00000; }
+    table { width:100%; border-collapse:collapse; background:rgba(30,30,30,0.9); margin-bottom:40px; }
+    th,td { padding:10px; border:1px solid #444; font-size:14px; }
+    img.thumb { width:60px; height:40px; object-fit:cover; border-radius:4px; cursor:pointer; }
+    .preview { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:10px; }
+    .preview img { width:60px; height:40px; object-fit:cover; border-radius:4px; border:1px solid #555; cursor:pointer; }
+    h2,h3 { color:#e60000; }
+    #lightboxOverlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:9999; justify-content:center; align-items:center; }
+    #lightboxOverlay img { max-width:90%; max-height:90%; border-radius:8px; box-shadow:0 0 20px #000; }
+    #lightboxOverlay span { position:absolute; top:20px; right:30px; font-size:32px; color:#fff; cursor:pointer; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Click Worx</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="search.html">Search</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="admin.html" class="admin-btn">Admin</a>
+    </nav>
+  </header>
+
+  <!-- Background Slideshow -->
+  <div class="slideshow" id="slideshow">
+    <img src="images/bg1.jpg" class="active">
+    <img src="images/bg2.jpg">
+    <img src="images/bg3.jpg">
+    <img src="images/bg4.jpg">
+  </div>
+
+  <div class="content">
+    <h2>Admin Panel</h2>
+
+    <!-- Car Form -->
+    <form id="carForm">
+      <input type="hidden" id="editIndex" value="">
+      <label>Category</label>
+      <select id="carCategory" required>
+        <option value="urgent">Post on Urgent Sale</option>
+        <option value="more">Post on More Cars</option>
+      </select>
+      <label>Car Name</label>
+      <input type="text" id="carName" required>
+      <label>Model</label>
+      <input type="text" id="carModel">
+      <label>Specs</label>
+      <input type="text" id="carSpecs">
+      <label>Color</label>
+      <input type="text" id="carColor">
+      <label>Mileage</label>
+      <input type="text" id="carMileage">
+      <label>Milkiya</label>
+      <input type="text" id="carMilkiya">
+      <label>Accident History</label>
+      <input type="text" id="carAccident">
+      <label>Location</label>
+      <input type="text" id="carLocation">
+      <label>Price (AED)</label>
+      <input type="number" id="carPrice" required>
+      <div class="negotiable-row">
+        <label for="carNegotiable">Negotiable</label>
+        <input type="checkbox" id="carNegotiable">
+      </div>
+      <label>Complete Details</label>
+      <textarea id="carFeatures"></textarea>
+      <label>Ribbon</label>
+      <select id="carRibbon">
+        <option value="">None</option>
+        <option value="Urgent Sale">Urgent Sale</option>
+        <option value="Special Discount">Special Discount</option>
+      </select>
+      <label>Image Filenames (comma separated)</label>
+      <input type="text" id="carImages" placeholder="e.g. car1.jpg,car2.jpg">
+      <div id="carPreview" class="preview"></div>
+      <button type="submit">Save Car</button>
+    </form>
+
+    <!-- Urgent Sale Cars Table -->
+    <h3>Urgent Sale Cars</h3>
+    <table id="urgentTable">
+      <thead>
+        <tr>
+          <th>Thumbnail</th><th>Name</th><th>Price</th><th>Negotiable</th><th>Ribbon</th><th>Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <!-- More Cars Table -->
+    <h3>More Cars</h3>
+    <table id="moreTable">
+      <thead>
+        <tr>
+          <th>Thumbnail</th><th>Name</th><th>Price</th><th>Negotiable</th><th>Ribbon</th><th>Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <!-- Lightbox -->
+  <div id="lightboxOverlay">
+    <span onclick="closeLightbox()">&times;</span>
+    <img id="lightboxImg" src="">
+  </div>
+
+  <script>
+    // Background slideshow
+    const slides = document.querySelectorAll('.slideshow img');
+    let currentSlide = 0;
+    setInterval(() => {
+      slides[currentSlide].classList.remove('active');
+      currentSlide = (currentSlide + 1) % slides.length;
+      slides[currentSlide].classList.add('active');
+    }, 4000);
+
+    // ================= Migration from old storage =================
+    (function migrateOldData() {
+      let allCars = JSON.parse(localStorage.getItem("cars") || "[]");
+
+      let urgentOld = JSON.parse(localStorage.getItem("urgentCars") || "[]");
+      let moreOld   = JSON.parse(localStorage.getItem("moreCars") || "[]");
+
+      if (urgentOld.length > 0) {
+        urgentOld.forEach(c => c.category = "urgent");
+        allCars = allCars.concat(urgentOld);
+        localStorage.removeItem("urgentCars");
+      }
+
+      if (moreOld.length > 0) {
+        moreOld.forEach(c => c.category = "more");
+        allCars = allCars.concat(moreOld);
+        localStorage.removeItem("moreCars");
+      }
+
+      if (urgentOld.length > 0 || moreOld.length > 0) {
+        localStorage.setItem("cars", JSON.stringify(allCars));
+        alert("✅ Old data migrated to new unified storage!");
+      }
+    })();
+
+    // ================= Cars Logic =================
+    let cars = JSON.parse(localStorage.getItem("cars") || "[]");
+    const carForm = document.getElementById("carForm");
+
+    carForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const car = getCarData();
+      const editIndex = document.getElementById("editIndex").value;
+      if (editIndex === "") { cars.push(car); alert("Car added!"); }
+      else { cars[editIndex] = car; alert("Car updated!"); }
+      localStorage.setItem("cars", JSON.stringify(cars));
+      carForm.reset();
+      document.getElementById("editIndex").value = "";
+      document.getElementById("carPreview").innerHTML = "";
+      renderTables();
+    });
+
+    function getCarData() {
+      return {
+        category: document.getElementById("carCategory").value,
+        name: document.getElementById("carName").value,
+        model: document.getElementById("carModel").value,
+        specs: document.getElementById("carSpecs").value,
+        color: document.getElementById("carColor").value,
+        mileage: document.getElementById("carMileage").value,
+        milkiya: document.getElementById("carMilkiya").value,
+        accident: document.getElementById("carAccident").value,
+        location: document.getElementById("carLocation").value,
+        price: document.getElementById("carPrice").value,
+        negotiable: document.getElementById("carNegotiable").checked,
+        features: document.getElementById("carFeatures").value,
+        ribbon: document.getElementById("carRibbon").value,
+        images: document.getElementById("carImages").value.split(",").map(f => f.trim()).filter(f => f)
+      };
+    }
+
+    function renderTables() {
+      const urgentTable = document.querySelector("#urgentTable tbody");
+      const moreTable = document.querySelector("#moreTable tbody");
+      urgentTable.innerHTML = "";
+      moreTable.innerHTML = "";
+
+      cars.forEach((car,i) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${car.images[0] ? `<img src="images/${car.name}/${car.images[0]}" class="thumb" onclick="openLightbox('images/${car.name}/${car.images[0]}')">` : ""}</td>
+          <td>${car.name}</td>
+          <td>AED ${car.price}</td>
+          <td>${car.negotiable ? "Yes" : "No"}</td>
+          <td>${car.ribbon || ""}</td>
+          <td>
+            <button onclick="editCar(${i})">Edit</button>
+            <button onclick="deleteCar(${i})">Delete</button>
+          </td>
+        `;
+        if (car.category === "urgent") urgentTable.appendChild(row);
+        else moreTable.appendChild(row);
+      });
+    }
+
+    function editCar(i) {
+      const car = cars[i];
+      document.getElementById("editIndex").value = i;
+      document.getElementById("carCategory").value = car.category;
+      document.getElementById("carName").value = car.name;
+      document.getElementById("carModel").value = car.model;
+      document.getElementById("carSpecs").value = car.specs;
+      document.getElementById("carColor").value = car.color;
+      document.getElementById("carMileage").value = car.mileage;
+      document.getElementById("carMilkiya").value = car.milkiya;
+      document.getElementById("carAccident").value = car.accident;
+      document.getElementById("carLocation").value = car.location;
+      document.getElementById("carPrice").value = car.price;
+      document.getElementById("carNegotiable").checked = car.negotiable;
+      document.getElementById("carFeatures").value = car.features;
+      document.getElementById("carRibbon").value = car.ribbon;
+      document.getElementById("carImages").value = car.images.join(",");
+      previewImages(car.images);
+    }
+
+    function deleteCar(i) {
+      if(confirm("Delete this car?")) {
+        cars.splice(i,1);
+        localStorage.setItem("cars", JSON.stringify(cars));
+        renderTables();
+      }
+    }
+
+    function previewImages(images) {
+      const container = document.getElementById("carPreview");
+      container.innerHTML = "";
+      images.forEach(img => {
+        const el = document.createElement("img");
+        el.src = "images/" + document.getElementById("carName").value + "/" + img;
+        el.onclick = () => openLightbox(el.src);
+        container.appendChild(el);
+      });
+    }
+
+    document.getElementById("carImages").addEventListener("input", () => {
+      const files = document.getElementById("carImages").value.split(",").map(f=>f.trim()).filter(f=>f);
+      previewImages(files);
+    });
+
+    // Lightbox
+    function openLightbox(src) {
+      document.getElementById("lightboxImg").src = src;
+      document.getElementById("lightboxOverlay").style.display = "flex";
+    }
+    function closeLightbox() {
+      document.getElementById("lightboxOverlay").style.display = "none";
+    }
+
+    // Initial render
+    renderTables();
+  </script>
+</body>
+</html>
