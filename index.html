@@ -45,16 +45,15 @@
     .main-layout { display: flex; justify-content: center; align-items: stretch;
       gap: 20px; padding: 20px 40px; position: relative; z-index: 5; }
 
-    /* ✅ Side banners now match search-section height */
+    /* ✅ Side banners */
     .side-box {
       width: 120px;
       background: rgba(255,255,255,0.1);
       border-radius: 8px;
       border: 1px solid #e60000;
       display:flex;
-      align-items:center;
+      align-items:stretch;
       justify-content:center;
-      padding: 0;
     }
     .side-box img {
       width: 100%;
@@ -122,7 +121,7 @@
       <img id="leftBanner" src="images/sample/left_banner.jpg">
     </div>
 
-    <div class="search-section" id="searchSection">
+    <div class="search-section" id="searchBox">
       <h2>Find Your Car</h2>
       <div class="search-bar">
         <input type="text" id="searchName" placeholder="Name of Car">
@@ -142,7 +141,7 @@
   </div>
 
   <script>
-    // Load banners from localStorage (if admin changed them)
+    // Load banners from localStorage
     const leftBanner = localStorage.getItem("leftBanner");
     const rightBanner = localStorage.getItem("rightBanner");
     if (leftBanner) document.getElementById("leftBanner").src = leftBanner;
@@ -185,8 +184,37 @@
       slides[curSlide].classList.add('active');
     },4000);
 
-    // Cars
-    let cars=JSON.parse(localStorage.getItem("cars")||"[]");
+    // Cars with fallback
+    let cars = JSON.parse(localStorage.getItem("cars") || "[]");
+    if (cars.length === 0) {
+      cars = [
+        {
+          name: "Toyota Corolla",
+          model: "2020",
+          price: "45000",
+          color: "White",
+          specs: "Full Option",
+          mileage: "35,000 km",
+          location: "Dubai",
+          features: "Excellent condition, single owner, full service history",
+          images: ["sample/car1.jpg","sample/car1b.jpg"],
+          ribbon: "Urgent"
+        },
+        {
+          name: "Nissan Altima",
+          model: "2019",
+          price: "38000",
+          color: "Black",
+          specs: "Mid Option",
+          mileage: "50,000 km",
+          location: "Sharjah",
+          features: "Very clean, well maintained",
+          images: ["sample/car2.jpg"],
+          ribbon: "Hot Deal"
+        }
+      ];
+    }
+
     const container=document.getElementById("carsContainer");
 
     function renderCars(list){
@@ -224,9 +252,8 @@
         <p><b>Specs:</b> ${curCar.specs||"-"}</p>
         <p><b>Color:</b> ${curCar.color||"-"}</p>
         <p><b>Mileage:</b> ${curCar.mileage||"-"}</p>
-        <p><b>Milkiya:</b> ${curCar.milkiya||"-"}</p>
         <p><b>Location:</b> ${curCar.location||"-"}</p>
-        <p><b>Price:</b> AED ${curCar.price||"-"} ${curCar.negotiable?"(Negotiable)":""}</p>
+        <p><b>Price:</b> AED ${curCar.price||"-"}</p>
         <p><b>Details:</b><br>${curCar.features||""}</p>
         <div style="margin-top:15px; display:flex; gap:10px;">
           <a class="btn" href="https://wa.me/?text=I%20want%20to%20book%20${encodeURIComponent(curCar.name)}" target="_blank">Book Now</a>
