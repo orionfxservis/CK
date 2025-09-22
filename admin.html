@@ -91,8 +91,8 @@
         <option value="Urgent Sale">Urgent Sale</option>
         <option value="Special Discount">Special Discount</option>
       </select>
-      <label>Image Filenames (comma separated)</label>
-      <input type="text" id="carImages" placeholder="e.g. car1.jpg,car2.jpg">
+      <label>Upload Car Images</label>
+      <input type="file" id="carImages" multiple accept="image/*">
       <div id="carPreview" class="preview"></div>
       <button type="submit">Save Car</button>
     </form>
@@ -126,33 +126,14 @@
     <img id="lightboxImg" src="">
   </div>
 
-<h2>Manage Side Banners (120×480px)</h2>
-
-<label>Left Banner:</label><br>
-<input type="file" id="leftBannerInput" accept="image/*">
-<button onclick="saveBanner('left')">Save Left Banner</button>
-<br><br>
-
-<label>Right Banner:</label><br>
-<input type="file" id="rightBannerInput" accept="image/*">
-<button onclick="saveBanner('right')">Save Right Banner</button>
-
-<script>
-  function saveBanner(side) {
-    const input = document.getElementById(side + "BannerInput");
-    const file = input.files[0];
-    if (!file) { alert("Please select an image!"); return; }
-
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      localStorage.setItem(side + "Banner", e.target.result); // save Base64
-      alert(side.charAt(0).toUpperCase() + side.slice(1) + " banner updated!");
-    };
-    reader.readAsDataURL(file);
-  }
-</script>
-
-
+  <h2>Manage Side Banners (120×480px)</h2>
+  <label>Left Banner:</label><br>
+  <input type="file" id="leftBannerInput" accept="image/*">
+  <button onclick="saveBanner('left')">Save Left Banner</button>
+  <br><br>
+  <label>Right Banner:</label><br>
+  <input type="file" id="rightBannerInput" accept="image/*">
+  <button onclick="saveBanner('right')">Save Right Banner</button>
 
   <script>
     // Background slideshow
@@ -164,34 +145,29 @@
       slides[currentSlide].classList.add('active');
     }, 4000);
 
-    // ================= Migration from old storage =================
-    (function migrateOldData() {
-      let allCars = JSON.parse(localStorage.getItem("cars") || "[]");
-
-      let urgentOld = JSON.parse(localStorage.getItem("urgentCars") || "[]");
-      let moreOld   = JSON.parse(localStorage.getItem("moreCars") || "[]");
-
-      if (urgentOld.length > 0) {
-        urgentOld.forEach(c => c.category = "urgent");
-        allCars = allCars.concat(urgentOld);
-        localStorage.removeItem("urgentCars");
-      }
-
-      if (moreOld.length > 0) {
-        moreOld.forEach(c => c.category = "more");
-        allCars = allCars.concat(moreOld);
-        localStorage.removeItem("moreCars");
-      }
-
-      if (urgentOld.length > 0 || moreOld.length > 0) {
-        localStorage.setItem("cars", JSON.stringify(allCars));
-        alert("✅ Old data migrated to new unified storage!");
-      }
-    })();
-
     // ================= Cars Logic =================
     let cars = JSON.parse(localStorage.getItem("cars") || "[]");
     const carForm = document.getElementById("carForm");
+    const imageInput = document.getElementById("carImages");
+    const previewContainer = document.getElementById("carPreview");
+
+    let uploadedImages = []; // base64 images
+
+    imageInput.addEventListener("change", () => {
+      uploadedImages = [];
+      previewContainer.innerHTML = "";
+      [...imageInput.files].forEach(file => {
+        const reader = new FileReader();
+        reader.onload = e => {
+          uploadedImages.push(e.target.result);
+          const img = document.createElement("img");
+          img.src = e.target.result;
+          img.onclick = () => openLightbox(img.src);
+          previewContainer.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+      });
+    });
 
     carForm.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -201,8 +177,9 @@
       else { cars[editIndex] = car; alert("Car updated!"); }
       localStorage.setItem("cars", JSON.stringify(cars));
       carForm.reset();
+      uploadedImages = [];
+      previewContainer.innerHTML = "";
       document.getElementById("editIndex").value = "";
-      document.getElementById("carPreview").innerHTML = "";
       renderTables();
     });
 
@@ -221,7 +198,7 @@
         negotiable: document.getElementById("carNegotiable").checked,
         features: document.getElementById("carFeatures").value,
         ribbon: document.getElementById("carRibbon").value,
-        images: document.getElementById("carImages").value.split(",").map(f => f.trim()).filter(f => f)
+        images: uploadedImages // base64 stored
       };
     }
 
@@ -234,7 +211,7 @@
       cars.forEach((car,i) => {
         const row = document.createElement("tr");
         row.innerHTML = `
-          <td>${car.images[0] ? `<img src="images/${car.name}/${car.images[0]}" class="thumb" onclick="openLightbox('images/${car.name}/${car.images[0]}')">` : ""}</td>
+          <td>${car.images[0] ? `<img src="${car.images[0]}" class="thumb" onclick="openLightbox('${car.images[0]}')">` : ""}</td>
           <td>${car.name}</td>
           <td>AED ${car.price}</td>
           <td>${car.negotiable ? "Yes" : "No"}</td>
@@ -265,8 +242,15 @@
       document.getElementById("carNegotiable").checked = car.negotiable;
       document.getElementById("carFeatures").value = car.features;
       document.getElementById("carRibbon").value = car.ribbon;
-      document.getElementById("carImages").value = car.images.join(",");
-      previewImages(car.images);
+
+      uploadedImages = car.images || [];
+      previewContainer.innerHTML = "";
+      uploadedImages.forEach(img => {
+        const el = document.createElement("img");
+        el.src = img;
+        el.onclick = () => openLightbox(el.src);
+        previewContainer.appendChild(el);
+      });
     }
 
     function deleteCar(i) {
@@ -277,22 +261,6 @@
       }
     }
 
-    function previewImages(images) {
-      const container = document.getElementById("carPreview");
-      container.innerHTML = "";
-      images.forEach(img => {
-        const el = document.createElement("img");
-        el.src = "images/" + document.getElementById("carName").value + "/" + img;
-        el.onclick = () => openLightbox(el.src);
-        container.appendChild(el);
-      });
-    }
-
-    document.getElementById("carImages").addEventListener("input", () => {
-      const files = document.getElementById("carImages").value.split(",").map(f=>f.trim()).filter(f=>f);
-      previewImages(files);
-    });
-
     // Lightbox
     function openLightbox(src) {
       document.getElementById("lightboxImg").src = src;
@@ -300,6 +268,19 @@
     }
     function closeLightbox() {
       document.getElementById("lightboxOverlay").style.display = "none";
+    }
+
+    // ================= Banner Save =================
+    function saveBanner(side) {
+      const input = document.getElementById(side + "BannerInput");
+      const file = input.files[0];
+      if (!file) { alert("Please select an image!"); return; }
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        localStorage.setItem(side + "Banner", e.target.result);
+        alert(side.charAt(0).toUpperCase() + side.slice(1) + " banner updated!");
+      };
+      reader.readAsDataURL(file);
     }
 
     // Initial render
