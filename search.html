@@ -7,18 +7,12 @@
     body { margin: 0; font-family: Arial, sans-serif; background: #000; color: #fff; }
 
     /* Header (same as index.html) */
-    header {
-      position: fixed; top: 0; left: 0; right: 0;
-      z-index: 10; display: flex; justify-content: space-between;
-      align-items: center; padding: 15px 40px;
-      background: rgba(0,0,0,0.8);
-      backdrop-filter: blur(6px);
-    }
-    header h1 { font-size: 28px; color: #e60000; margin: 0; }
-    nav a { margin-left: 20px; text-decoration: none; font-weight: bold; color: #fff; }
-    nav a.admin { background:#e60000; padding:6px 10px; border-radius:5px; }
+    header{ position:fixed; top:0; left:0; right:0; z-index:60; display:flex; justify-content:space-between; border-bottom: 2px solid #e50914; border-radius: 0 0 12px 12px; align-items:center; padding:12px 18px; background:rgba(0,0,0,0.78); backdrop-filter:blur(6px);}
+    header h1{ margin:0; font-size:20px; color:var(--red); }
+    nav a{ color:#fff; text-decoration:none; margin-left:12px; font-weight:600; font-size:14px; }
+    nav a.admin{ background:var(--red); padding:6px 10px; border-radius:6px; }
 
-    .page-top { margin-top: 80px; }
+    .page-top{ height:64px; } /* space for header */
 
     /* Slideshow */
     .slideshow {
@@ -93,10 +87,10 @@
 
   <!-- Background slideshow -->
   <div class="slideshow" id="slideshow">
-    <img src="images/BG/bg1.jpg" class="active">
-    <img src="images/BG/bg2.jpg">
-    <img src="images/BG/bg3.jpg">
-    <img src="images/BG/bg4.jpg">
+    <img src="images/BG/01.jpg" class="active">
+    <img src="images/BG/02.jpg">
+    <img src="images/BG/03.jpg">
+    <img src="images/BG/04.jpg">
   </div>
 
   <!-- Search Section -->

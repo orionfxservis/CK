@@ -1,99 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   <title>Click Worx - Cars for Sale</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <style>
-    body { margin: 0; font-family: Arial, sans-serif; background: #000; color: #fff; }
-
-    header {
-      position: fixed; top: 0; left: 0; right: 0;
-      z-index: 10; display: flex; justify-content: space-between;
-      align-items: center; padding: 15px 40px;
-      background: rgba(0,0,0,0.8);
-      backdrop-filter: blur(6px);
+    /* ---------- Basic theme & layout ---------- */
+    :root{
+      --red:#e60000;
+      --red-dark:#c00000;
+      --muted:#222;
     }
-    header h1 { font-size: 28px; color: #e60000; margin: 0; }
-    nav a { margin-left: 20px; text-decoration: none; font-weight: bold; color: #fff; }
-    nav a.admin { background:#e60000; padding:6px 10px; border-radius:5px; }
+    html,body{height:100%;}
+    body { margin:0; font-family: Arial, sans-serif; background:#000; color:#fff; -webkit-font-smoothing:antialiased;}
+    header{ position:fixed; top:0; left:0; right:0; z-index:60; display:flex; justify-content:space-between; border-bottom: 2px solid #e50914; border-radius: 0 0 12px 12px; align-items:center; padding:12px 18px; background:rgba(0,0,0,0.78); backdrop-filter:blur(6px);}
+    header h1{ margin:0; font-size:20px; color:var(--red); }
+    nav a{ color:#fff; text-decoration:none; margin-left:12px; font-weight:600; font-size:14px; }
+    nav a.admin{ background:var(--red); padding:6px 10px; border-radius:6px; }
 
-    .page-top { margin-top: 80px; }
+    .page-top{ height:64px; } /* space for header */
 
-    .slideshow { position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      overflow: hidden; z-index: -1; }
-    .slideshow img { position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      object-fit: cover; opacity: 0; transition: opacity 1s ease-in-out; }
-    .slideshow img.active { opacity: 1; }
+    /* Slideshow full-screen background */
+    .slideshow{ position:fixed; inset:0; z-index:-1; overflow:hidden; }
+    .slideshow img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity 1s ease-in-out; }
+    .slideshow img.active{ opacity:1; }
 
+    /* Main layout */
+    .main-layout{ display:flex; gap:5px; align-items:flex-start; justify-content:center; padding:18px; z-index:5; max-width:1300px; margin:0 auto; box-sizing:border-box; }
+    .side-box{ width:120px; min-width:80px; height:480px; border-radius:8px; border:1px solid var(--red); background:rgba(255,255,255,0.04); display:flex; align-items:stretch; justify-content:center; overflow:hidden; }
+    .side-box img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+    /* Search Section */
     .search-section {
       max-width: 720px;
       background: rgba(20,20,20,0.9); padding: 25px; border-radius: 10px;
-      position: relative; z-index: 5;
-      flex: 1;
+      position: relative; z-index: 5; margin: auto;
     }
     .search-section h2 { margin-top: 0; color: #e60000; text-align:center; }
-    .search-bar { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-top: 15px; }
-    .search-bar input, .search-bar select, .search-bar textarea {
+    .search-bar {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-top: 15px;
+    }
+    .search-bar input, .search-bar select {
       padding: 10px; border-radius: 6px; border: none; font-size: 14px; width: 100%;
       box-sizing: border-box;
     }
-    .search-bar textarea { grid-column: span 3; height: 80px; resize: none; }
-    .search-btn { grid-column: span 3; background: #e60000; color: #fff; padding: 12px; border: none;
-      border-radius: 6px; cursor: pointer; font-weight: bold; text-align:center; width: 100%; }
+    .search-bar textarea {
+      grid-column: span 3;
+      height: 80px;
+      resize: none;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .search-btn {
+      grid-column: span 3;
+      background: #e60000; color: #fff; padding: 12px; border: none;
+      border-radius: 6px; cursor: pointer; font-weight: bold; text-align:center;
+      width: 100%;
+      box-sizing: border-box;
+    }
     .search-btn:hover { background: #c00000; }
 
-    .main-layout { display: flex; justify-content: center; align-items: stretch;
-      gap: 20px; padding: 20px 40px; position: relative; z-index: 5; }
+    /* Urgent cars grid */
+    .urgent-sale-section{ max-width:1300px; margin:26px auto; padding:14px; border-radius:10px; background:rgba(20,20,20,0.86); border:1px solid var(--red); }
+    .urgent-sale-section h2{ color:var(--red); margin:0 0 12px; text-align:center; }
+    .cars-container{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; }
+    .car-card {
+  background: rgba(30,30,30,0.85);
+  border-radius: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid var(--red);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 200px;
+  position: relative;   /* ✅ needed for ribbon */
+}
 
-    /* ✅ Side banners */
-    .side-box {
-      width: 120px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 8px;
-      border: 1px solid #e60000;
-      display:flex;
-      align-items:stretch;
-      justify-content:center;
-    }
-    .side-box img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 6px;
-    }
+    .car-card img{ width:100%; height:120px; object-fit:cover; border-radius:6px; cursor:pointer; }
+    	
+	/* Ribbon style */
+.ribbon {
+  width: 120px;
+  background: var(--red);
+  color: #fff;
+  text-align: center;
+  line-height: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  position: absolute;
+  top: 40px;
+  left: -10px;
+  transform: rotate(-45deg);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+  text-transform: uppercase;
+}
 
-    .banner-box { max-width: 720px; margin: 20px auto; display: flex; justify-content: center; }
-    .banner-box img { width: 100%; max-height: 120px; border-radius: 8px; object-fit: cover; }
+	/* Main layout */
+.main-layout {
+  display: flex;
+  gap: 12px;              /* reduced gap (was 18px) */
+  align-items: stretch;   /* ensures equal height between children */
+  justify-content: center;
+  padding: 18px;
+  z-index: 5;
+  max-width: 1300px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
 
-    .urgent-sale-section { max-width: 1300px; margin: 30px auto; padding: 15px;
-      border: 1px solid #e60000; border-radius: 10px; background: rgba(20,20,20,0.85); }
-    .urgent-sale-section h2 { margin: 0 0 15px; color: #e60000; text-align: center; }
-    .cars-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
-    .car-card { background: rgba(30,30,30,0.85); border-radius: 10px; padding: 12px; text-align: center;
-      position: relative; overflow: hidden; height: 220px; display: flex; flex-direction: column; justify-content: space-between; }
-    .car-card img { width: 100%; height: 120px; object-fit: cover; border-radius: 6px; cursor:pointer; }
-    .ribbon { position: absolute; top: 25px; right: -35px; width: 140px; transform: rotate(45deg);
-      text-align: center; background: #e60000; color: #fff; font-size: 11px; font-weight: bold; padding: 4px 0; }
-    .car-info { font-size: 13px; line-height: 1.4; margin-top: 5px; }
-    .btn { padding: 6px; background: #e60000; color: #fff; border: none; border-radius: 5px;
-      cursor: pointer; font-size: 12px; text-decoration:none; }
-    .btn:hover { background: #c00000; }
+.side-box {
+  width: 120px;
+  min-width: 80px;
+  border-radius: 8px;
+  height: 320px;
+  border: 1px solid var(--red);
+  background: rgba(255,255,255,0.04);
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  overflow: hidden;
+}
 
-    /* Modal */
-    .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%;
-      background:rgba(0,0,0,0.8); z-index:20; justify-content:center; align-items:center; }
-    .modal-content { background:#222; padding:20px; border-radius:10px; max-width:900px;
-      width:90%; display:flex; gap:20px; position:relative; }
-    .modal-images { flex:1; position:relative; }
-    .modal-images img { width:100%; max-height:400px; object-fit:contain; display:none; }
-    .modal-images img.active { display:block; }
-    .arrow { position:absolute; top:50%; transform:translateY(-50%); font-size:28px; color:#fff; cursor:pointer; padding:5px; }
-    .arrow.left{ left:10px; } .arrow.right{ right:10px; }
-    .modal-details { flex:1; font-size:14px; }
-    .close-btn { position:absolute; top:15px; right:20px; font-size:24px; color:#fff; cursor:pointer; }
+.search-section {
+  flex: 1;                 /* takes remaining space */
+  background: rgba(20,20,20,0.9);
+  padding: 25px;
+  border-radius: 10px;
+  border: 1px solid var(--red);
+  position: relative;
+  z-index: 5;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+}
+
+
+    /* Modal (gallery + details + sticky buttons) */
+    .modal{ display:none; position:fixed; inset:0; background:rgba(0,0,0,0.92); z-index:120; align-items:center; justify-content:center; padding:20px; }
+    .modal.open{ display:flex; }
+    .modal-content{ width:100%; max-width:980px; max-height:92vh; background:#111; border-radius:10px; overflow:hidden; display:flex; flex-direction:column; position:relative; }
+    .modal-body{ display:flex; gap:18px; flex:1 1 auto; padding:18px; box-sizing:border-box; overflow:hidden; }
+    .modal-images{ flex-basis:45%; flex-grow:0; display:flex; flex-direction:column; gap:10px; overflow-y:auto; max-height:calc(92vh - 140px); padding-right:6px; }
+    .modal-images img{ width:100%; height:110px; object-fit:cover; border-radius:6px; cursor:pointer; }
+    .modal-images img.active{ height:340px; object-fit:contain; order:-1; }
+    .modal-details{ flex:1; overflow:auto; color:#ddd; font-size:14px; padding-right:6px; }
+    .modal-btn-container{ display:flex; gap:10px; padding:12px; border-top:1px solid rgba(255,255,255,0.04); background:#0b0b0b; }
+    .modal-btn{ flex:1; padding:10px; border-radius:6px; border:0; font-weight:700; cursor:pointer; color:#fff; background:var(--red); }
+    .modal-btn.secondary{ background:#007bff; }
+    .close-btn{ position:absolute; right:12px; top:10px; font-size:26px; cursor:pointer; color:#fff; background:transparent; border:0; }
+
+    /* Booking/contact popup modal forms */
+    .mini-modal{ display:none; position:fixed; inset:0; z-index:140; align-items:center; justify-content:center; background:rgba(0,0,0,0.7); }
+    .mini-modal.open{ display:flex; }
+    .mini-content{ width:100%; max-width:520px; background:#111; border-radius:10px; padding:16px; box-sizing:border-box; }
+    .form-row{ display:flex; gap:8px; flex-wrap:wrap; }
+    .form-row input, .form-row textarea, select{ width:100%; padding:10px; margin-bottom:8px; border-radius:6px; border:0; background:#141414; color:#fff; box-sizing:border-box; }
+    .submit-btn{ background:var(--red); color:#fff; border:0; padding:10px 14px; border-radius:6px; cursor:pointer; font-weight:700; }
+
+    /* Small screen adjustments */
+	@media (max-width:900px){
+	.main-layout {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 2px;   /* reduce this value */
+  padding: 20px 40px;
+  position: relative;
+  z-index: 5;
+}
+
+  .search-section {
+    order: 1;
+    width: 100%;
+  }
+  .side-box {
+    order: 2;
+    width: 100%;
+    height: 160px;           /* fixed equal height for banners */
+    margin-top: 12px;        /* spacing between stacked boxes */
+  }
+}
+
+	@media (max-width:600px){
+	header { padding:10px; }
+	header h1 { font-size:18px; }
+  .modal-images img.active { height:220px; }
+  .modal-images img { height:90px; }
+  .modal-body { flex-direction:column; }
+
+  .side-box {
+    height: 120px;   /* slightly smaller on very small screens */
+  }
+}
+
   </style>
 </head>
 <body>
+
+  <!-- Header -->
   <header>
     <h1>Click Worx</h1>
     <nav>
@@ -101,191 +207,303 @@
       <a href="search.html">Search</a>
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
-      <a href="#" class="admin" onclick="adminLogin()">Admin</a>
+      <a class="admin" href="#" onclick="adminLogin()">Admin</a>
     </nav>
   </header>
 
   <div class="page-top"></div>
 
   <!-- Background slideshow -->
-  <div class="slideshow">
-    <img src="images/BG/bg1.jpg" class="active">
-    <img src="images/BG/bg2.jpg">
-    <img src="images/BG/bg3.jpg">
-    <img src="images/BG/bg4.jpg">
+  <div class="slideshow" aria-hidden="true">
+    <img src="images/BG/01.jpg" class="active" alt="">
+    <img src="images/BG/02.jpg" alt="">
+    <img src="images/BG/03.jpg" alt="">
+    <img src="images/BG/04.jpg" alt="">
   </div>
 
-  <!-- Search Section -->
-  <div class="main-layout">
-    <div class="side-box">
-      <img id="leftBanner" src="images/sample/left_banner.jpg">
-    </div>
+  <!-- Main layout: side banners + search -->
+  <main class="main-layout" role="main" aria-label="Main content">
+    <aside class="side-box" aria-hidden="true">
+      <img id="leftBanner" src="" alt="Left banner">
+    </aside>
 
-    <div class="search-section" id="searchBox">
-      <h2>Find Your Car</h2>
-      <div class="search-bar">
-        <input type="text" id="searchName" placeholder="Name of Car">
-        <input type="text" id="searchModel" placeholder="Model">
-        <input type="text" id="searchColor" placeholder="Color">
-        <input type="text" id="searchSpecs" placeholder="Specs">
-        <input type="text" id="searchEstate" placeholder="Estate">
-        <input type="number" id="searchPrice" placeholder="Max Price">
-        <textarea id="autosized-area" placeholder="Describe what you're looking for"></textarea>
-        <button class="search-btn" onclick="applySearch()">Search</button>
-      </div>
-    </div>
-
-    <div class="side-box">
-      <img id="rightBanner" src="images/sample/right_banner.jpg">
+    <!-- Search Section -->
+  <div class="search-section" id="search">
+    <h2>Search Cars</h2>
+    <div class="search-bar">
+      <input type="text" id="searchName" placeholder="Name of Car">
+      <input type="text" id="searchModel" placeholder="Model">
+      <input type="text" id="searchColor" placeholder="Color">
+      <input type="text" id="searchSpecs" placeholder="Specs">
+      <input type="text" id="searchEstate" placeholder="Estate">
+      <input type="number" id="searchPrice" placeholder="Max Price">
+      <textarea id="autosized-area" placeholder="Describe what you're looking for" maxlength="200"></textarea>
+      <button class="search-btn" onclick="applySearch()">Search</button>
     </div>
   </div>
 
-  <script>
-    // Load banners from localStorage
-    const leftBanner = localStorage.getItem("leftBanner");
-    const rightBanner = localStorage.getItem("rightBanner");
-    if (leftBanner) document.getElementById("leftBanner").src = leftBanner;
-    if (rightBanner) document.getElementById("rightBanner").src = rightBanner;
-  </script>
 
-  <!-- Banner -->
-  <div class="banner-box"><img src="images/banner/banner_01.jpg"></div>
+    <aside class="side-box" aria-hidden="true">
+      <img id="rightBanner" src="" alt="Right banner">
+    </aside>
+  </main>
 
-  <!-- Urgent Cars -->
-  <div class="urgent-sale-section">
+  <!-- Urgent sale grid -->
+  <section class="urgent-sale-section" aria-label="Urgent Sale Cars">
     <h2>Urgent Sale Cars</h2>
-    <div class="cars-container" id="carsContainer"></div>
-  </div>
+    <div id="carsContainer" class="cars-container" aria-live="polite"></div>
+  </section>
 
-  <!-- Modal -->
-  <div class="modal" id="carModal">
-    <div class="modal-content">
-      <span class="close-btn" onclick="closeModal()">&times;</span>
-      <div class="modal-images" id="modalImages">
-        <span class="arrow left" onclick="prevImage()">&#10094;</span>
-        <span class="arrow right" onclick="nextImage()">&#10095;</span>
+  <!-- Full-size modal: gallery + details -->
+  <div id="carModal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-content" role="document">
+      <button class="close-btn" aria-label="Close" onclick="closeModal()">&times;</button>
+      <div class="modal-body">
+        <div id="modalImages" class="modal-images" aria-hidden="false"></div>
+        <div id="modalDetails" class="modal-details"></div>
       </div>
-      <div class="modal-details" id="modalDetails"></div>
+      <div class="modal-btn-container">
+        <button class="modal-btn" onclick="openBooking()">Book Now</button>
+        <button class="modal-btn secondary" onclick="openContact()">Contact Us</button>
+      </div>
     </div>
   </div>
 
-  <script>
-    function adminLogin(){
-      const pass=prompt("Enter admin password:");
-      if(pass==="1234"){ window.location.href="admin.html"; }
-      else{ alert("Wrong password!"); }
-    }
+  <!-- Booking mini-modal (submits to Formspree) -->
+  <div id="bookingModal" class="mini-modal" aria-hidden="true">
+    <div class="mini-content">
+      <h3 style="margin-top:0; color:var(--red)">Book This Car</h3>
+      <!--
+        Replace action URL with your Formspree endpoint:
+        https://formspree.io/f/YOUR_BOOK_FORM_ID
+        See Formspree docs: method="POST" and include name attributes.
+      -->
+      <form id="bookingForm" method="POST" action="https://formspree.io/f/YOUR_BOOK_FORM_ID" target="_blank">
+        <input type="hidden" name="carName" id="bookingCarName" value="">
+        <label for="bk-name">Your Name</label>
+        <input id="bk-name" name="name" type="text" required>
+        <label for="bk-email">Email</label>
+        <input id="bk-email" name="_replyto" type="email" required>
+        <label for="bk-phone">Phone</label>
+        <input id="bk-phone" name="phone" type="text" required>
+        <label for="bk-message">Message</label>
+        <textarea id="bk-message" name="message" rows="4" placeholder="Preferred date/time or questions..."></textarea>
+        <input type="hidden" name="_subject" value="Booking request from Click Worx">
+        <div style="display:flex; gap:8px; margin-top:10px;">
+          <button type="submit" class="submit-btn">Send Booking</button>
+          <button type="button" class="submit-btn" style="background:#666;" onclick="closeBooking()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
-    // Slideshow
-    const slides=document.querySelectorAll('.slideshow img');
-    let curSlide=0;
-    setInterval(()=>{ slides[curSlide].classList.remove('active');
-      curSlide=(curSlide+1)%slides.length;
-      slides[curSlide].classList.add('active');
-    },4000);
+  <!-- Contact mini-modal -->
+  <div id="contactModal" class="mini-modal" aria-hidden="true">
+    <div class="mini-content">
+      <h3 style="margin-top:0; color:var(--red)">Contact Seller</h3>
+      <!--
+        Replace action URL with your Formspree endpoint:
+        https://formspree.io/f/YOUR_CONTACT_FORM_ID
+      -->
+      <form id="contactForm" method="POST" action="https://formspree.io/f/YOUR_CONTACT_FORM_ID" target="_blank">
+        <input type="hidden" name="carName" id="contactCarName" value="">
+        <label for="ct-name">Your Name</label>
+        <input id="ct-name" name="name" type="text" required>
+        <label for="ct-email">Email</label>
+        <input id="ct-email" name="_replyto" type="email" required>
+        <label for="ct-msg">Message</label>
+        <textarea id="ct-msg" name="message" rows="4" placeholder="Questions about the car..."></textarea>
+        <input type="hidden" name="_subject" value="Contact request from Click Worx">
+        <div style="display:flex; gap:8px; margin-top:10px;">
+          <button type="submit" class="submit-btn">Send Message</button>
+          <button type="button" class="submit-btn" style="background:#666;" onclick="closeContact()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
-    // Cars with fallback
-    let cars = JSON.parse(localStorage.getItem("cars") || "[]");
-    if (cars.length === 0) {
-      cars = [
-        {
-          name: "Toyota Corolla",
-          model: "2020",
-          price: "45000",
-          color: "White",
-          specs: "Full Option",
-          mileage: "35,000 km",
-          location: "Dubai",
-          features: "Excellent condition, single owner, full service history",
-          images: ["sample/car1.jpg","sample/car1b.jpg"],
-          ribbon: "Urgent"
-        },
-        {
-          name: "Nissan Altima",
-          model: "2019",
-          price: "38000",
-          color: "Black",
-          specs: "Mid Option",
-          mileage: "50,000 km",
-          location: "Sharjah",
-          features: "Very clean, well maintained",
-          images: ["sample/car2.jpg"],
-          ribbon: "Hot Deal"
-        }
-      ];
-    }
+<script>
+/* ---------- Admin Gate ---------- */
+function adminLogin(){
+  const pass = prompt("Enter admin password:");
+  if(pass === "1234") window.location.href = "admin.html";
+  else alert("Wrong password!");
+}
 
-    const container=document.getElementById("carsContainer");
+/* ---------- Slideshow ---------- */
+(function slideshow(){
+  const slides = document.querySelectorAll('.slideshow img');
+  if(!slides.length) return;
+  let idx = 0;
+  setInterval(()=> {
+    slides[idx].classList.remove('active');
+    idx = (idx + 1) % slides.length;
+    slides[idx].classList.add('active');
+  }, 4000);
+})();
 
-    function renderCars(list){
-      container.innerHTML="";
-      list.forEach((car,i)=>{ 
-        const card=document.createElement("div");
-        card.className="car-card";
-        card.innerHTML=`
-          ${car.ribbon?`<div class="ribbon">${car.ribbon}</div>`:""}
-          ${car.images && car.images[0] ? `<img src="images/${car.images[0]}" onclick="openModal(${i},0)">` : ""}
-          <div class="car-info"><strong>${car.name||"Unnamed Car"}</strong><br>AED ${car.price||"-"}</div>
-          <button class="btn" onclick="openModal(${i},0)">Show Details</button>`;
-        container.appendChild(card);
-      });
-    }
+/* ---------- Banners (load from admin localStorage) ---------- */
+(function loadBanners(){
+  const left = document.getElementById('leftBanner');
+  const right = document.getElementById('rightBanner');
+  try{
+    const l = localStorage.getItem('leftBanner');
+    const r = localStorage.getItem('rightBanner');
+    left.src = l || 'images/sample/left_banner.jpg';
+    right.src = r || 'images/sample/right_banner.jpg';
+  }catch(e){
+    left.src = 'images/sample/left_banner.jpg';
+    right.src = 'images/sample/right_banner.jpg';
+  }
+})();
 
-    // Modal
-    let curCar=null, curImg=0;
-    function openModal(i,j){ curCar=cars[i]; curImg=j; document.getElementById("carModal").style.display="flex"; renderModal(); }
-    function closeModal(){ document.getElementById("carModal").style.display="none"; }
-    function renderModal(){
-      const imgs=document.getElementById("modalImages");
-      imgs.innerHTML=`<span class="arrow left" onclick="prevImage()">&#10094;</span>
-                      <span class="arrow right" onclick="nextImage()">&#10095;</span>`;
-      curCar.images.forEach((img,k)=>{ 
-        const el = document.createElement("img"); 
-        el.src = "images/" + img;
-        if(k===curImg) el.classList.add("active");
-        imgs.appendChild(el);
-      });
-      const d=document.getElementById("modalDetails");
-      d.innerHTML=`
-        <h2>${curCar.name}</h2>
-        <p><b>Model:</b> ${curCar.model||"-"}</p>
-        <p><b>Specs:</b> ${curCar.specs||"-"}</p>
-        <p><b>Color:</b> ${curCar.color||"-"}</p>
-        <p><b>Mileage:</b> ${curCar.mileage||"-"}</p>
-        <p><b>Location:</b> ${curCar.location||"-"}</p>
-        <p><b>Price:</b> AED ${curCar.price||"-"}</p>
-        <p><b>Details:</b><br>${curCar.features||""}</p>
-        <div style="margin-top:15px; display:flex; gap:10px;">
-          <a class="btn" href="https://wa.me/?text=I%20want%20to%20book%20${encodeURIComponent(curCar.name)}" target="_blank">Book Now</a>
-          <a class="btn" href="https://wa.me/?text=I%20am%20interested%20in%20${encodeURIComponent(curCar.name)}" target="_blank">Contact Us</a>
-        </div>`;
-    }
-    function prevImage(){ curImg=(curImg-1+curCar.images.length)%curCar.images.length; renderModal(); }
-    function nextImage(){ curImg=(curImg+1)%curCar.images.length; renderModal(); }
+/* ---------- Cars data: load from localStorage, fallback if empty ---------- */
+const fallbackCars = [
+  { name:"Toyota Corolla", model:"2020", price:"45000", color:"White", specs:"Full Option", mileage:"35,000 km", location:"Dubai", features:"Excellent condition, single owner, full service history", images:["images/sample/car1.jpg","images/sample/car1b.jpg","images/sample/car1c.jpg"], ribbon:"Urgent", category:"urgent" },
+  { name:"Honda Civic", model:"2019", price:"42000", color:"Black", specs:"Sport", mileage:"50,000 km", location:"Sharjah", features:"Well maintained, accident-free", images:["images/sample/car2.jpg","images/sample/car2b.jpg","images/sample/car2c.jpg"], ribbon:"Urgent", category:"urgent" }
+];
 
-    // Search
-    function applySearch(){
-      const name=document.getElementById("searchName").value.toLowerCase();
-      const model=document.getElementById("searchModel").value.toLowerCase();
-      const color=document.getElementById("searchColor").value.toLowerCase();
-      const specs=document.getElementById("searchSpecs").value.toLowerCase();
-      const estate=document.getElementById("searchEstate").value.toLowerCase();
-      const price=parseFloat(document.getElementById("searchPrice").value);
-      const desc=document.getElementById("autosized-area").value.toLowerCase();
-      const filtered=cars.filter(c=>{
-        return (!name||c.name.toLowerCase().includes(name)) &&
-               (!model||c.model.toLowerCase().includes(model)) &&
-               (!color||c.color.toLowerCase().includes(color)) &&
-               (!specs||c.specs.toLowerCase().includes(specs)) &&
-               (!estate||c.location.toLowerCase().includes(estate)) &&
-               (!price||parseFloat(c.price)<=price) &&
-               (!desc||c.features.toLowerCase().includes(desc));
-      });
-      renderCars(filtered);
-    }
+let cars = [];
+try { cars = JSON.parse(localStorage.getItem('cars') || "[]"); } catch(e){ cars = []; }
+let urgentCars = (cars.filter(c=>c && c.category === "urgent") || []);
+if(urgentCars.length === 0) urgentCars = fallbackCars;
 
-    // Initial render
-    renderCars(cars);
-  </script>
+/* ---------- Render cars grid ---------- */
+const container = document.getElementById('carsContainer');
+function renderCars(list){
+  container.innerHTML = "";
+  list.forEach((car, idx) => {
+    const card = document.createElement('div');
+    card.className = 'car-card';
+    card.innerHTML = `
+      ${car.ribbon ? `<div class="ribbon">${car.ribbon}</div>` : ''}
+      ${car.images && car.images[0] ? `<img src="${car.images[0]}" alt="${(car.name||'Car')}" onclick="openModal(${idx},0)">` : ''}
+      <div style="margin-top:8px;">
+        <div class="car-info"><strong>${car.name||'Unnamed'}</strong><div style="font-size:13px;color:#ddd;margin-top:6px">AED ${car.price||'-'}</div></div>
+      </div>
+      <div style="margin-top:8px; display:flex; gap:8px;">
+        <button class="btn" onclick="openModal(${idx},0)">Show Details</button>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+renderCars(urgentCars);
+
+/* ---------- Search ---------- */
+function applySearch(){
+  const name = document.getElementById('searchName').value.trim().toLowerCase();
+  const model = document.getElementById('searchModel').value.trim().toLowerCase();
+  const color = document.getElementById('searchColor').value.trim().toLowerCase();
+  const specs = document.getElementById('searchSpecs').value.trim().toLowerCase();
+  const estate = document.getElementById('searchEstate').value.trim().toLowerCase();
+  const price = parseFloat(document.getElementById('searchPrice').value || 0);
+  const desc = document.getElementById('autosized-area').value.trim().toLowerCase();
+
+  const filtered = urgentCars.filter(c => {
+    return (!name || (c.name||'').toLowerCase().includes(name))
+      && (!model || (c.model||'').toLowerCase().includes(model))
+      && (!color || (c.color||'').toLowerCase().includes(color))
+      && (!specs || (c.specs||'').toLowerCase().includes(specs))
+      && (!estate || (c.location||'').toLowerCase().includes(estate))
+      && (!price || parseFloat(c.price||0) <= price)
+      && (!desc || (c.features||'').toLowerCase().includes(desc));
+  });
+
+  renderCars(filtered);
+}
+
+/* ---------- Modal gallery + details ---------- */
+let curCar = null;
+let curImg = 0;
+const modal = document.getElementById('carModal');
+
+function openModal(index, imgIndex){
+  curCar = urgentCars[index];
+  curImg = imgIndex || 0;
+  renderModal();
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden','false');
+  // prevent body scroll
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(){
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden','true');
+  document.body.style.overflow = '';
+}
+
+function renderModal(){
+  if(!curCar) return;
+  const imgsEl = document.getElementById('modalImages');
+  imgsEl.innerHTML = '';
+  (curCar.images||[]).forEach((src, idx) => {
+    const img = document.createElement('img');
+    img.src = src;
+    if(idx === curImg) img.classList.add('active');
+    img.onclick = () => {
+      curImg = idx;
+      renderModal();
+      // smooth scroll the clicked thumbnail into center of images container
+      img.scrollIntoView({behavior:'smooth', block:'center'});
+    };
+    imgsEl.appendChild(img);
+  });
+
+  const d = document.getElementById('modalDetails');
+  d.innerHTML = `
+    <h2 style="margin-top:0;color:var(--red)">${curCar.name||''}</h2>
+    <p><strong>Model:</strong> ${curCar.model||'-'}</p>
+    <p><strong>Specs:</strong> ${curCar.specs||'-'}</p>
+    <p><strong>Color:</strong> ${curCar.color||'-'}</p>
+    <p><strong>Mileage:</strong> ${curCar.mileage||'-'}</p>
+    <p><strong>Location:</strong> ${curCar.location||'-'}</p>
+    <p><strong>Price:</strong> AED ${curCar.price||'-'}</p>
+    <p style="margin-top:10px"><strong>Details:</strong><br>${curCar.features||''}</p>
+  `;
+}
+
+/* Close modal on ESC or outside click */
+window.addEventListener('keydown', (e)=> { if(e.key==='Escape') closeModal(); });
+modal.addEventListener('click', (e)=> { if(e.target === modal) closeModal(); });
+
+/* ---------- Booking & Contact forms handling (mini modals) ---------- */
+const bookingModal = document.getElementById('bookingModal');
+const contactModal = document.getElementById('contactModal');
+
+function openBooking(){
+  if(!curCar) return alert('No car selected');
+  document.getElementById('bookingCarName').value = curCar.name || '';
+  bookingModal.classList.add('open');
+  bookingModal.setAttribute('aria-hidden','false');
+}
+function closeBooking(){
+  bookingModal.classList.remove('open');
+  bookingModal.setAttribute('aria-hidden','true');
+}
+function openContact(){
+  if(!curCar) return alert('No car selected');
+  document.getElementById('contactCarName').value = curCar.name || '';
+  contactModal.classList.add('open');
+  contactModal.setAttribute('aria-hidden','false');
+}
+function closeContact(){
+  contactModal.classList.remove('open');
+  contactModal.setAttribute('aria-hidden','true');
+}
+
+/* close mini-modals when clicked outside */
+bookingModal.addEventListener('click', (e)=> { if(e.target === bookingModal) closeBooking(); });
+contactModal.addEventListener('click', (e)=> { if(e.target === contactModal) closeContact(); });
+
+/* ---------- Formspree notes in code: 
+   - Replace the form action attribute URLs with your Formspree endpoints.
+   - Example endpoint: https://formspree.io/f/XXXXXXXX
+   - After deploying to GitHub Pages do one test submit from the live site to activate.
+   Docs: Formspree HTML setup / activation. 
+   (See Formspree docs for details.) ---------- */
+</script>
+
 </body>
 </html>
