@@ -358,10 +358,7 @@ function adminLogin(){
 })();
 
 /* ---------- Cars data: load from localStorage, fallback if empty ---------- */
-const fallbackCars = [
-  { name:"Toyota Corolla", model:"2020", price:"45000", color:"White", specs:"Full Option", mileage:"35,000 km", location:"Dubai", features:"Excellent condition, single owner, full service history", images:["images/sample/car1.jpg","images/sample/car1b.jpg","images/sample/car1c.jpg"], ribbon:"Urgent", category:"urgent" },
-  { name:"Honda Civic", model:"2019", price:"42000", color:"Black", specs:"Sport", mileage:"50,000 km", location:"Sharjah", features:"Well maintained, accident-free", images:["images/sample/car2.jpg","images/sample/car2b.jpg","images/sample/car2c.jpg"], ribbon:"Urgent", category:"urgent" }
-];
+const fallbackCars = [];
 
 let cars = [];
 try { cars = JSON.parse(localStorage.getItem('cars') || "[]"); } catch(e){ cars = []; }
