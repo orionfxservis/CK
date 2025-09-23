@@ -365,8 +365,15 @@ const fallbackCars = [
 
 let cars = [];
 try { cars = JSON.parse(localStorage.getItem('cars') || "[]"); } catch(e){ cars = []; }
-let urgentCars = (cars.filter(c=>c && c.category === "urgent") || []);
-if(urgentCars.length === 0) urgentCars = fallbackCars;
+
+// Filter urgent cars
+let urgentCars = cars.filter(c => c && c.category === "urgent");
+
+// If no urgent cars or fewer than 12, pad with fallback cars
+if (urgentCars.length < 12) {
+  const needed = 12 - urgentCars.length;
+  urgentCars = urgentCars.concat(fallbackCars.slice(0, needed));
+}
 
 /* ---------- Render cars grid ---------- */
 const container = document.getElementById('carsContainer');
