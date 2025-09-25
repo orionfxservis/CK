@@ -14,7 +14,7 @@ nav a.admin{ background:var(--red); padding:6px 10px; border-radius:6px; }
 .slideshow img { position:absolute; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity 1s; filter:blur(6px) brightness(0.4); }
 .slideshow img.active { opacity:1; }
 .content { position:relative; z-index:5; padding:40px; overflow:visible !important; }
-form { max-width:400px; background:rgba(30,30,30,0.9); padding:20px; border-radius:10px; margin-bottom:40px; }
+form { max-width:400px; background:rgba(30,30,30,0.9); padding:20px; border: 1px solid #e50914; border-radius:10px; margin-bottom:40px; }
 form input,form textarea,form select { width:100%; margin-bottom:10px; padding:8px; border:none; border-radius:5px; }
 form label { font-size:14px; display:block; margin-bottom:3px; }
 .negotiable-row { display:flex; align-items:center; justify-content:space-between; margin:10px 0; }
@@ -31,6 +31,7 @@ table {
 th,td { 
   padding:10px; 
   border:1px solid #444; 
+  border: 1px solid #e50914;
   font-size:14px; 
   vertical-align:top; 
   white-space:normal;  
@@ -40,6 +41,57 @@ h2,h3 { color:#e60000; }
 #lightboxOverlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:9999; justify-content:center; align-items:center; }
 #lightboxOverlay img { max-width:90%; max-height:90%; border-radius:8px; box-shadow:0 0 20px #000; }
 #lightboxOverlay span { position:absolute; top:20px; right:30px; font-size:32px; color:#fff; cursor:pointer; }
+
+/* ✅ Banner Box Styles */
+.banner-box {
+  position: absolute;
+  top: 100px;
+  right: 40px;
+  width: 260px;
+  background: rgba(20,20,20,0.9);
+  border: 1px solid #e50914;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+.banner-box h3 {
+  margin: 0 0 12px;
+  font-size: 16px;
+  color: #e50914;
+  text-align:center;
+}
+.banner-box label {
+  display:block;
+  font-size:13px;
+  margin:8px 0 4px;
+}
+.banner-box input[type="file"] {
+  display:block;
+  margin-bottom:8px;
+  font-size:12px;
+  color:#ccc;
+}
+.banner-preview {
+  width:100%;
+  height:80px;
+  border-radius:6px;
+  object-fit:cover;
+  margin-bottom:10px;
+  border:1px solid #333;
+}
+.banner-box button {
+  width:100%;
+  background:#e50914;
+  color:#fff;
+  border:0;
+  padding:8px;
+  border-radius:6px;
+  cursor:pointer;
+  font-weight:600;
+}
+.banner-box button:hover {
+  background:#c00000;
+}
 </style>
 </head>
 <body>
@@ -63,6 +115,24 @@ h2,h3 { color:#e60000; }
 
 <div class="content">
 <h2>Admin Panel</h2>
+
+<!-- ✅ Banner Box (top-right) -->
+<div class="banner-box">
+  <h3>Manage Banners</h3>
+  <label>Left Banner</label>
+  <input type="file" accept="image/*" onchange="uploadBanner(event,'leftBanner','leftPreview')">
+  <img id="leftPreview" class="banner-preview" src="" alt="Left Banner">
+
+  <label>Right Banner</label>
+  <input type="file" accept="image/*" onchange="uploadBanner(event,'rightBanner','rightPreview')">
+  <img id="rightPreview" class="banner-preview" src="" alt="Right Banner">
+
+  <label>Horizontal Banner</label>
+  <input type="file" accept="image/*" onchange="uploadBanner(event,'bannerHorizontal','horizPreview')">
+  <img id="horizPreview" class="banner-preview" src="" alt="Horizontal Banner">
+
+  <button onclick="resetBanners()">Reset Banners</button>
+</div>
 
 <form id="carForm">
 <input type="hidden" id="editIndex" value="">
@@ -237,6 +307,40 @@ function deleteCar(i){
 
 function openLightbox(src){ document.getElementById("lightboxImg").src=src; document.getElementById("lightboxOverlay").style.display="flex"; }
 function closeLightbox(){ document.getElementById("lightboxOverlay").style.display="none"; }
+
+/* ✅ Banner Functions */
+window.addEventListener('DOMContentLoaded',()=>{
+  const left = localStorage.getItem('leftBanner');
+  const right = localStorage.getItem('rightBanner');
+  const horiz = localStorage.getItem('bannerHorizontal');
+  if(left) document.getElementById('leftPreview').src = left;
+  if(right) document.getElementById('rightPreview').src = right;
+  if(horiz) document.getElementById('horizPreview').src = horiz;
+});
+
+function uploadBanner(e,key,previewId){
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev){
+    localStorage.setItem(key, ev.target.result);
+    document.getElementById(previewId).src = ev.target.result;
+    alert(key+" updated!");
+  };
+  reader.readAsDataURL(file);
+}
+
+function resetBanners(){
+  if(confirm("Reset all banners?")){
+    localStorage.removeItem('leftBanner');
+    localStorage.removeItem('rightBanner');
+    localStorage.removeItem('bannerHorizontal');
+    document.getElementById('leftPreview').src = "";
+    document.getElementById('rightPreview').src = "";
+    document.getElementById('horizPreview').src = "";
+    alert("Banners reset.");
+  }
+}
 
 renderTables();
 </script>
