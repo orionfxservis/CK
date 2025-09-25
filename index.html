@@ -83,6 +83,7 @@
 .ribbon {
   width: 120px;
   background: var(--red);
+  border-radius: 8px;
   color: #fff;
   text-align: center;
   line-height: 20px;
@@ -130,10 +131,25 @@
   border: 1px solid var(--red);
   position: relative;
   z-index: 5;
-  margin: auto;
+  margin: 0 10px; /* reduce left/right margin */
   display: flex;
   flex-direction: column;
   justify-content: stretch;
+}
+
+.banner-horizontal {
+  display: flex;
+  justify-content: center;
+  margin: 15px auto;
+}
+
+.banner-horizontal img {
+  width: 720px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--red);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
 }
 
 
@@ -247,6 +263,12 @@
       <img id="rightBanner" src="" alt="Right banner">
     </aside>
   </main>
+
+	<!-- Horizontal Banner Section -->
+	<div class="banner-horizontal">
+	<img id="bannerHorizontal" src="images/sample/banner-horizontal.jpg" alt="Horizontal Banner">
+	</div>
+
 
   <!-- Urgent sale grid -->
   <section class="urgent-sale-section" aria-label="Urgent Sale Cars">
@@ -460,6 +482,11 @@ function adminLogin(){
     right.src = 'images/sample/right_banner.jpg';
   }
 })();
+
+if (localStorage.getItem("bannerHorizontal")) {
+  document.getElementById("bannerHorizontal").src = localStorage.getItem("bannerHorizontal");
+}
+
 
 /* ---------- Cars data: load from localStorage, fallback if empty ---------- */
 const fallbackCars = [];

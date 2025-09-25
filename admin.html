@@ -6,27 +6,36 @@
 <style>
 body { margin:0; font-family:Arial,sans-serif; background:#000; color:#fff; }
 header{ position:fixed; top:0; left:0; right:0; z-index:60; display:flex; justify-content:space-between; border-bottom: 2px solid #e50914; border-radius: 0 0 12px 12px; align-items:center; padding:12px 18px; background:rgba(0,0,0,0.78); backdrop-filter:blur(6px);}
-    header h1{ margin:0; font-size:20px; color:var(--red); }
-    nav a{ color:#fff; text-decoration:none; margin-left:12px; font-weight:600; font-size:14px; }
-    nav a.admin{ background:var(--red); padding:6px 10px; border-radius:6px; }
-    .page-top{ height:64px; } /* space for header */
+header h1{ margin:0; font-size:20px; color:#e50914; }
+nav a{ color:#fff; text-decoration:none; margin-left:12px; font-weight:600; font-size:14px; }
+nav a.admin{ background:var(--red); padding:6px 10px; border-radius:6px; }
+.page-top{ height:64px; } 
 .slideshow { position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1; }
 .slideshow img { position:absolute; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity 1s; filter:blur(6px) brightness(0.4); }
 .slideshow img.active { opacity:1; }
-.content { position:relative; z-index:5; padding:40px; }
+.content { position:relative; z-index:5; padding:40px; overflow:visible !important; }
 form { max-width:400px; background:rgba(30,30,30,0.9); padding:20px; border-radius:10px; margin-bottom:40px; }
 form input,form textarea,form select { width:100%; margin-bottom:10px; padding:8px; border:none; border-radius:5px; }
 form label { font-size:14px; display:block; margin-bottom:3px; }
 .negotiable-row { display:flex; align-items:center; justify-content:space-between; margin:10px 0; }
 form button { background:#e60000; color:#fff; padding:10px; border:none; border-radius:5px; cursor:pointer; }
 form button:hover { background:#c00000; }
-table { width:100%; border-collapse:collapse; background:rgba(30,30,30,0.9); margin-bottom:40px; }
-th,td { padding:10px; border:1px solid #444; font-size:14px; vertical-align:top; }
+
+table { 
+  width:100%; 
+  border-collapse:collapse; 
+  background:rgba(30,30,30,0.9); 
+  margin-bottom:10px; 
+  table-layout:auto;
+}
+th,td { 
+  padding:10px; 
+  border:1px solid #444; 
+  font-size:14px; 
+  vertical-align:top; 
+  white-space:normal;  
+}
 img.thumb { width:60px; height:40px; object-fit:cover; border-radius:4px; cursor:pointer; margin-right:3px; }
-.preview { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:10px; }
-.preview div { position:relative; display:inline-block; }
-.preview img { width:60px; height:40px; object-fit:cover; border-radius:4px; border:1px solid #555; cursor:pointer; }
-.preview span { position:absolute; top:0; right:0; background:#e60000; color:#fff; border-radius:50%; padding:0 5px; cursor:pointer; font-weight:bold; }
 h2,h3 { color:#e60000; }
 #lightboxOverlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:9999; justify-content:center; align-items:center; }
 #lightboxOverlay img { max-width:90%; max-height:90%; border-radius:8px; box-shadow:0 0 20px #000; }
@@ -92,9 +101,8 @@ h2,h3 { color:#e60000; }
 <option value="Urgent Sale">Urgent Sale</option>
 <option value="Special Discount">Special Discount</option>
 </select>
-<label>Upload Car Images</label>
-<input type="file" id="carImages" multiple accept="image/*">
-<div id="carPreview" class="preview"></div>
+<label>Enter Image Filenames (comma separated, from /images/ folder)</label>
+<input type="text" id="carImages" placeholder="e.g. car1.jpg, car2.jpg">
 <button type="submit">Save Car</button>
 </form>
 
@@ -116,15 +124,6 @@ h2,h3 { color:#e60000; }
 <img id="lightboxImg" src="">
 </div>
 
-<h2>Manage Side Banners (120×480px)</h2>
-<label>Left Banner:</label><br>
-<input type="file" id="leftBannerInput" accept="image/*">
-<button onclick="saveBanner('left')">Save Left Banner</button>
-<br><br>
-<label>Right Banner:</label><br>
-<input type="file" id="rightBannerInput" accept="image/*">
-<button onclick="saveBanner('right')">Save Right Banner</button>
-
 <script>
 // slideshow
 const slides=document.querySelectorAll('.slideshow img');
@@ -134,46 +133,14 @@ setInterval(()=>{ slides[curSlide].classList.remove('active'); curSlide=(curSlid
 // cars
 let cars = JSON.parse(localStorage.getItem("cars") || "[]");
 const carForm = document.getElementById("carForm");
-const imageInput = document.getElementById("carImages");
-const previewContainer = document.getElementById("carPreview");
-let uploadedImages = [];
-
-function renderPreview(){
-  previewContainer.innerHTML = "";
-  uploadedImages.forEach((imgSrc)=>{
-    const container = document.createElement("div");
-    const img = document.createElement("img");
-    img.src = imgSrc;
-    img.onclick = () => openLightbox(img.src);
-    container.appendChild(img);
-
-    const removeBtn = document.createElement("span");
-    removeBtn.innerHTML = "&times;";
-    removeBtn.onclick = ()=>{
-      uploadedImages = uploadedImages.filter(u => u !== imgSrc);
-      renderPreview();
-    };
-    container.appendChild(removeBtn);
-    previewContainer.appendChild(container);
-  });
-}
-
-imageInput.addEventListener("change", ()=>{
-  [...imageInput.files].forEach(file=>{
-    const reader=new FileReader();
-    reader.onload=e=>{
-      uploadedImages.push(e.target.result);
-      renderPreview();
-    };
-    reader.readAsDataURL(file);
-  });
-  imageInput.value="";
-});
 
 carForm.addEventListener("submit", e=>{
   e.preventDefault();
-  let editIndex = parseInt(document.getElementById("editIndex").value);
-  if(isNaN(editIndex)) editIndex = null;
+  let editIndex = document.getElementById("editIndex").value;
+  editIndex = editIndex === "" ? null : parseInt(editIndex);
+
+  let imgInput = document.getElementById("carImages").value.trim();
+  let imgFiles = imgInput ? imgInput.split(",").map(f=>"images/"+f.trim()) : [];
 
   let car = {
     category: document.getElementById("carCategory").value,
@@ -189,7 +156,7 @@ carForm.addEventListener("submit", e=>{
     negotiable: document.getElementById("carNegotiable").checked,
     features: document.getElementById("carFeatures").value,
     ribbon: document.getElementById("carRibbon").value,
-    images: [...uploadedImages]
+    images: imgFiles
   };
 
   if(editIndex === null){
@@ -201,9 +168,8 @@ carForm.addEventListener("submit", e=>{
   }
 
   localStorage.setItem("cars", JSON.stringify(cars));
+
   carForm.reset();
-  uploadedImages = [];
-  renderPreview();
   document.getElementById("editIndex").value = "";
   renderTables();
 });
@@ -214,48 +180,32 @@ function renderTables(){
   urgentTable.innerHTML = "";
   moreTable.innerHTML = "";
 
-  cars.forEach((car, i) => {
-    const row = document.createElement("tr");
+  const urgentCars = cars.filter(c=>c.category==="urgent");
+  const moreCars = cars.filter(c=>c.category==="more");
 
-    // Generate thumbnails with remove button
-    let thumbnails = "";
-    if (car.images && car.images.length > 0) {
-      thumbnails = car.images.map((img, idx) => 
-        `<div style="display:inline-block; position:relative; margin-right:3px;">
-          <img src="${img}" class="thumb" onclick="openLightbox('${img}')">
-          <span style="position:absolute;top:-5px;right:-5px;background:#e60000;color:#fff;border-radius:50%;padding:0 5px;cursor:pointer;font-weight:bold;"
-            onclick="removeImage(${i},${idx})">&times;</span>
-        </div>`
-      ).join(" ");
-    }
-
-    row.innerHTML = `
-      <td>${thumbnails}</td>
-      <td>${car.name}</td>
-      <td>AED ${car.price}</td>
-      <td>${car.negotiable ? 'Yes' : 'No'}</td>
-      <td>${car.ribbon || ''}</td>
-      <td>
-        <button onclick="editCar(${i})">Edit</button>
-        <button onclick="deleteCar(${i})">Delete</button>
-      </td>
-    `;
-
-    if(car.category === "urgent") urgentTable.appendChild(row);
-    else moreTable.appendChild(row);
-  });
+  urgentCars.forEach((car) => addRow(car, urgentTable));
+  moreCars.forEach((car) => addRow(car, moreTable));
 }
 
-function removeImage(carIndex, imgIndex){
-  if(confirm("Remove this image?")){
-    cars[carIndex].images.splice(imgIndex, 1);
-    localStorage.setItem("cars", JSON.stringify(cars));
-    renderTables();
-    if(parseInt(document.getElementById("editIndex").value) === carIndex){
-      uploadedImages = [...cars[carIndex].images];
-      renderPreview();
-    }
+function addRow(car, table){
+  const row = document.createElement("tr");
+  let thumbnails = "";
+  if (car.images && car.images.length > 0) {
+    thumbnails = car.images.map((img) => 
+      `<img src="${img}" class="thumb" onclick="openLightbox('${img}')">`
+    ).join(" ");
   }
+  row.innerHTML = `
+    <td>${thumbnails}</td>
+    <td>${car.name}</td>
+    <td>AED ${car.price}</td>
+    <td>${car.negotiable ? 'Yes' : 'No'}</td>
+    <td>${car.ribbon || ''}</td>
+    <td>
+      <button onclick="editCar(${cars.indexOf(car)})">Edit</button>
+      <button onclick="deleteCar(${cars.indexOf(car)})">Delete</button>
+    </td>`;
+  table.appendChild(row);
 }
 
 function editCar(i){
@@ -274,9 +224,7 @@ function editCar(i){
   document.getElementById("carNegotiable").checked = car.negotiable;
   document.getElementById("carFeatures").value = car.features;
   document.getElementById("carRibbon").value = car.ribbon;
-
-  uploadedImages = [...(car.images || [])];
-  renderPreview();
+  document.getElementById("carImages").value = (car.images||[]).map(p=>p.replace("images/","")).join(", ");
 }
 
 function deleteCar(i){ 
@@ -289,18 +237,6 @@ function deleteCar(i){
 
 function openLightbox(src){ document.getElementById("lightboxImg").src=src; document.getElementById("lightboxOverlay").style.display="flex"; }
 function closeLightbox(){ document.getElementById("lightboxOverlay").style.display="none"; }
-
-function saveBanner(side){
-  const input=document.getElementById(side+"BannerInput");
-  const file=input.files[0];
-  if(!file){alert("Please select an image!"); return;}
-  const reader=new FileReader();
-  reader.onload=function(e){
-    localStorage.setItem(side+"Banner", e.target.result);
-    alert(side.charAt(0).toUpperCase()+side.slice(1)+" banner updated!");
-  };
-  reader.readAsDataURL(file);
-}
 
 renderTables();
 </script>
