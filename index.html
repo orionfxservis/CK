@@ -415,7 +415,7 @@ function sendWhatsApp(event) {
   const message = document.getElementById("ct-msg").value;
 
   // Replace with your WhatsApp number (international format, no spaces)
-  const sellerNumber = "971501234567"; 
+  const sellerNumber = "923330360487"; 
 
   const text = `Car Inquiry:%0A🚗 Car: ${carName}%0A👤 Name: ${name}%0A📞 Contact: ${phone}%0A💬 Message: ${message}`;
   const url = `https://wa.me/${sellerNumber}?text=${text}`;
@@ -605,7 +605,7 @@ modal.addEventListener('click', (e)=> { if(e.target === modal) closeModal(); });
 
 function sendWhatsApp(e){
   e.preventDefault();
-  const phone = "971500000000"; // 🔴 replace with your WhatsApp number
+  const phone = "+923330360487"; // 🔴 replace with your WhatsApp number
   const carName = document.getElementById("contactCarName").value || "";
   const custName = document.getElementById("ct-name").value || "";
   const custPhone = document.getElementById("ct-phone").value || "";
