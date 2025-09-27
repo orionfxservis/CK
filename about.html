@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Click Worx - About Us</title>
+  <title>Click Worx - About</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- ✅ Mobile scaling -->
   <style>
     body { margin: 0; font-family: Arial, sans-serif; background: #000; color: #fff; }
 
@@ -24,22 +25,28 @@
     .slideshow img.active { opacity: 1; }
 
     .content {
-      max-width: 900px; margin: auto; padding: 20px; border: 1px solid #e50914;
-      background: rgba(20,20,20,0.9); border-radius: 10px;
+      max-width: 900px; margin: 20px auto; padding: 20px;
+      border: 1px solid #e50914; background: rgba(20,20,20,0.9);
+      border-radius: 10px;
+      position: relative; z-index: 5;
     }
+    h2 { margin-top: 0; text-align: center; }
+
+    .content p { line-height: 1.6; margin-bottom: 16px; }
 
     /* Responsive tweaks */
     @media (max-width: 768px) {
       header h1 { font-size: 18px; }
       nav a { font-size: 13px; margin-left: 8px; }
-      .content { margin: 10px; padding: 15px; }
+      .content { margin: 15px; padding: 15px; }
     }
 
     @media (max-width: 480px) {
-      header { flex-direction: column; align-items: flex-start; }
+      header { flex-direction: column; align-items: flex-start; padding: 10px; }
       nav { margin-top: 6px; }
-      nav a { display: inline-block; margin: 4px 6px 0 0; }
-      .content { margin: 8px; padding: 12px; }
+      nav a { margin: 4px 6px 0 0; font-size: 12px; }
+      .page-top { height: 95px; } 
+      .content { margin: 10px; padding: 12px; }
       h2 { font-size: 18px; }
     }
   </style>
@@ -49,7 +56,6 @@
     <h1>Click Worx</h1>
     <nav>
       <a href="index.html">Home</a>
-      <a href="search.html">Search</a>
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
       <a href="#" class="admin" onclick="adminLogin()">Admin</a>
@@ -67,23 +73,27 @@
 
   <div class="content">
     <h2>About Us</h2>
-    <p>
-      At Click Worx, we provide a trusted platform where buyers and sellers can connect to fulfill their requirements with ease. All deals are carried out face-to-face, ensuring transparency and mutual agreement. Buyers are free to make their offers, and sellers have the choice to accept or decline. Our role is to facilitate this process, and we only charge a service fee once the deal is successfully completed.
-    </p>
+    <p>Welcome to <strong>Click Worx</strong>, your trusted partner for buying and selling cars. 
+       We are passionate about connecting car buyers and sellers with transparency and efficiency.</p>
+    <p>Our mission is to provide a reliable platform where users can find a wide range of vehicles, 
+       from budget-friendly options to premium models, all while enjoying a seamless experience.</p>
+    <p>At Click Worx, customer satisfaction comes first. We combine technology with expertise 
+       to make sure you get the best value and service every time.</p>
   </div>
 
   <script>
     function adminLogin(){
-      const pass=prompt("Enter admin password:");
-      if(pass==="1234"){ window.location.href="admin.html"; }
+      const pass = prompt("Enter admin password:");
+      if(pass === "1234"){ window.location.href = "admin.html"; }
       else{ alert("Wrong password!"); }
     }
 
-    const slides=document.querySelectorAll('.slideshow img');
-    let cur=0;
+    // Slideshow
+    const slides = document.querySelectorAll('.slideshow img');
+    let cur = 0;
     setInterval(()=>{
       slides[cur].classList.remove('active');
-      cur=(cur+1)%slides.length;
+      cur = (cur+1) % slides.length;
       slides[cur].classList.add('active');
     },4000);
   </script>
