@@ -220,7 +220,7 @@
     <h1>Click Worx</h1>
     <nav>
       <a href="index.html">Home</a>
-      <a href="search.html">Search</a>
+	  <a href="search.html">Search</a>
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
       <a class="admin" href="#" onclick="adminLogin()">Admin</a>
@@ -272,7 +272,7 @@
 
   <!-- Urgent sale grid -->
   <section class="urgent-sale-section" aria-label="Urgent Sale Cars">
-    <h2>Urgent Sale Cars</h2>
+    <h2>Cars For Sale</h2>
     <div id="carsContainer" class="cars-container" aria-live="polite"></div>
   </section>
 
@@ -415,7 +415,7 @@ function sendWhatsApp(event) {
   const message = document.getElementById("ct-msg").value;
 
   // Replace with your WhatsApp number (international format, no spaces)
-  const sellerNumber = "923330360487"; 
+  const sellerNumber = "+923330360487"; 
 
   const text = `Car Inquiry:%0A🚗 Car: ${carName}%0A👤 Name: ${name}%0A📞 Contact: ${phone}%0A💬 Message: ${message}`;
   const url = `https://wa.me/${sellerNumber}?text=${text}`;
@@ -437,7 +437,7 @@ function sendWhatsApp(event) {
   const message = document.getElementById("ct-msg").value;
 
   // Replace with your WhatsApp number (international format, no spaces)
-  const sellerNumber = "971501234567"; 
+  const sellerNumber = "+923330360487"; 
 
   const text = `Car Inquiry:%0A🚗 Car: ${carName}%0A👤 Name: ${name}%0A📞 Contact: ${phone}%0A💬 Message: ${message}`;
   const url = `https://wa.me/${sellerNumber}?text=${text}`;
@@ -489,7 +489,57 @@ if (localStorage.getItem("bannerHorizontal")) {
 
 
 /* ---------- Cars data: load from localStorage, fallback if empty ---------- */
-const fallbackCars = [];
+const fallbackCars = [
+  {
+    name: "Toyota Corolla",
+    model: "2020",
+    color: "White",
+    specs: "1.6L Automatic",
+    mileage: "35,000 km",
+    location: "Dubai",
+    price: "45000",
+    features: "GCC specs, full service history, single owner.",
+    category: "urgent",
+    ribbon: "Urgent",
+    images: [
+      "images/cars/corolla1.jpg",
+      "images/cars/corolla2.jpg"
+    ]
+  },
+  {
+    name: "Honda Civic",
+    model: "2019",
+    color: "Black",
+    specs: "2.0L Sport",
+    mileage: "50,000 km",
+    location: "Sharjah",
+    price: "55000",
+    features: "Well maintained, accident free.",
+    category: "urgent",
+    ribbon: "Hot Deal",
+    images: [
+      "images/cars/civic1.jpg",
+      "images/cars/civic2.jpg"
+    ]
+  },
+  {
+    name: "Nissan Altima",
+    model: "2021",
+    color: "Silver",
+    specs: "2.5L Automatic",
+    mileage: "20,000 km",
+    location: "Abu Dhabi",
+    price: "67000",
+    features: "Still under warranty, keyless entry, push start.",
+    category: "urgent",
+    ribbon: "Featured",
+    images: [
+      "images/cars/altima1.jpg",
+      "images/cars/altima2.jpg"
+    ]
+  }
+];
+
 
 let cars = [];
 try { cars = JSON.parse(localStorage.getItem('cars') || "[]"); } catch(e){ cars = []; }
