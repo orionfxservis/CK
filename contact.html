@@ -3,15 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <title>Click Worx - Contact</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- ✅ important for mobile -->
   <style>
     body { margin: 0; font-family: Arial, sans-serif; background: #000; color: #fff; }
 
-    header{ position:fixed; top:0; left:0; right:0; z-index:60; display:flex; justify-content:space-between; border-bottom: 2px solid #e50914; border-radius: 0 0 12px 12px; align-items:center; padding:12px 18px; background:rgba(0,0,0,0.78); backdrop-filter:blur(6px);}
-    header h1{ margin:0; font-size:20px; color:#e50914; }
-    nav a{ color:#fff; text-decoration:none; margin-left:12px; font-weight:600; font-size:14px; }
-    nav a.admin{ background:#e50914; padding:6px 10px; border-radius:6px; }
+    header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 60;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap;
+      border-bottom: 2px solid #e50914; border-radius: 0 0 12px 12px;
+      padding: 12px 18px; background: rgba(0, 0, 0, 0.78); backdrop-filter: blur(6px);
+    }
+    header h1 { margin: 0; font-size: 20px; color: #e50914; }
+    nav { display: flex; flex-wrap: wrap; }
+    nav a { color: #fff; text-decoration: none; margin-left: 12px; font-weight: 600; font-size: 14px; }
+    nav a.admin { background: #e50914; padding: 6px 10px; border-radius: 6px; }
 
-    .page-top{ height:64px; } /* space for header */
+    .page-top { height: 70px; } /* space for header */
 
     .slideshow {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -27,7 +35,10 @@
       max-width: 900px; margin: 20px auto; padding: 20px;
       border: 1px solid #e50914; background: rgba(20,20,20,0.9);
       border-radius: 10px;
+      position: relative; z-index: 5; /* ✅ keeps form above slideshow */
     }
+    h2 { margin-top: 0; text-align: center; }
+
     form { display: flex; flex-direction: column; }
     form input, form textarea {
       width: 100%; margin-bottom: 12px; padding: 10px;
@@ -50,11 +61,11 @@
 
     @media (max-width: 480px) {
       header { flex-direction: column; align-items: flex-start; padding: 10px; }
-      nav { margin-top: 6px; flex-wrap: wrap; }
-      nav a { display: inline-block; margin: 4px 6px 0 0; font-size: 12px; }
-      .page-top { height: 90px; } 
+      nav { margin-top: 6px; }
+      nav a { margin: 4px 6px 0 0; font-size: 12px; }
+      .page-top { height: 95px; } 
       .content { margin: 10px; padding: 12px; }
-      h2 { font-size: 18px; text-align: center; }
+      h2 { font-size: 18px; }
     }
   </style>
 </head>
@@ -95,6 +106,7 @@
       else{ alert("Wrong password!"); }
     }
 
+    // Slideshow
     const slides = document.querySelectorAll('.slideshow img');
     let cur = 0;
     setInterval(()=>{
@@ -103,13 +115,14 @@
       slides[cur].classList.add('active');
     },4000);
 
+    // WhatsApp redirect
     function sendToWhatsApp(event){
       event.preventDefault();
       const name = document.getElementById('name').value;
       const contact = document.getElementById('contact').value;
       const message = document.getElementById('message').value;
 
-      const phoneNumber = "923330360487"; // <-- ✅ no "+" in wa.me links
+      const phoneNumber = "923330360487"; // ✅ wa.me does not allow "+"
 
       const whatsappURL = `https://wa.me/${phoneNumber}?text=Hello, my name is ${encodeURIComponent(name)}.%0AContact No: ${encodeURIComponent(contact)}.%0AMessage: ${encodeURIComponent(message)}`;
       window.open(whatsappURL, "_blank");
