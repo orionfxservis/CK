@@ -30,8 +30,7 @@ table {
 }
 th,td { 
   padding:10px; 
-  border:1px solid #444; 
-  border: 1px solid #e50914;
+  border:1px solid #e50914;
   font-size:14px; 
   vertical-align:top; 
   white-space:normal;  
@@ -127,12 +126,13 @@ h2,h3 { color:#e60000; }
   <img id="rightPreview" class="banner-preview" src="" alt="Right Banner">
 
   <label>Horizontal Banner</label>
-  <input type="file" accept="image/*" onchange="uploadBanner(event,'bannerHorizontal','horizPreview')">
+  <input type="file" accept="image/*" onchange="uploadBanner(event,'horizontalBanner','horizPreview')">
   <img id="horizPreview" class="banner-preview" src="" alt="Horizontal Banner">
 
   <button onclick="resetBanners()">Reset Banners</button>
 </div>
 
+<!-- Car form -->
 <form id="carForm">
 <input type="hidden" id="editIndex" value="">
 <label>Category</label>
@@ -312,7 +312,7 @@ function closeLightbox(){ document.getElementById("lightboxOverlay").style.displ
 window.addEventListener('DOMContentLoaded',()=>{
   const left = localStorage.getItem('leftBanner');
   const right = localStorage.getItem('rightBanner');
-  const horiz = localStorage.getItem('bannerHorizontal');
+  const horiz = localStorage.getItem('horizontalBanner');
   if(left) document.getElementById('leftPreview').src = left;
   if(right) document.getElementById('rightPreview').src = right;
   if(horiz) document.getElementById('horizPreview').src = horiz;
@@ -334,7 +334,7 @@ function resetBanners(){
   if(confirm("Reset all banners?")){
     localStorage.removeItem('leftBanner');
     localStorage.removeItem('rightBanner');
-    localStorage.removeItem('bannerHorizontal');
+    localStorage.removeItem('horizontalBanner');
     document.getElementById('leftPreview').src = "";
     document.getElementById('rightPreview').src = "";
     document.getElementById('horizPreview').src = "";

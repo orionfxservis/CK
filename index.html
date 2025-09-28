@@ -155,11 +155,16 @@
       }
     ];
 
-    // Load cars
+    // Load cars (real data > fallback)
     function loadCars() {
-      let cars = JSON.parse(localStorage.getItem('cars')) || fallbackCars;
-      populateModelDropdown(cars);
-      renderCars(cars);
+      let cars = JSON.parse(localStorage.getItem('cars'));
+      if (cars && cars.length > 0) {
+        populateModelDropdown(cars);
+        renderCars(cars);
+      } else {
+        populateModelDropdown(fallbackCars);
+        renderCars(fallbackCars);
+      }
     }
 
     function renderCars(cars) {
@@ -185,8 +190,10 @@
 
     // Open modal
     function openModal(index) {
-      const cars = JSON.parse(localStorage.getItem('cars')) || fallbackCars;
-      const car = cars[index];
+      const cars = JSON.parse(localStorage.getItem('cars'));
+      const carList = (cars && cars.length > 0) ? cars : fallbackCars;
+      const car = carList[index];
+
       document.getElementById('modalMainImg').src = car.images[0];
       const thumbs = document.getElementById('modalThumbs');
       thumbs.innerHTML = '';
@@ -235,9 +242,10 @@
     function applyFilters() {
       const searchValue = document.getElementById('searchInput').value.toLowerCase();
       const filterModel = document.getElementById('filterModel').value;
-      let cars = JSON.parse(localStorage.getItem('cars')) || fallbackCars;
+      let cars = JSON.parse(localStorage.getItem('cars'));
+      let carList = (cars && cars.length > 0) ? cars : fallbackCars;
 
-      let filtered = cars.filter(c => 
+      let filtered = carList.filter(c => 
         (!searchValue || c.name.toLowerCase().includes(searchValue)) &&
         (!filterModel || c.model === filterModel)
       );
