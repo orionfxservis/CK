@@ -73,17 +73,27 @@ nav a.admin{ background:var(--red); padding:6px 10px; border-radius:6px; }
 
 .modal{ display:none; position:fixed; inset:0; background:rgba(0,0,0,0.92); z-index:120; align-items:center; justify-content:center; padding:20px; }
 .modal.open{ display:flex; }
-.modal-content{ width:100%; max-width:980px; max-height:92vh; background:#111; border-radius:10px; display:flex; flex-direction:column; }
+.modal-content{ width:100%; max-width:980px; max-height:92vh; background:#111; border-radius:10px; display:flex; flex-direction:column; position:relative; }
 .modal-body{ display:flex; gap:18px; flex:1; padding:18px; overflow:hidden; }
 .modal-images{ flex-basis:45%; display:flex; flex-direction:column; gap:10px; overflow-y:auto; max-height:calc(92vh - 140px); }
 .modal-images img{ width:100%; height:110px; object-fit:cover; border-radius:6px; cursor:pointer; }
 .modal-images img.active{ height:340px; object-fit:contain; order:-1; }
 .modal-details{ flex:1; overflow:auto; color:#ddd; font-size:14px; }
 .close-btn{ position:absolute; right:12px; top:10px; font-size:26px; cursor:pointer; color:#fff; background:transparent; border:0; }
+.want-btn{ background:var(--red); color:#fff; border:0; padding:10px; border-radius:6px; cursor:pointer; font-weight:bold; margin-top:10px; }
+
+.mini-modal{ display:none; position:fixed; inset:0; z-index:140; align-items:center; justify-content:center; background:rgba(0,0,0,0.7); }
+.mini-modal.open{ display:flex; }
+.mini-content{ width:100%; max-width:520px; background:#111; border-radius:10px; padding:16px; }
+.form-row input, .form-row textarea, select{
+  width:100%; padding:10px; margin-bottom:8px; border-radius:6px; border:0; background:#141414; color:#fff; box-sizing:border-box;
+}
+.submit-btn{ background:var(--red); color:#fff; border:0; padding:10px 14px; border-radius:6px; cursor:pointer; font-weight:700; }
 
 @media (max-width:900px){
   .main-layout{ flex-direction:column; align-items:center; }
   .side-box{ width:100%; height:160px; margin-top:12px; }
+  .side-box img{ width:100%; height:100%; object-fit:cover; }
   .search-section{ width:100%; }
   .modal-body{ flex-direction:column; }
   .modal-images img.active{ height:260px; }
@@ -96,23 +106,6 @@ nav a.admin{ background:var(--red); padding:6px 10px; border-radius:6px; }
   .modal-images img{ height:90px; }
   .modal-images img.active{ height:200px; }
 }
-
-@media (max-width:900px){
-  .side-box img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-  }
-}
-
-@media (max-width:600px){
-  .car-card img{
-    height:120px; /* maintain height */
-    object-fit:cover;
-  }
-}
-
-
 </style>
 </head>
 <body>
@@ -169,106 +162,69 @@ nav a.admin{ background:var(--red); padding:6px 10px; border-radius:6px; }
   </div>
 </div>
 
-<!-- Add this inside <body> just after your car modal -->
-<!-- CONTACT MINI MODAL -->
+<!-- MINI CONTACT MODAL -->
 <div id="contactModal" class="mini-modal">
   <div class="mini-content">
-    <h2 style="color:#e60000">Car Inquiry</h2>
+    <h2 style="color:#e60000">Contact Us</h2>
     <div class="form-row">
-      <input type="text" id="contactCarName" placeholder="I'm interested in Car Name" readonly>
-      <input type="text" id="contactName" placeholder="Your Name">
-      <input type="text" id="contactNumber" placeholder="Contact No">
-      <textarea id="contactMessage" placeholder="Your Message" rows="4"></textarea>
-      <button class="submit-btn" onclick="submitContact()">Submit</button>
+      <input type="text" id="contactCarName" placeholder="Interested in Car" readonly>
+      <input type="text" id="customerName" placeholder="Your Name">
+      <input type="text" id="customerPhone" placeholder="Contact No">
+      <textarea id="customerMessage" placeholder="Message"></textarea>
+      <button class="submit-btn" onclick="submitContact()">Send</button>
     </div>
   </div>
 </div>
-<style>
-.mini-modal{ display:none; position:fixed; inset:0; z-index:140; align-items:center; justify-content:center; background:rgba(0,0,0,0.7); }
-.mini-modal.open{ display:flex; }
-.mini-content{ width:100%; max-width:520px; background:#111; border-radius:10px; padding:16px; color:#fff; }
-.form-row input, .form-row textarea{ width:100%; padding:10px; margin-bottom:8px; border-radius:6px; border:0; background:#141414; color:#fff; box-sizing:border-box; }
-.submit-btn{ background:var(--red); color:#fff; border:0; padding:10px 14px; border-radius:6px; cursor:pointer; font-weight:700; width:100%; }
-</style>
-
 
 <script>
-const slides = document.querySelectorAll('.slideshow img');
-let curSlide = 0;
+/* Background slideshow */
+const slides=document.querySelectorAll('.slideshow img');
+let curSlide=0;
 setInterval(()=>{ slides[curSlide].classList.remove('active'); curSlide=(curSlide+1)%slides.length; slides[curSlide].classList.add('active'); },4000);
 
-function renderCars(cars){
-  const container = document.getElementById("carsContainer");
-  container.innerHTML = "";
-  cars.forEach((car,i)=>{
-    const card = document.createElement("div");
-    card.className="car-card";
-    card.innerHTML = `
-      ${car.ribbon ? `<div class="ribbon">${car.ribbon}</div>` : ""}
-      <img src="${car.images && car.images.length>0 ? car.images[0] : 'images/noimage.png'}" alt="${car.name}">
-      <h3>${car.name}</h3>
-      <p>Model: ${car.model}</p>
-      <p>${car.specs}</p>
-      <p>Price: AED ${car.price} ${car.negotiable?'(Negotiable)':''}</p>
-    `;
-    card.onclick = ()=>openCar(i);
-    container.appendChild(card);
-  });
-}
-
-function openCar(index){
-  const cars = JSON.parse(localStorage.getItem("cars")||"[]");
-  const car = cars[index];
-  if(!car) return;
-  const modal = document.getElementById("carModal");
-  const imagesDiv = document.getElementById("modalImages");
-  const detailsDiv = document.getElementById("modalDetails");
-  imagesDiv.innerHTML="";
-  detailsDiv.innerHTML="";
-  const imgs = car.images && car.images.length>0 ? car.images : ["images/noimage.png"];
-  imgs.forEach((src,i)=>{
-    const img=document.createElement("img");
-    img.src=src;
-    if(i===0) img.classList.add("active");
-    img.onclick=()=>{ imagesDiv.querySelectorAll("img").forEach(im=>im.classList.remove("active")); img.classList.add("active"); };
-    imagesDiv.appendChild(img);
-  });
-  detailsDiv.innerHTML = `
-    <h2 style="color:#e60000">${car.name || ''} ${car.model || ''}</h2>
-    <p><strong>Price:</strong> AED ${car.price || ''} ${car.negotiable?'(Negotiable)':''}</p>
-    <p><strong>Color:</strong> ${car.color || ''}</p>
-    <p><strong>Mileage:</strong> ${car.mileage || ''}</p>
-    <p><strong>Milkiya:</strong> ${car.milkiya || ''}</p>
-    <p><strong>Accident History:</strong> ${car.accident || ''}</p>
-    <p><strong>Location:</strong> ${car.location || ''}</p>
-    <p><strong>Specs:</strong> ${car.specs || ''}</p>
-    ${car.features?`<p><strong>Features:</strong> ${car.features}</p>`:""}
-    ${car.ribbon?`<p><strong>Ribbon:</strong> ${car.ribbon}</p>`:""}
-  `;
-  modal.classList.add("open");
-}
-
-function closeCarModal(){ document.getElementById("carModal").classList.remove("open"); }
-
-document.addEventListener("DOMContentLoaded",()=>{
+/* Load banners & cars */
+function loadBannersAndCars(){
   const left=localStorage.getItem("leftBanner");
   const right=localStorage.getItem("rightBanner");
   if(left) document.getElementById("leftBanner").src=left;
   if(right) document.getElementById("rightBanner").src=right;
-  const cars = JSON.parse(localStorage.getItem("cars")||"[]");
-  renderCars(cars);
-});
 
+  const cars=JSON.parse(localStorage.getItem("cars")||"[]");
+  renderCars(cars);
+}
+
+/* Render car cards */
+function renderCars(cars){
+  const container=document.getElementById("carsContainer");
+  container.innerHTML="";
+  cars.forEach((car,i)=>{
+    const card=document.createElement("div");
+    card.className="car-card";
+    card.innerHTML=`
+      ${car.ribbon?`<div class="ribbon">${car.ribbon}</div>`:""}
+      <img src="${car.images&&car.images.length>0?car.images[0]:'images/noimage.png'}" alt="${car.name}">
+      <h3>${car.name}</h3>
+      <p>Model: ${car.model}</p>
+      <p>${car.specs}</p>
+      <p>Price: AED ${car.price} ${car.negotiable?'(Negotiable)':''}</p>
+      <button class="want-btn" onclick="openContact(${i},event)">Want This</button>
+    `;
+    card.onclick=(e)=>{ if(!e.target.classList.contains('want-btn')) openCar(i); };
+    container.appendChild(card);
+  });
+}
+
+/* Car modal */
 function openCar(index){
-  const cars = JSON.parse(localStorage.getItem("cars")||"[]");
-  const car = cars[index];
+  const cars=JSON.parse(localStorage.getItem("cars")||"[]");
+  const car=cars[index];
   if(!car) return;
-  const modal = document.getElementById("carModal");
-  const imagesDiv = document.getElementById("modalImages");
-  const detailsDiv = document.getElementById("modalDetails");
+  const modal=document.getElementById("carModal");
+  const imagesDiv=document.getElementById("modalImages");
+  const detailsDiv=document.getElementById("modalDetails");
   imagesDiv.innerHTML="";
   detailsDiv.innerHTML="";
-  const imgs = car.images && car.images.length>0 ? car.images : ["images/noimage.png"];
+  const imgs=car.images&&car.images.length>0?car.images:["images/noimage.png"];
   imgs.forEach((src,i)=>{
     const img=document.createElement("img");
     img.src=src;
@@ -276,76 +232,45 @@ function openCar(index){
     img.onclick=()=>{ imagesDiv.querySelectorAll("img").forEach(im=>im.classList.remove("active")); img.classList.add("active"); };
     imagesDiv.appendChild(img);
   });
-  detailsDiv.innerHTML = `
-    <h2 style="color:#e60000">${car.name || ''} ${car.model || ''}</h2>
-    <p><strong>Price:</strong> AED ${car.price || ''} ${car.negotiable?'(Negotiable)':''}</p>
-    <p><strong>Color:</strong> ${car.color || ''}</p>
-    <p><strong>Mileage:</strong> ${car.mileage || ''}</p>
-    <p><strong>Milkiya:</strong> ${car.milkiya || ''}</p>
-    <p><strong>Accident History:</strong> ${car.accident || ''}</p>
-    <p><strong>Location:</strong> ${car.location || ''}</p>
-    <p><strong>Specs:</strong> ${car.specs || ''}</p>
+  detailsDiv.innerHTML=`
+    <h2 style="color:#e60000">${car.name||''} ${car.model||''}</h2>
+    <p><strong>Price:</strong> AED ${car.price||''} ${car.negotiable?'(Negotiable)':''}</p>
+    <p><strong>Color:</strong> ${car.color||''}</p>
+    <p><strong>Mileage:</strong> ${car.mileage||''}</p>
+    <p><strong>Milkiya:</strong> ${car.milkiya||''}</p>
+    <p><strong>Accident History:</strong> ${car.accident||''}</p>
+    <p><strong>Location:</strong> ${car.location||''}</p>
+    <p><strong>Specs:</strong> ${car.specs||''}</p>
     ${car.features?`<p><strong>Features:</strong> ${car.features}</p>`:""}
     ${car.ribbon?`<p><strong>Ribbon:</strong> ${car.ribbon}</p>`:""}
-    <button class="submit-btn" style="margin-top:10px;" onclick="openContact('${car.name}')">Want This</button>
   `;
   modal.classList.add("open");
 }
+function closeCarModal(){ document.getElementById("carModal").classList.remove("open"); }
 
-// Open contact modal with car name auto-filled
-function openContact(carName){
-  document.getElementById("contactCarName").value = carName;
+/* Contact modal */
+function openContact(index,event){
+  event.stopPropagation();
+  const cars=JSON.parse(localStorage.getItem("cars")||"[]");
+  const car=cars[index];
+  document.getElementById("contactCarName").value=car.name+" "+car.model;
+  document.getElementById("customerName").value="";
+  document.getElementById("customerPhone").value="";
+  document.getElementById("customerMessage").value="";
   document.getElementById("contactModal").classList.add("open");
-  closeCarModal(); // optionally close car modal
 }
-
-// Close contact modal
-function closeContact(){ document.getElementById("contactModal").classList.remove("open"); }
-
-// Simulated submit function
 function submitContact(){
-  const carName = document.getElementById("contactCarName").value;
-  const name = document.getElementById("contactName").value;
-  const number = document.getElementById("contactNumber").value;
-  const message = document.getElementById("contactMessage").value;
-
-  if(!name || !number){
-    alert("Please fill your Name and Contact No.");
-    return;
-  }
-
-  // You can replace this with Formspree or server logic
-  console.log("Contact submitted:", {carName,name,number,message});
-  alert("Your inquiry has been submitted!");
-  closeContact();
+  const car=document.getElementById("contactCarName").value;
+  const name=document.getElementById("customerName").value;
+  const phone=document.getElementById("customerPhone").value;
+  const msg=document.getElementById("customerMessage").value;
+  if(!name||!phone){ alert("Please enter name and contact no."); return; }
+  alert(`Request sent!\nCar: ${car}\nName: ${name}\nPhone: ${phone}\nMessage: ${msg}`);
+  document.getElementById("contactModal").classList.remove("open");
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  // SLIDESHOW
-  const slides = document.querySelectorAll('.slideshow img');
-  let curSlide = 0;
-  setInterval(()=>{ 
-    slides[curSlide].classList.remove('active'); 
-    curSlide = (curSlide+1)%slides.length; 
-    slides[curSlide].classList.add('active'); 
-  },4000);
-
-  // BANNERS
-  const left = localStorage.getItem("leftBanner");
-  const right = localStorage.getItem("rightBanner");
-  if(left) document.getElementById("leftBanner").src = left;
-  if(right) document.getElementById("rightBanner").src = right;
-
-  // CARS
-  const cars = JSON.parse(localStorage.getItem("cars")||"[]");
-  renderCars(cars);
-});
-
-console.log("Left banner:", left, "Right banner:", right);
-console.log("Cars array:", cars);
-
-
-// Optional: implement applySearch() if needed later
+/* Init */
+document.addEventListener("DOMContentLoaded",()=>{ loadBannersAndCars(); });
 </script>
 </body>
 </html>
