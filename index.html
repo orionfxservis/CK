@@ -39,9 +39,9 @@
     .modal-images { flex:1; text-align:center; }
     .modal-images img { max-width:100%; border-radius:6px; display:none; }
     .modal-images img.active { display:block; }
-    .modal-thumbs { display:flex; gap:6px; margin-top:10px; justify-content:center; }
+    .modal-thumbs { display:flex; gap:6px; margin-top:10px; justify-content:center; flex-wrap:wrap; }
     .modal-thumbs img { width:60px; height:40px; object-fit:cover; cursor:pointer; border-radius:4px; }
-    .modal-details { flex:1; }
+    .modal-details { flex:1; min-width:200px; }
     .modal-details h2 { margin:0 0 10px; }
     .modal-details p { margin:5px 0; }
 
@@ -158,6 +158,11 @@
     // Load cars
     function loadCars() {
       let cars = JSON.parse(localStorage.getItem('cars')) || fallbackCars;
+      populateModelDropdown(cars);
+      renderCars(cars);
+    }
+
+    function renderCars(cars) {
       const grid = document.getElementById('carsGrid');
       grid.innerHTML = '';
 
@@ -185,7 +190,7 @@
       document.getElementById('modalMainImg').src = car.images[0];
       const thumbs = document.getElementById('modalThumbs');
       thumbs.innerHTML = '';
-      car.images.forEach((img, i) => {
+      car.images.forEach((img) => {
         const t = document.createElement('img');
         t.src = img;
         t.onclick = () => {
@@ -213,6 +218,19 @@
       document.getElementById('carModal').style.display = 'none';
     }
 
+    // Populate models in dropdown
+    function populateModelDropdown(cars) {
+      const models = [...new Set(cars.map(c => c.model))];
+      const dropdown = document.getElementById('filterModel');
+      dropdown.innerHTML = '<option value="">All Models</option>';
+      models.forEach(m => {
+        const opt = document.createElement('option');
+        opt.value = m;
+        opt.textContent = m;
+        dropdown.appendChild(opt);
+      });
+    }
+
     // Filters
     function applyFilters() {
       const searchValue = document.getElementById('searchInput').value.toLowerCase();
@@ -224,23 +242,7 @@
         (!filterModel || c.model === filterModel)
       );
 
-      const grid = document.getElementById('carsGrid');
-      grid.innerHTML = '';
-      filtered.forEach((car, index) => {
-        const card = document.createElement('div');
-        card.className = 'car-card';
-        card.innerHTML = `
-          ${car.ribbon ? `<div class="car-ribbon">${car.ribbon}</div>` : ''}
-          <img src="${car.images[0]}" alt="${car.name}">
-          <div class="car-info">
-            <h3>${car.name}</h3>
-            <p>${car.model} - ${car.color}</p>
-            <p>AED ${car.price}</p>
-            <button onclick="openModal(${index})">Details</button>
-          </div>
-        `;
-        grid.appendChild(card);
-      });
+      renderCars(filtered);
     }
   </script>
 </body>
