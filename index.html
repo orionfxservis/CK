@@ -96,6 +96,23 @@ nav a.admin{ background:var(--red); padding:6px 10px; border-radius:6px; }
   .modal-images img{ height:90px; }
   .modal-images img.active{ height:200px; }
 }
+
+@media (max-width:900px){
+  .side-box img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+}
+
+@media (max-width:600px){
+  .car-card img{
+    height:120px; /* maintain height */
+    object-fit:cover;
+  }
+}
+
+
 </style>
 </head>
 <body>
@@ -302,6 +319,30 @@ function submitContact(){
   alert("Your inquiry has been submitted!");
   closeContact();
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  // SLIDESHOW
+  const slides = document.querySelectorAll('.slideshow img');
+  let curSlide = 0;
+  setInterval(()=>{ 
+    slides[curSlide].classList.remove('active'); 
+    curSlide = (curSlide+1)%slides.length; 
+    slides[curSlide].classList.add('active'); 
+  },4000);
+
+  // BANNERS
+  const left = localStorage.getItem("leftBanner");
+  const right = localStorage.getItem("rightBanner");
+  if(left) document.getElementById("leftBanner").src = left;
+  if(right) document.getElementById("rightBanner").src = right;
+
+  // CARS
+  const cars = JSON.parse(localStorage.getItem("cars")||"[]");
+  renderCars(cars);
+});
+
+console.log("Left banner:", left, "Right banner:", right);
+console.log("Cars array:", cars);
 
 
 // Optional: implement applySearch() if needed later
