@@ -1,6 +1,6 @@
 async function loadCars(){
   try {
-    const resp = await fetch('https://orionfxservis.github.io/CK/YourRepo/main/cars.json');
+    const resp = await fetch('https://orionfxservis.github.io/CK/main/cars.json');
     const cars = await resp.json();
     localStorage.setItem("cars", JSON.stringify(cars));
     renderCars(cars);
