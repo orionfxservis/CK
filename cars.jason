@@ -1,28 +1,11 @@
-[
-  {
-    "name": "Toyota Corolla",
-    "model": "2021",
-    "color": "White",
-    "specs": "Full Option",
-    "mileage": "25,000 km",
-    "location": "Dubai",
-    "price": "58000",
-    "features": "Excellent condition, single owner, no accidents.",
-    "category": "urgent",
-    "ribbon": "Hot Deal",
-    "images": ["images/cars/corolla1.jpg", "images/cars/corolla2.jpg"]
-  },
-  {
-    "name": "Nissan Altima",
-    "model": "2020",
-    "color": "Black",
-    "specs": "Mid Option",
-    "mileage": "40,000 km",
-    "location": "Sharjah",
-    "price": "45000",
-    "features": "Well maintained, full service history.",
-    "category": "urgent",
-    "ribbon": "Urgent",
-    "images": ["images/cars/altima1.jpg"]
+async function loadCars(){
+  try {
+    const resp = await fetch('https://orionfxservis.github.io/CK/YourRepo/main/cars.json');
+    const cars = await resp.json();
+    localStorage.setItem("cars", JSON.stringify(cars));
+    renderCars(cars);
+  } catch(e) {
+    console.error("Failed to load cars from GitHub", e);
+    renderCars([]);
   }
-]
+}
