@@ -1,348 +1,444 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Admin Panel - Click Worx</title>
-<style>
-body { margin:0; font-family:Arial,sans-serif; background:#000; color:#fff; }
-header{ position:fixed; top:0; left:0; right:0; z-index:60; display:flex; justify-content:space-between; border-bottom: 2px solid #e50914; border-radius: 0 0 12px 12px; align-items:center; padding:12px 18px; background:rgba(0,0,0,0.78); backdrop-filter:blur(6px);}
-header h1{ margin:0; font-size:20px; color:#e50914; }
-nav a{ color:#fff; text-decoration:none; margin-left:12px; font-weight:600; font-size:14px; }
-nav a.admin{ background:var(--red); padding:6px 10px; border-radius:6px; }
-.page-top{ height:64px; } 
-.slideshow { position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1; }
-.slideshow img { position:absolute; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity 1s; filter:blur(6px) brightness(0.4); }
-.slideshow img.active { opacity:1; }
-.content { position:relative; z-index:5; padding:40px; overflow:visible !important; }
-form { max-width:400px; background:rgba(30,30,30,0.9); padding:20px; border: 1px solid #e50914; border-radius:10px; margin-bottom:40px; }
-form input,form textarea,form select { width:100%; margin-bottom:10px; padding:8px; border:none; border-radius:5px; }
-form label { font-size:14px; display:block; margin-bottom:3px; }
-.negotiable-row { display:flex; align-items:center; justify-content:space-between; margin:10px 0; }
-form button { background:#e60000; color:#fff; padding:10px; border:none; border-radius:5px; cursor:pointer; }
-form button:hover { background:#c00000; }
+  <meta charset="UTF-8">
+  <title>Admin Panel - ClickWorx</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --red: #e50914;
+      --red-dark: #b00610;
+      --bg-dark: #0d0d0d;
+      --bg-card: #1a1a1a;
+      --text-light: #fff;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-light);
+      padding: 15px;
+    }
+    h1 { width: 100%; font-size: 1.8rem; color: var(--red); margin-bottom: 15px; }
+    .flex-row { display: flex; gap: 15px; flex-wrap: wrap; }
+    .section {
+      background: var(--bg-card);
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid var(--red);
+      flex: 1;
+      min-width: 320px;
+    }
+    h2 { margin: 0 0 10px; color: var(--red); font-size: 18px; }
+    label { display: block; margin-top: 8px; font-size: 14px; }
+    input, select, textarea {
+      width: 100%; margin-top: 5px; padding: 6px;
+      border-radius: 6px; border: none; outline: none;
+    }
+    textarea { min-height: 70px; resize: vertical; }
+    .inline { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+    button {
+      margin-top: 10px; padding: 6px 12px;
+      background: var(--red); border: none; border-radius: 6px;
+      color: #fff; cursor: pointer; font-size: 14px;
+    }
+    button:hover { background: var(--red-dark); }
+    .preview { margin-top: 8px; max-width: 100%; border-radius: 6px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; }
+    th, td { padding: 6px; border: 1px solid #333; text-align: left; }
+    th { background: #222; }
+    td img { max-width: 80px; border-radius: 4px; }
+    tr.dragging { opacity: 0.5; background: #333; }
 
-table { 
-  width:100%; 
-  border-collapse:collapse; 
-  background:rgba(30,30,30,0.9); 
-  margin-bottom:10px; 
-  table-layout:auto;
-}
-th,td { 
-  padding:10px; 
-  border:1px solid #e50914;
-  font-size:14px; 
-  vertical-align:top; 
-  white-space:normal;  
-}
-img.thumb { width:60px; height:40px; object-fit:cover; border-radius:4px; cursor:pointer; margin-right:3px; }
-h2,h3 { color:#e60000; }
-#lightboxOverlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:9999; justify-content:center; align-items:center; }
-#lightboxOverlay img { max-width:90%; max-height:90%; border-radius:8px; box-shadow:0 0 20px #000; }
-#lightboxOverlay span { position:absolute; top:20px; right:30px; font-size:32px; color:#fff; cursor:pointer; }
-
-/* ✅ Banner Box Styles */
-.banner-box {
-  position: absolute;
-  top: 100px;
-  right: 40px;
-  width: 260px;
-  background: rgba(20,20,20,0.9);
-  border: 1px solid #e50914;
-  border-radius: 10px;
-  padding: 15px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-}
-.banner-box h3 {
-  margin: 0 0 12px;
-  font-size: 16px;
-  color: #e50914;
-  text-align:center;
-}
-.banner-box label {
-  display:block;
-  font-size:13px;
-  margin:8px 0 4px;
-}
-.banner-box input[type="file"] {
-  display:block;
-  margin-bottom:8px;
-  font-size:12px;
-  color:#ccc;
-}
-.banner-preview {
-  width:100%;
-  height:80px;
-  border-radius:6px;
-  object-fit:cover;
-  margin-bottom:10px;
-  border:1px solid #333;
-}
-.banner-box button {
-  width:100%;
-  background:#e50914;
-  color:#fff;
-  border:0;
-  padding:8px;
-  border-radius:6px;
-  cursor:pointer;
-  font-weight:600;
-}
-.banner-box button:hover {
-  background:#c00000;
-}
-</style>
+    /* Popup Modal */
+    .modal {
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center;
+    }
+    .modal-content {
+      background: var(--bg-card); padding: 20px; border-radius: 10px;
+      max-width: 700px; width: 90%; position: relative; color: var(--text-light);
+    }
+    .close { position: absolute; top: 10px; right: 15px; font-size: 20px; cursor: pointer; }
+    .gallery { display: flex; align-items: center; justify-content: center; }
+    .gallery img {
+      max-width: 500px; max-height: 300px; border-radius: 6px;
+    }
+    .arrow {
+      cursor: pointer; font-size: 28px; padding: 10px; color: var(--red);
+      user-select: none;
+    }
+    .car-details { margin-top: 15px; font-size: 14px; }
+    @media (max-width: 768px) {
+      .flex-row { flex-direction: column; }
+      .gallery img { max-width: 100%; }
+    }
+  </style>
 </head>
 <body>
-<header>
-<h1>Click Worx</h1>
-<nav>
-<a href="index.html">Home</a>
-<a href="about.html">About</a>
-<a href="contact.html">Contact</a>
-<a href="admin.html" class="admin-btn">Admin</a>
-</nav>
-</header>
 
-<div class="slideshow" id="slideshow">
-<img src="images/BG/01.jpg" class="active">
-<img src="images/BG/02.jpg">
-<img src="images/BG/03.jpg">
-<img src="images/BG/04.jpg">
-</div>
+  <h1>Admin Panel</h1>
 
-<div class="content">
-<h2>Admin Panel</h2>
+  <!-- Car + Banner Side by Side -->
+  <div class="flex-row">
+    <!-- Car Management -->
+    <div class="section">
+      <h2>Add / Manage Cars</h2>
+      <label>Category</label>
+      <select id="carCategory">
+        <option value="urgent">Urgent Sale</option>
+        <option value="normal">Normal</option>
+      </select>
 
-<!-- ✅ Banner Box (top-right) -->
-<div class="banner-box">
-  <h3>Manage Banners</h3>
-  <label>Left Banner</label>
-  <input type="file" accept="image/*" onchange="uploadBanner(event,'leftBanner','leftPreview')">
-  <img id="leftPreview" class="banner-preview" src="" alt="Left Banner">
+      <label>Car Name</label><input type="text" id="carName">
+      <label>Model</label><input type="text" id="carModel">
+      <label>Specs</label><input type="text" id="carSpecs">
+      <label>Color</label><input type="text" id="carColor">
+      <label>Mileage</label><input type="text" id="carMileage">
+      <label>Milkiya</label><input type="text" id="carMilkiya">
+      <label>Accident History</label><input type="text" id="carAccident">
 
-  <label>Right Banner</label>
-  <input type="file" accept="image/*" onchange="uploadBanner(event,'rightBanner','rightPreview')">
-  <img id="rightPreview" class="banner-preview" src="" alt="Right Banner">
+      <label>Price</label>
+      <div class="inline">
+        <input type="text" id="carPrice" placeholder="e.g. $25,000">
+        <label><input type="checkbox" id="carNegotiable"> Negotiable</label>
+      </div>
 
-  <label>Horizontal Banner</label>
-  <input type="file" accept="image/*" onchange="uploadBanner(event,'horizontalBanner','horizPreview')">
-  <img id="horizPreview" class="banner-preview" src="" alt="Horizontal Banner">
+      <label>Ribbon (Editable)</label>
+      <input type="text" id="carRibbon" placeholder="e.g. Hot Deal, Limited">
 
-  <button onclick="resetBanners()">Reset Banners</button>
-</div>
+      <label>Details</label>
+      <textarea id="carDetails" placeholder="Enter full car details..."></textarea>
 
-<!-- Car form -->
-<form id="carForm">
-<input type="hidden" id="editIndex" value="">
-<label>Category</label>
-<select id="carCategory" required>
-<option value="urgent">Post on Urgent Sale</option>
-<option value="more">Post on More Cars</option>
-</select>
-<label>Car Name</label>
-<input type="text" id="carName" required>
-<label>Model</label>
-<input type="text" id="carModel">
-<label>Specs</label>
-<input type="text" id="carSpecs">
-<label>Color</label>
-<input type="text" id="carColor">
-<label>Mileage</label>
-<input type="text" id="carMileage">
-<label>Milkiya</label>
-<input type="text" id="carMilkiya">
-<label>Accident History</label>
-<input type="text" id="carAccident">
-<label>Location</label>
-<input type="text" id="carLocation">
-<label>Price (AED)</label>
-<input type="number" id="carPrice" required>
-<div class="negotiable-row">
-<label for="carNegotiable">Negotiable</label>
-<input type="checkbox" id="carNegotiable">
-</div>
-<label>Complete Details</label>
-<textarea id="carFeatures"></textarea>
-<label>Ribbon</label>
-<select id="carRibbon">
-<option value="">None</option>
-<option value="Urgent Sale">Urgent Sale</option>
-<option value="Special Discount">Special Discount</option>
-<option value="Low Budget">Low Budget</option>
-</select>
-<label>Enter Image Filenames (comma separated, from /images/ folder)</label>
-<input type="text" id="carImages" placeholder="e.g. car1.jpg, car2.jpg">
-<button type="submit">Save Car</button>
-</form>
+      <label>Upload Car Images (Multiple)</label>
+      <input type="file" id="carImages" accept="image/*" multiple>
+      <div id="carImagePreview"></div>
 
-<h3>Urgent Sale Cars</h3>
-<table id="urgentTable">
-<thead><tr><th>Thumbnails</th><th>Name</th><th>Price</th><th>Negotiable</th><th>Ribbon</th><th>Actions</th></tr></thead>
-<tbody></tbody>
-</table>
+      <button onclick="addCar()">Add Car</button>
+    </div>
 
-<h3>More Cars</h3>
-<table id="moreTable">
-<thead><tr><th>Thumbnails</th><th>Name</th><th>Price</th><th>Negotiable</th><th>Ribbon</th><th>Actions</th></tr></thead>
-<tbody></tbody>
-</table>
-</div>
+    <!-- Banner Management -->
+    <div class="section">
+      <h2>Manage Banners</h2>
+      <label>Left Banner</label>
+      <input type="file" id="leftBanner" accept="image/*">
+      <img id="leftPreview" class="preview" style="display:none;" />
 
-<div id="lightboxOverlay">
-<span onclick="closeLightbox()">&times;</span>
-<img id="lightboxImg" src="">
-</div>
+      <label>Right Banner</label>
+      <input type="file" id="rightBanner" accept="image/*">
+      <img id="rightPreview" class="preview" style="display:none;" />
 
-<script>
-// slideshow
-const slides=document.querySelectorAll('.slideshow img');
-let curSlide=0;
-setInterval(()=>{ slides[curSlide].classList.remove('active'); curSlide=(curSlide+1)%slides.length; slides[curSlide].classList.add('active'); },4000);
+      <label>Horizontal Banner</label>
+      <input type="file" id="horizontalBanner" accept="image/*">
+      <img id="horizontalPreview" class="preview" style="display:none;" />
 
-// cars
-let cars = JSON.parse(localStorage.getItem("cars") || "[]");
-const carForm = document.getElementById("carForm");
+      <button onclick="saveBanners()">Save Banners</button>
 
-carForm.addEventListener("submit", e=>{
-  e.preventDefault();
-  let editIndex = document.getElementById("editIndex").value;
-  editIndex = editIndex === "" ? null : parseInt(editIndex);
+      <table id="bannerTable">
+        <thead>
+          <tr><th>Type</th><th>Preview</th><th>Actions</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
 
-  let imgInput = document.getElementById("carImages").value.trim();
-  let imgFiles = imgInput ? imgInput.split(",").map(f=>"images/"+f.trim()) : [];
+  <!-- Car Table (full width below) -->
+  <div class="section">
+    <h2>Cars List</h2>
+    <table id="carTable">
+      <thead>
+        <tr>
+          <th>Image</th><th>Name</th><th>Model</th><th>Specs</th><th>Price</th><th>Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
 
-  let car = {
-    category: document.getElementById("carCategory").value,
-    name: document.getElementById("carName").value,
-    model: document.getElementById("carModel").value,
-    specs: document.getElementById("carSpecs").value,
-    color: document.getElementById("carColor").value,
-    mileage: document.getElementById("carMileage").value,
-    milkiya: document.getElementById("carMilkiya").value,
-    accident: document.getElementById("carAccident").value,
-    location: document.getElementById("carLocation").value,
-    price: document.getElementById("carPrice").value,
-    negotiable: document.getElementById("carNegotiable").checked,
-    features: document.getElementById("carFeatures").value,
-    ribbon: document.getElementById("carRibbon").value,
-    images: imgFiles
-  };
+  <!-- Popup Modal -->
+  <div id="carModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <div class="gallery">
+        <span class="arrow" onclick="prevImage()">&#10094;</span>
+        <img id="modalImage" src="" alt="">
+        <span class="arrow" onclick="nextImage()">&#10095;</span>
+      </div>
+      <div class="car-details" id="modalDetails"></div>
+    </div>
+  </div>
 
-  if(editIndex === null){
-    cars.push(car);
-    alert("Car added!");
-  } else {
-    cars[editIndex] = car;
-    alert("Car updated!");
+  <script>
+   
+  /* ---------------- Cars Management ---------------- */
+  const carImagesInput = document.getElementById("carImages");
+  const carImagePreview = document.getElementById("carImagePreview");
+
+  let editIndex = null; // track editing
+
+  carImagesInput.addEventListener("change", () => {
+    carImagePreview.innerHTML = "";
+    [...carImagesInput.files].forEach(file => {
+      const reader = new FileReader();
+      reader.onload = e => {
+        const img = document.createElement("img");
+        img.src = e.target.result;
+        img.style.maxWidth = "80px";
+        img.style.margin = "5px";
+        img.style.borderRadius = "4px";
+        carImagePreview.appendChild(img);
+      };
+      reader.readAsDataURL(file);
+    });
+  });
+
+  function loadCars() {
+    const cars = JSON.parse(localStorage.getItem("cars")) || [];
+    const tbody = document.querySelector("#carTable tbody");
+    tbody.innerHTML = "";
+    cars.forEach((car, i) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>
+          ${car.images && car.images.length > 0 
+            ? `<img src="${car.images[0]}" alt="">` 
+            : ""}
+        </td>
+        <td>${car.name}</td>
+        <td>${car.model}</td>
+        <td>${car.specs}</td>
+        <td>${car.price} ${car.negotiable ? "(Negotiable)" : ""}</td>
+        <td>
+          <button onclick="editCar(${i})">Edit</button>
+          <button onclick="deleteCar(${i})">Delete</button>
+        </td>`;
+      tbody.appendChild(row);
+    });
   }
 
-  localStorage.setItem("cars", JSON.stringify(cars));
+  function addCar() {
+    const cars = JSON.parse(localStorage.getItem("cars")) || [];
 
-  carForm.reset();
-  document.getElementById("editIndex").value = "";
-  renderTables();
-});
+    // Convert multiple uploaded images to base64
+    function filesToBase64(files) {
+      return Promise.all([...files].map(file => {
+        return new Promise(resolve => {
+          const reader = new FileReader();
+          reader.onload = e => resolve(e.target.result);
+          reader.readAsDataURL(file);
+        });
+      }));
+    }
 
-function renderTables(){
-  const urgentTable = document.querySelector("#urgentTable tbody");
-  const moreTable = document.querySelector("#moreTable tbody");
-  urgentTable.innerHTML = "";
-  moreTable.innerHTML = "";
+    filesToBase64(carImagesInput.files).then(images => {
+      const newCar = {
+        category: carCategory.value,
+        name: carName.value,
+        model: carModel.value,
+        specs: carSpecs.value,
+        color: carColor.value,
+        mileage: carMileage.value,
+        milkiya: carMilkiya.value,
+        accident: carAccident.value,
+        price: carPrice.value,
+        negotiable: carNegotiable.checked,
+        ribbon: carRibbon.value,
+        details: carDetails.value,
+        images: images.length > 0 ? images : (editIndex !== null ? cars[editIndex].images : [])
+      };
 
-  const urgentCars = cars.filter(c=>c.category==="urgent");
-  const moreCars = cars.filter(c=>c.category==="more");
+      if (editIndex !== null) {
+        cars[editIndex] = newCar;
+        editIndex = null;
+      } else {
+        cars.push(newCar);
+      }
 
-  urgentCars.forEach((car) => addRow(car, urgentTable));
-  moreCars.forEach((car) => addRow(car, moreTable));
-}
-
-function addRow(car, table){
-  const row = document.createElement("tr");
-  let thumbnails = "";
-  if (car.images && car.images.length > 0) {
-    thumbnails = car.images.map((img) => 
-      `<img src="${img}" class="thumb" onclick="openLightbox('${img}')">`
-    ).join(" ");
+      localStorage.setItem("cars", JSON.stringify(cars));
+      loadCars();
+      resetForm();
+    });
   }
-  row.innerHTML = `
-    <td>${thumbnails}</td>
-    <td>${car.name}</td>
-    <td>AED ${car.price}</td>
-    <td>${car.negotiable ? 'Yes' : 'No'}</td>
-    <td>${car.ribbon || ''}</td>
-    <td>
-      <button onclick="editCar(${cars.indexOf(car)})">Edit</button>
-      <button onclick="deleteCar(${cars.indexOf(car)})">Delete</button>
-    </td>`;
-  table.appendChild(row);
-}
 
-function editCar(i){
-  const car = cars[i];
-  document.getElementById("editIndex").value = i;
-  document.getElementById("carCategory").value = car.category;
-  document.getElementById("carName").value = car.name;
-  document.getElementById("carModel").value = car.model;
-  document.getElementById("carSpecs").value = car.specs;
-  document.getElementById("carColor").value = car.color;
-  document.getElementById("carMileage").value = car.mileage;
-  document.getElementById("carMilkiya").value = car.milkiya;
-  document.getElementById("carAccident").value = car.accident;
-  document.getElementById("carLocation").value = car.location;
-  document.getElementById("carPrice").value = car.price;
-  document.getElementById("carNegotiable").checked = car.negotiable;
-  document.getElementById("carFeatures").value = car.features;
-  document.getElementById("carRibbon").value = car.ribbon;
-  document.getElementById("carImages").value = (car.images||[]).map(p=>p.replace("images/","")).join(", ");
-}
-
-function deleteCar(i){ 
-  if(confirm("Delete this car?")){ 
-    cars.splice(i,1); 
-    localStorage.setItem("cars",JSON.stringify(cars)); 
-    renderTables(); 
-  } 
-}
-
-function openLightbox(src){ document.getElementById("lightboxImg").src=src; document.getElementById("lightboxOverlay").style.display="flex"; }
-function closeLightbox(){ document.getElementById("lightboxOverlay").style.display="none"; }
-
-/* ✅ Banner Functions */
-window.addEventListener('DOMContentLoaded',()=>{
-  const left = localStorage.getItem('leftBanner');
-  const right = localStorage.getItem('rightBanner');
-  const horiz = localStorage.getItem('horizontalBanner');
-  if(left) document.getElementById('leftPreview').src = left;
-  if(right) document.getElementById('rightPreview').src = right;
-  if(horiz) document.getElementById('horizPreview').src = horiz;
-});
-
-function uploadBanner(e,key,previewId){
-  const file = e.target.files[0];
-  if(!file) return;
-  const reader = new FileReader();
-  reader.onload = function(ev){
-    localStorage.setItem(key, ev.target.result);
-    document.getElementById(previewId).src = ev.target.result;
-    alert(key+" updated!");
-  };
-  reader.readAsDataURL(file);
-}
-
-function resetBanners(){
-  if(confirm("Reset all banners?")){
-    localStorage.removeItem('leftBanner');
-    localStorage.removeItem('rightBanner');
-    localStorage.removeItem('horizontalBanner');
-    document.getElementById('leftPreview').src = "";
-    document.getElementById('rightPreview').src = "";
-    document.getElementById('horizPreview').src = "";
-    alert("Banners reset.");
+  function resetForm() {
+    carName.value = "";
+    carModel.value = "";
+    carSpecs.value = "";
+    carColor.value = "";
+    carMileage.value = "";
+    carMilkiya.value = "";
+    carAccident.value = "";
+    carPrice.value = "";
+    carNegotiable.checked = false;
+    carRibbon.value = "";
+    carDetails.value = "";
+    carImagesInput.value = "";
+    carImagePreview.innerHTML = "";
   }
-}
 
-renderTables();
-</script>
+  function deleteCar(i) {
+    const cars = JSON.parse(localStorage.getItem("cars")) || [];
+    cars.splice(i, 1);
+    localStorage.setItem("cars", JSON.stringify(cars));
+    loadCars();
+  }
+
+  function editCar(i) {
+    const cars = JSON.parse(localStorage.getItem("cars")) || [];
+    const c = cars[i];
+    carCategory.value = c.category;
+    carName.value = c.name;
+    carModel.value = c.model;
+    carSpecs.value = c.specs;
+    carColor.value = c.color;
+    carMileage.value = c.mileage;
+    carMilkiya.value = c.milkiya;
+    carAccident.value = c.accident;
+    carPrice.value = c.price;
+    carNegotiable.checked = c.negotiable;
+    carRibbon.value = c.ribbon;
+    carDetails.value = c.details;
+    editIndex = i; // set edit mode
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    loadCars();
+    renderBanners();
+  });
+
+
+    /* ---------------- Car Modal Gallery ---------------- */
+    let currentCar = null;
+    let currentImageIndex = 0;
+
+    function viewCar(i) {
+      const cars = JSON.parse(localStorage.getItem("cars")) || [];
+      currentCar = cars[i];
+      currentImageIndex = 0;
+      document.getElementById("modalImage").src = currentCar.images[0] || "";
+      document.getElementById("modalDetails").innerHTML = `
+        <strong>${currentCar.name}</strong> (${currentCar.model})<br>
+        Specs: ${currentCar.specs}<br>
+        Color: ${currentCar.color}<br>
+        Mileage: ${currentCar.mileage}<br>
+        Milkiya: ${currentCar.milkiya}<br>
+        Accident: ${currentCar.accident}<br>
+        Price: ${currentCar.price} ${currentCar.negotiable ? "(Negotiable)" : ""}<br>
+        Ribbon: ${currentCar.ribbon}<br>
+        <p>${currentCar.details}</p>
+      `;
+      document.getElementById("carModal").style.display = "flex";
+    }
+
+    function closeModal() {
+      document.getElementById("carModal").style.display = "none";
+    }
+
+    function prevImage() {
+      if (!currentCar) return;
+      currentImageIndex = (currentImageIndex - 1 + currentCar.images.length) % currentCar.images.length;
+      document.getElementById("modalImage").src = currentCar.images[currentImageIndex];
+    }
+
+    function nextImage() {
+      if (!currentCar) return;
+      currentImageIndex = (currentImageIndex + 1) % currentCar.images.length;
+      document.getElementById("modalImage").src = currentCar.images[currentImageIndex];
+    }
+
+    /* ---------------- Banner Management ---------------- */
+    let banners = JSON.parse(localStorage.getItem("banners")) || {};
+
+    function previewBanner(inputId, previewId, key) {
+      const input = document.getElementById(inputId);
+      const preview = document.getElementById(previewId);
+
+      input.addEventListener("change", () => {
+        const file = input.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = e => {
+            preview.src = e.target.result;
+            preview.style.display = "block";
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+
+      if (banners[key]) {
+        preview.src = banners[key];
+        preview.style.display = "block";
+      }
+    }
+
+    previewBanner("leftBanner", "leftPreview", "left");
+    previewBanner("rightBanner", "rightPreview", "right");
+    previewBanner("horizontalBanner", "horizontalPreview", "horizontal");
+
+    function saveBanners() {
+      const left = document.getElementById("leftBanner").files[0];
+      const right = document.getElementById("rightBanner").files[0];
+      const horizontal = document.getElementById("horizontalBanner").files[0];
+
+      function fileToBase64(file, callback) {
+        const reader = new FileReader();
+        reader.onload = e => callback(e.target.result);
+        reader.readAsDataURL(file);
+      }
+
+      if (left) {
+        fileToBase64(left, data => {
+          banners.left = data;
+          localStorage.setItem("banners", JSON.stringify(banners));
+          renderBanners();
+          document.getElementById("leftPreview").src = data;
+        });
+      }
+      if (right) {
+        fileToBase64(right, data => {
+          banners.right = data;
+          localStorage.setItem("banners", JSON.stringify(banners));
+          renderBanners();
+          document.getElementById("rightPreview").src = data;
+        });
+      }
+      if (horizontal) {
+        fileToBase64(horizontal, data => {
+          banners.horizontal = data;
+          localStorage.setItem("banners", JSON.stringify(banners));
+          renderBanners();
+          document.getElementById("horizontalPreview").src = data;
+        });
+      }
+    }
+
+    function renderBanners() {
+      const tbody = document.querySelector("#bannerTable tbody");
+      tbody.innerHTML = "";
+      for (const [key, src] of Object.entries(banners)) {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${key}</td>
+          <td><img src="${src}" style="max-width:100px;border-radius:4px"></td>
+          <td><button onclick="deleteBanner('${key}')">Delete</button></td>
+        `;
+        tbody.appendChild(tr);
+      }
+    }
+
+    function deleteBanner(type) {
+      delete banners[type];
+      localStorage.setItem("banners", JSON.stringify(banners));
+      renderBanners();
+      if (type === "left") document.getElementById("leftPreview").style.display = "none";
+      if (type === "right") document.getElementById("rightPreview").style.display = "none";
+      if (type === "horizontal") document.getElementById("horizontalPreview").style.display = "none";
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      loadCars();
+      renderBanners();
+    });
+  </script>
 </body>
 </html>
