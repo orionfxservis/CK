@@ -8,7 +8,6 @@
 :root{
   --red:#e60000;
   --red-dark:#c00000;
-  --muted:#222;
 }
 html,body{height:100%; margin:0; font-family:Arial,sans-serif; background:#000; color:#fff;}
 header{
@@ -29,6 +28,7 @@ nav a.admin{ background:var(--red); padding:6px 10px; border-radius:6px; }
 .main-layout{
   display:flex; gap:12px; align-items:flex-start; justify-content:center;
   padding:18px; max-width:1300px; margin:0 auto; box-sizing:border-box;
+  flex-wrap:wrap;
 }
 .side-box{
   width:120px; min-width:80px; height:320px;
@@ -71,9 +71,9 @@ nav a.admin{ background:var(--red); padding:6px 10px; border-radius:6px; }
   transform:rotate(-45deg); box-shadow:0 2px 6px rgba(0,0,0,0.4); text-transform:uppercase;
 }
 
-.modal{ display:none; position:fixed; inset:0; background:rgba(0,0,0,0.92); z-index:120; align-items:center; justify-content:center; padding:20px; }
-.modal.open{ display:flex; }
-.modal-content{ width:100%; max-width:980px; max-height:92vh; background:#111; border-radius:10px; display:flex; flex-direction:column; }
+.modal, .contact-modal{ display:none; position:fixed; inset:0; background:rgba(0,0,0,0.92); z-index:120; align-items:center; justify-content:center; padding:20px; }
+.modal.open, .contact-modal.open{ display:flex; }
+.modal-content, .contact-content{ width:100%; max-width:980px; max-height:92vh; background:#111; border-radius:10px; display:flex; flex-direction:column; }
 .modal-body{ display:flex; gap:18px; flex:1; padding:18px; overflow:hidden; }
 .modal-images{ flex-basis:45%; display:flex; flex-direction:column; gap:10px; overflow-y:auto; max-height:calc(92vh - 140px); }
 .modal-images img{ width:100%; height:110px; object-fit:cover; border-radius:6px; cursor:pointer; }
@@ -81,18 +81,16 @@ nav a.admin{ background:var(--red); padding:6px 10px; border-radius:6px; }
 .modal-details{ flex:1; overflow:auto; color:#ddd; font-size:14px; }
 .close-btn{ position:absolute; right:12px; top:10px; font-size:26px; cursor:pointer; color:#fff; background:transparent; border:0; }
 
-.contact-modal{ display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:130; align-items:center; justify-content:center; padding:20px; }
-.contact-modal.open{ display:flex; }
 .contact-content{ width:100%; max-width:480px; background:#111; border-radius:10px; padding:16px; }
 .contact-content input, .contact-content textarea{ width:100%; padding:10px; margin-bottom:10px; border-radius:6px; border:0; background:#141414; color:#fff; }
-
 .contact-content button{ width:100%; background:var(--red); color:#fff; border:0; padding:10px; border-radius:6px; cursor:pointer; font-weight:700; }
 
 @media (max-width:900px){
   .main-layout{ flex-direction:column; align-items:center; }
   .side-box{ width:100%; height:auto; margin-top:12px; }
   .side-box img{ width:100%; height:180px; }
-  .search-section{ width:100%; }
+  .search-section{ width:100%; order:0; }
+  .main-layout > .side-box{ order:1; } /* banners after search */
   .modal-body{ flex-direction:column; }
   .modal-images img.active{ height:260px; }
 }
@@ -188,16 +186,13 @@ function loadBanners(){
 
 // Load cars
 async function loadCars(){
-  let cars = JSON.parse(localStorage.getItem("cars")||"[]");
-  if(cars.length===0){
-    try{
-      const resp=await fetch('https://yourusername.github.io/yourrepo/cars.json'); // Replace with GitHub URL
-      cars = await resp.json();
-      localStorage.setItem("cars", JSON.stringify(cars));
-    } catch(e){
-      console.log("Error loading cars from GitHub, using empty array",e);
-      cars=[];
-    }
+  let cars = [];
+  try{
+    const resp=await fetch('https://raw.githubusercontent.com/YourUsername/YourRepo/main/cars.json'); // Replace with your GitHub URL
+    cars = await resp.json();
+    localStorage.setItem("cars", JSON.stringify(cars));
+  } catch(e){
+    console.log("Error loading cars from GitHub",e);
   }
   renderCars(cars);
 }
@@ -254,7 +249,6 @@ function openCar(index){
 }
 
 function closeCarModal(){ document.getElementById("carModal").classList.remove("open"); }
-
 function wantThis(carName){
   document.getElementById("carModal").classList.remove("open");
   const contactModal=document.getElementById("contactModal");
@@ -264,7 +258,6 @@ function wantThis(carName){
   document.getElementById("contactMessage").value="";
   contactModal.classList.add("open");
 }
-
 function submitContact(){
   alert("Contact request sent!");
   document.getElementById("contactModal").classList.remove("open");
