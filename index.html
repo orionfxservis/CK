@@ -37,7 +37,7 @@
     header .logo { font-size: 1.5rem; font-weight: 700; color: var(--text-light); }
     header .logo span { color: var(--red); }
     nav ul { list-style: none; display: flex; margin: 0; padding: 0; }
-    nav ul li { margin-left: 15px; }
+    nav ul li { margin-left: 10px; }
     nav ul li a {
       color: var(--text-light); text-decoration: none; font-weight: 500;
       padding: 6px 10px; transition: all 0.3s ease;
@@ -122,7 +122,7 @@
     /* Car Grid */
     .car-grid { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
     .car-card {
-      background: var(--bg-card); border-radius: 12px; overflow: hidden;
+      background: var(--bg-card); border: 1px solid var(--red); border-radius: 12px; overflow: hidden;
       box-shadow: 0 5px 15px rgba(0,0,0,0.5);
       width: 220px; position: relative; transition: transform 0.3s ease;
     }
@@ -145,7 +145,7 @@
     /* Modal */
     .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center; }
     .modal-content {
-      background: var(--bg-card); padding: 20px; border-radius: 10px;
+      background: var(--bg-card); border: 1px solid var(--red); padding: 20px; border-radius: 10px;
       max-width: 900px; width: 90%; max-height: 90vh; display: flex; gap: 20px; overflow: hidden;
     }
     .modal-left { flex: 1; overflow-y: auto; }
@@ -162,7 +162,7 @@
     /* Buy Form */
     .buy-form { margin-top: 15px; display: none; flex-direction: column; gap: 10px; }
     .buy-form input, .buy-form textarea {
-      width: 100%; padding: 10px; border: none; border-radius: 5px;
+      width: 95%; padding: 10px; border: none; border-radius: 5px;
     }
 
     /* Footer */
