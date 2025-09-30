@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Toyota Corolla",
+    "model": "2020",
+    "price": "$18,000",
+    "details": "A reliable sedan with great fuel economy and comfort.",
+    "images": [
+      "https://picsum.photos/400/300?random=11",
+      "https://picsum.photos/400/300?random=12",
+      "https://picsum.photos/400/300?random=13"
+    ],
+    "ribbon": "Urgent Sale",
+    "category": "Urgent Sale"
+  },
+  {
+    "name": "Honda Civic",
+    "model": "2019",
+    "price": "$20,500",
+    "details": "Sporty design and advanced safety features included.",
+    "images": [
+      "https://picsum.photos/400/300?random=14",
+      "https://picsum.photos/400/300?random=15"
+    ],
+    "ribbon": "More Cars",
+    "category": "More Cars"
+  },
+  {
+    "name": "Suzuki Swift",
+    "model": "2021",
+    "price": "$12,000",
+    "details": "Compact hatchback perfect for city driving and fuel efficiency.",
+    "images": [
+      "https://picsum.photos/400/300?random=16"
+    ],
+    "ribbon": "Urgent Sale",
+    "category": "Urgent Sale"
+  }
+]

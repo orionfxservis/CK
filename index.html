@@ -199,49 +199,55 @@
   </div>
 
   <script>
-    // ----- Banner -----
-    const bannerTrack = document.getElementById('bannerTrack');
-    const savedBanners = JSON.parse(localStorage.getItem('banners')) || {};
-    let bannerList = [];
-    if (savedBanners.left) bannerList.push(savedBanners.left);
-    if (savedBanners.right) bannerList.push(savedBanners.right);
-    if (savedBanners.horizontal) bannerList.push(savedBanners.horizontal);
-    bannerList.forEach(src => {
-      const bannerDiv = document.createElement('div');
-      bannerDiv.className = 'banner';
-      bannerDiv.style.backgroundImage = `url(${src})`;
-      bannerTrack.appendChild(bannerDiv);
-    });
-
-    // ----- Cars -----
-    function loadCars() {
-      const savedCars = JSON.parse(localStorage.getItem('cars')) || [];
-      const carGrid = document.getElementById('carGrid');
-      carGrid.innerHTML = '';
-      savedCars.forEach((car, i) => {
-        const card = document.createElement('div');
-        card.className = 'car-card';
-        const mainImg = (car.images && car.images.length) ? car.images[0] : car.image || '';
-        card.innerHTML = `
-          ${car.ribbon ? `<div class="ribbon">${car.ribbon}</div>` : ""}
-          <img src="${mainImg}" alt="${car.name}">
-          <div class="info">
-            <h3>${car.name} - ${car.model}</h3>
-            <p class="price">${car.price} ${car.negotiable ? "(Negotiable)" : ""}</p>
-            <button class="btn" onclick="openModal(${i})">Details</button>
-          </div>`;
-        carGrid.appendChild(card);
+    // ----- Load Banners from JSON -----
+    fetch('banners.json')
+      .then(res => res.json())
+      .then(savedBanners => {
+        const bannerTrack = document.getElementById('bannerTrack');
+        bannerTrack.innerHTML = '';
+        let bannerList = [];
+        if (savedBanners.left) bannerList.push(savedBanners.left);
+        if (savedBanners.right) bannerList.push(savedBanners.right);
+        if (savedBanners.horizontal) bannerList.push(savedBanners.horizontal);
+        bannerList.forEach(src => {
+          const bannerDiv = document.createElement('div');
+          bannerDiv.className = 'banner';
+          bannerDiv.style.backgroundImage = `url(${src})`;
+          bannerTrack.appendChild(bannerDiv);
+        });
       });
-    }
-    loadCars();
+
+    // ----- Load Cars from JSON -----
+    fetch('cars.json')
+      .then(res => res.json())
+      .then(savedCars => {
+        const carGrid = document.getElementById('carGrid');
+        carGrid.innerHTML = '';
+        savedCars.forEach((car, i) => {
+          const card = document.createElement('div');
+          card.className = 'car-card';
+          const mainImg = (car.images && car.images.length) ? car.images[0] : car.image || '';
+          card.innerHTML = `
+            ${car.ribbon ? `<div class="ribbon">${car.ribbon}</div>` : ""}
+            <img src="${mainImg}" alt="${car.name}">
+            <div class="info">
+              <h3>${car.name} - ${car.model}</h3>
+              <p class="price">${car.price}</p>
+              <button class="btn" onclick="openModal(${i})">Details</button>
+            </div>`;
+          carGrid.appendChild(card);
+        });
+
+        // Save cars globally for modal
+        window.savedCarsGlobal = savedCars;
+      });
 
     // ----- Modal -----
     function openModal(index) {
-      const cars = JSON.parse(localStorage.getItem('cars')) || [];
-      const car = cars[index];
+      const car = window.savedCarsGlobal[index];
       document.getElementById('modalTitle').textContent = car.name + " - " + car.model;
       document.getElementById('modalDetails').textContent = car.details || "";
-      document.getElementById('modalPrice').textContent = car.price + (car.negotiable ? " (Negotiable)" : "");
+      document.getElementById('modalPrice').textContent = car.price;
       const imgs = (car.images && car.images.length) ? car.images : (car.image ? [car.image] : []);
       document.getElementById('modalImages').innerHTML = imgs.map(img => `<img src="${img}" alt="${car.name}">`).join('');
       document.getElementById('carNameField').value = car.name;
@@ -252,16 +258,13 @@
       document.getElementById('buyForm').style.display = 'none';
     }
     function openBuyForm() { document.getElementById('buyForm').style.display = 'flex'; }
-
-    // ----- WhatsApp -----
     function sendWhatsApp() {
       const carName = document.getElementById('carNameField').value;
       const name = document.getElementById('customerName').value;
       const contact = document.getElementById('contactNo').value;
       const msg = document.getElementById('message').value;
       const text = `I Want To Buy: ${carName}%0AName: ${name}%0AContact: ${contact}%0AMessage: ${msg}`;
-      const number = localStorage.getItem('whatsappNumber') || "92xxxxxxxxxx";
-      window.open(`https://wa.me/${number}?text=${text}`, '_blank');
+      window.open(`https://wa.me/92xxxxxxxxxx?text=${text}`, '_blank');
     }
   </script>
 </body>
