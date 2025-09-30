@@ -49,28 +49,11 @@
     td img { max-width: 80px; border-radius: 4px; }
     tr.dragging { opacity: 0.5; background: #333; }
 
-    /* Popup Modal */
-    .modal {
-      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center;
-    }
-    .modal-content {
-      background: var(--bg-card); padding: 20px; border-radius: 10px;
-      max-width: 700px; width: 90%; position: relative; color: var(--text-light);
-    }
-    .close { position: absolute; top: 10px; right: 15px; font-size: 20px; cursor: pointer; }
-    .gallery { display: flex; align-items: center; justify-content: center; }
-    .gallery img {
-      max-width: 500px; max-height: 300px; border-radius: 6px;
-    }
-    .arrow {
-      cursor: pointer; font-size: 28px; padding: 10px; color: var(--red);
-      user-select: none;
-    }
-    .car-details { margin-top: 15px; font-size: 14px; }
+    /* Responsive */
     @media (max-width: 768px) {
       .flex-row { flex-direction: column; }
-      .gallery img { max-width: 100%; }
+      table { font-size: 12px; }
+      th, td { padding: 4px; }
     }
   </style>
 </head>
@@ -78,7 +61,6 @@
 
   <h1>Admin Panel</h1>
 
-  <!-- Car + Banner Side by Side -->
   <div class="flex-row">
     <!-- Car Management -->
     <div class="section">
@@ -140,11 +122,19 @@
         <tbody></tbody>
       </table>
     </div>
+
+    <!-- WhatsApp Settings -->
+    <div class="section">
+      <h2>WhatsApp Settings</h2>
+      <label>WhatsApp Business Number (with country code)</label>
+      <input type="text" id="whatsappNumber" placeholder="e.g. 923001234567">
+      <button onclick="saveWhatsApp()">Save Number</button>
+    </div>
   </div>
 
-  <!-- Car Table (full width below) -->
+  <!-- Car Table -->
   <div class="section">
-    <h2>Cars List</h2>
+    <h2>Cars List (Drag to Reorder)</h2>
     <table id="carTable">
       <thead>
         <tr>
@@ -155,26 +145,10 @@
     </table>
   </div>
 
-  <!-- Popup Modal -->
-  <div id="carModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal()">&times;</span>
-      <div class="gallery">
-        <span class="arrow" onclick="prevImage()">&#10094;</span>
-        <img id="modalImage" src="" alt="">
-        <span class="arrow" onclick="nextImage()">&#10095;</span>
-      </div>
-      <div class="car-details" id="modalDetails"></div>
-    </div>
-  </div>
-
-  <script>
-   
-  /* ---------------- Cars Management ---------------- */
+<script>
+  let editIndex = null;
   const carImagesInput = document.getElementById("carImages");
   const carImagePreview = document.getElementById("carImagePreview");
-
-  let editIndex = null; // track editing
 
   carImagesInput.addEventListener("change", () => {
     carImagePreview.innerHTML = "";
@@ -198,12 +172,9 @@
     tbody.innerHTML = "";
     cars.forEach((car, i) => {
       const row = document.createElement("tr");
+      row.draggable = true;
       row.innerHTML = `
-        <td>
-          ${car.images && car.images.length > 0 
-            ? `<img src="${car.images[0]}" alt="">` 
-            : ""}
-        </td>
+        <td>${car.images?.length ? `<img src="${car.images[0]}">` : ""}</td>
         <td>${car.name}</td>
         <td>${car.model}</td>
         <td>${car.specs}</td>
@@ -214,64 +185,52 @@
         </td>`;
       tbody.appendChild(row);
     });
+    enableDragDrop();
   }
 
-  function addCar() {
+  async function addCar() {
     const cars = JSON.parse(localStorage.getItem("cars")) || [];
+    const files = carImagesInput.files;
 
-    // Convert multiple uploaded images to base64
-    function filesToBase64(files) {
-      return Promise.all([...files].map(file => {
-        return new Promise(resolve => {
-          const reader = new FileReader();
-          reader.onload = e => resolve(e.target.result);
-          reader.readAsDataURL(file);
-        });
-      }));
+    const images = await Promise.all([...files].map(file => new Promise(res => {
+      const reader = new FileReader();
+      reader.onload = e => res(e.target.result);
+      reader.readAsDataURL(file);
+    })));
+
+    const newCar = {
+      category: carCategory.value,
+      name: carName.value,
+      model: carModel.value,
+      specs: carSpecs.value,
+      color: carColor.value,
+      mileage: carMileage.value,
+      milkiya: carMilkiya.value,
+      accident: carAccident.value,
+      price: carPrice.value,
+      negotiable: carNegotiable.checked,
+      ribbon: carRibbon.value,
+      details: carDetails.value,
+      images: images.length ? images : (editIndex !== null ? cars[editIndex].images : [])
+    };
+
+    if (editIndex !== null) {
+      cars[editIndex] = newCar;
+      editIndex = null;
+    } else {
+      cars.unshift(newCar); // new car goes on top
     }
 
-    filesToBase64(carImagesInput.files).then(images => {
-      const newCar = {
-        category: carCategory.value,
-        name: carName.value,
-        model: carModel.value,
-        specs: carSpecs.value,
-        color: carColor.value,
-        mileage: carMileage.value,
-        milkiya: carMilkiya.value,
-        accident: carAccident.value,
-        price: carPrice.value,
-        negotiable: carNegotiable.checked,
-        ribbon: carRibbon.value,
-        details: carDetails.value,
-        images: images.length > 0 ? images : (editIndex !== null ? cars[editIndex].images : [])
-      };
-
-      if (editIndex !== null) {
-        cars[editIndex] = newCar;
-        editIndex = null;
-      } else {
-        cars.push(newCar);
-      }
-
-      localStorage.setItem("cars", JSON.stringify(cars));
-      loadCars();
-      resetForm();
-    });
+    localStorage.setItem("cars", JSON.stringify(cars));
+    loadCars();
+    resetForm();
   }
 
   function resetForm() {
-    carName.value = "";
-    carModel.value = "";
-    carSpecs.value = "";
-    carColor.value = "";
-    carMileage.value = "";
-    carMilkiya.value = "";
-    carAccident.value = "";
-    carPrice.value = "";
+    carName.value = carModel.value = carSpecs.value = carColor.value = "";
+    carMileage.value = carMilkiya.value = carAccident.value = carPrice.value = "";
     carNegotiable.checked = false;
-    carRibbon.value = "";
-    carDetails.value = "";
+    carRibbon.value = carDetails.value = "";
     carImagesInput.value = "";
     carImagePreview.innerHTML = "";
   }
@@ -298,147 +257,153 @@
     carNegotiable.checked = c.negotiable;
     carRibbon.value = c.ribbon;
     carDetails.value = c.details;
-    editIndex = i; // set edit mode
+    editIndex = i;
+  }
+
+  function enableDragDrop() {
+    const tbody = document.querySelector("#carTable tbody");
+    let draggingRow;
+
+    tbody.querySelectorAll("tr").forEach(row => {
+      row.addEventListener("dragstart", e => {
+        draggingRow = row;
+        row.classList.add("dragging");
+      });
+      row.addEventListener("dragend", e => {
+        row.classList.remove("dragging");
+        saveOrder();
+      });
+    });
+
+    tbody.addEventListener("dragover", e => {
+      e.preventDefault();
+      const afterElement = getDragAfterElement(tbody, e.clientY);
+      if (afterElement == null) {
+        tbody.appendChild(draggingRow);
+      } else {
+        tbody.insertBefore(draggingRow, afterElement);
+      }
+    });
+  }
+
+  function getDragAfterElement(container, y) {
+    const draggableElements = [...container.querySelectorAll("tr:not(.dragging)")];
+    return draggableElements.reduce((closest, child) => {
+      const box = child.getBoundingClientRect();
+      const offset = y - box.top - box.height / 2;
+      if (offset < 0 && offset > closest.offset) {
+        return { offset, element: child };
+      } else {
+        return closest;
+      }
+    }, { offset: Number.NEGATIVE_INFINITY }).element;
+  }
+
+  function saveOrder() {
+    let cars = JSON.parse(localStorage.getItem("cars")) || [];
+    const rows = document.querySelectorAll("#carTable tbody tr");
+    const newOrder = [];
+
+    rows.forEach(row => {
+      const name = row.querySelector("td:nth-child(2)").textContent;
+      const car = cars.find(c => c.name === name);
+      if (car) newOrder.push(car);
+    });
+
+    localStorage.setItem("cars", JSON.stringify(newOrder));
+    loadCars();
+  }
+
+  /* ---------------- Banner Management ---------------- */
+  let banners = JSON.parse(localStorage.getItem("banners")) || {};
+
+  function previewBanner(inputId, previewId, key) {
+    const input = document.getElementById(inputId);
+    const preview = document.getElementById(previewId);
+
+    input.addEventListener("change", () => {
+      const file = input.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          preview.src = e.target.result;
+          preview.style.display = "block";
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    if (banners[key]) {
+      preview.src = banners[key];
+      preview.style.display = "block";
+    }
+  }
+
+  previewBanner("leftBanner", "leftPreview", "left");
+  previewBanner("rightBanner", "rightPreview", "right");
+  previewBanner("horizontalBanner", "horizontalPreview", "horizontal");
+
+  function saveBanners() {
+    const left = document.getElementById("leftBanner").files[0];
+    const right = document.getElementById("rightBanner").files[0];
+    const horizontal = document.getElementById("horizontalBanner").files[0];
+
+    function fileToBase64(file) {
+      return new Promise(resolve => {
+        const reader = new FileReader();
+        reader.onload = e => resolve(e.target.result);
+        reader.readAsDataURL(file);
+      });
+    }
+
+    Promise.all([
+      left ? fileToBase64(left) : banners.left,
+      right ? fileToBase64(right) : banners.right,
+      horizontal ? fileToBase64(horizontal) : banners.horizontal
+    ]).then(([leftData, rightData, horizontalData]) => {
+      banners = { left: leftData, right: rightData, horizontal: horizontalData };
+      localStorage.setItem("banners", JSON.stringify(banners));
+      renderBanners();
+    });
+  }
+
+  function renderBanners() {
+    const tbody = document.querySelector("#bannerTable tbody");
+    tbody.innerHTML = "";
+    for (const [key, src] of Object.entries(banners)) {
+      if (!src) continue;
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${key}</td>
+        <td><img src="${src}" style="max-width:100px;border-radius:4px"></td>
+        <td><button onclick="deleteBanner('${key}')">Delete</button></td>
+      `;
+      tbody.appendChild(tr);
+    }
+  }
+
+  function deleteBanner(type) {
+    delete banners[type];
+    localStorage.setItem("banners", JSON.stringify(banners));
+    renderBanners();
+    if (type === "left") document.getElementById("leftPreview").style.display = "none";
+    if (type === "right") document.getElementById("rightPreview").style.display = "none";
+    if (type === "horizontal") document.getElementById("horizontalPreview").style.display = "none";
+  }
+
+  /* ---------------- WhatsApp Settings ---------------- */
+  function saveWhatsApp() {
+    const number = document.getElementById("whatsappNumber").value.trim();
+    if (!number) return alert("Please enter a WhatsApp number");
+    localStorage.setItem("whatsappNumber", number);
+    alert("WhatsApp number saved!");
   }
 
   document.addEventListener("DOMContentLoaded", () => {
     loadCars();
     renderBanners();
+    document.getElementById("whatsappNumber").value = localStorage.getItem("whatsappNumber") || "";
   });
-
-
-    /* ---------------- Car Modal Gallery ---------------- */
-    let currentCar = null;
-    let currentImageIndex = 0;
-
-    function viewCar(i) {
-      const cars = JSON.parse(localStorage.getItem("cars")) || [];
-      currentCar = cars[i];
-      currentImageIndex = 0;
-      document.getElementById("modalImage").src = currentCar.images[0] || "";
-      document.getElementById("modalDetails").innerHTML = `
-        <strong>${currentCar.name}</strong> (${currentCar.model})<br>
-        Specs: ${currentCar.specs}<br>
-        Color: ${currentCar.color}<br>
-        Mileage: ${currentCar.mileage}<br>
-        Milkiya: ${currentCar.milkiya}<br>
-        Accident: ${currentCar.accident}<br>
-        Price: ${currentCar.price} ${currentCar.negotiable ? "(Negotiable)" : ""}<br>
-        Ribbon: ${currentCar.ribbon}<br>
-        <p>${currentCar.details}</p>
-      `;
-      document.getElementById("carModal").style.display = "flex";
-    }
-
-    function closeModal() {
-      document.getElementById("carModal").style.display = "none";
-    }
-
-    function prevImage() {
-      if (!currentCar) return;
-      currentImageIndex = (currentImageIndex - 1 + currentCar.images.length) % currentCar.images.length;
-      document.getElementById("modalImage").src = currentCar.images[currentImageIndex];
-    }
-
-    function nextImage() {
-      if (!currentCar) return;
-      currentImageIndex = (currentImageIndex + 1) % currentCar.images.length;
-      document.getElementById("modalImage").src = currentCar.images[currentImageIndex];
-    }
-
-    /* ---------------- Banner Management ---------------- */
-    let banners = JSON.parse(localStorage.getItem("banners")) || {};
-
-    function previewBanner(inputId, previewId, key) {
-      const input = document.getElementById(inputId);
-      const preview = document.getElementById(previewId);
-
-      input.addEventListener("change", () => {
-        const file = input.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = e => {
-            preview.src = e.target.result;
-            preview.style.display = "block";
-          };
-          reader.readAsDataURL(file);
-        }
-      });
-
-      if (banners[key]) {
-        preview.src = banners[key];
-        preview.style.display = "block";
-      }
-    }
-
-    previewBanner("leftBanner", "leftPreview", "left");
-    previewBanner("rightBanner", "rightPreview", "right");
-    previewBanner("horizontalBanner", "horizontalPreview", "horizontal");
-
-    function saveBanners() {
-      const left = document.getElementById("leftBanner").files[0];
-      const right = document.getElementById("rightBanner").files[0];
-      const horizontal = document.getElementById("horizontalBanner").files[0];
-
-      function fileToBase64(file, callback) {
-        const reader = new FileReader();
-        reader.onload = e => callback(e.target.result);
-        reader.readAsDataURL(file);
-      }
-
-      if (left) {
-        fileToBase64(left, data => {
-          banners.left = data;
-          localStorage.setItem("banners", JSON.stringify(banners));
-          renderBanners();
-          document.getElementById("leftPreview").src = data;
-        });
-      }
-      if (right) {
-        fileToBase64(right, data => {
-          banners.right = data;
-          localStorage.setItem("banners", JSON.stringify(banners));
-          renderBanners();
-          document.getElementById("rightPreview").src = data;
-        });
-      }
-      if (horizontal) {
-        fileToBase64(horizontal, data => {
-          banners.horizontal = data;
-          localStorage.setItem("banners", JSON.stringify(banners));
-          renderBanners();
-          document.getElementById("horizontalPreview").src = data;
-        });
-      }
-    }
-
-    function renderBanners() {
-      const tbody = document.querySelector("#bannerTable tbody");
-      tbody.innerHTML = "";
-      for (const [key, src] of Object.entries(banners)) {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>${key}</td>
-          <td><img src="${src}" style="max-width:100px;border-radius:4px"></td>
-          <td><button onclick="deleteBanner('${key}')">Delete</button></td>
-        `;
-        tbody.appendChild(tr);
-      }
-    }
-
-    function deleteBanner(type) {
-      delete banners[type];
-      localStorage.setItem("banners", JSON.stringify(banners));
-      renderBanners();
-      if (type === "left") document.getElementById("leftPreview").style.display = "none";
-      if (type === "right") document.getElementById("rightPreview").style.display = "none";
-      if (type === "horizontal") document.getElementById("horizontalPreview").style.display = "none";
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      loadCars();
-      renderBanners();
-    });
-  </script>
+</script>
 </body>
 </html>
