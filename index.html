@@ -20,6 +20,7 @@
       background: var(--bg-dark);
       color: var(--text-light);
       line-height: 1.6;
+      scroll-behavior: smooth; /* ✅ Smooth scroll */
     }
 
     /* Header */
@@ -31,28 +32,69 @@
       padding: 0 10px;
       z-index: 1000;
       border-bottom: 2px solid var(--red-dark);
-	  border-radius: 0 0 12px 12px;
+      border-radius: 0 0 12px 12px;
     }
     header .logo { font-size: 1.5rem; font-weight: 700; color: var(--text-light); }
     header .logo span { color: var(--red); }
     nav ul { list-style: none; display: flex; margin: 0; padding: 0; }
-    nav ul li { margin-left: 25px; }
+    nav ul li { margin-left: 15px; }
     nav ul li a {
       color: var(--text-light); text-decoration: none; font-weight: 500;
       padding: 6px 10px; transition: all 0.3s ease;
     }
     nav ul li a:hover { color: var(--red); border-bottom: 2px solid var(--red); }
 
-    /* Hero */
+    /* ✅ Admin red button */
+    nav ul li a.admin-link {
+      background: var(--red);
+      color: #fff !important;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+    nav ul li a.admin-link:hover {
+      background: var(--red-dark);
+      border-bottom: none;
+    }
+
+    /* Hero - ✅ slideshow */
     .hero {
       margin-top: 70px;
       height: 90vh;
-      background: url('https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
-      display: flex; align-items: center; justify-content: center;
-      text-align: center; position: relative;
+      position: relative;
+      overflow: hidden;
     }
-    .hero::after { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,0.65); }
-    .hero-content { position: relative; z-index: 2; }
+    .hero-slides {
+      display: flex;
+      width: 400%; /* 4 images */
+      height: 100%;
+      animation: slideHero 20s infinite linear;
+    }
+    .hero-slide {
+      flex: 0 0 100%;
+      background-size: cover;
+      background-position: center;
+    }
+    @keyframes slideHero {
+      0%   { transform: translateX(0%); }
+      20%  { transform: translateX(0%); }
+      25%  { transform: translateX(-100%); }
+      45%  { transform: translateX(-100%); }
+      50%  { transform: translateX(-200%); }
+      70%  { transform: translateX(-200%); }
+      75%  { transform: translateX(-300%); }
+      95%  { transform: translateX(-300%); }
+      100% { transform: translateX(0%); }
+    }
+    .hero-content {
+      position: absolute;
+      inset: 0;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      text-align: center;
+      z-index: 2;
+      color: var(--text-light);
+    }
     .hero-content h1 { font-size: 3rem; margin-bottom: 10px; }
     .hero-content p { font-size: 1.2rem; color: var(--red); margin-bottom: 20px; }
     .btn {
@@ -65,8 +107,7 @@
     /* Banner Carousel */
     .banner-carousel { width: 100%; height: 200px; margin: 40px 0; position: relative; overflow: hidden; }
     .banner-track { display: flex; height: 100%; transition: transform 0.5s ease-in-out; }
-    .banner { flex: 0 0 100%; height: 200px; background: #222 center/cover no-repeat; position: relative; }
-    .banner::after { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,0.15); }
+    .banner { flex: 0 0 100%; height: 200px; background: #222 center/cover no-repeat; }
 
     /* Sections */
     .section { padding: 60px 20px; max-width: 100%; margin: auto; }
@@ -141,19 +182,25 @@
     <div class="logo">CLICK<span>WORX</span></div>
     <nav>
       <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Urgent Sale</a></li>
-        <li><a href="#">More Cars</a></li>
-        <li><a href="#">Search</a></li>
-        <li><a href="#">About Us</a></li>
-        <li><a href="#">Contact Us</a></li>
-        <li><a href="admin.html">Admin</a></li>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#urgent">Urgent Sale</a></li>
+        <li><a href="#morecars">More Cars</a></li>
+        <li><a href="#search">Search</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+        <li><a href="admin.html" class="admin-link">Admin</a></li>
       </ul>
     </nav>
   </header>
 
   <!-- Hero -->
-  <section class="hero">
+  <section id="home" class="hero">
+    <div class="hero-slides">
+      <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1600&q=80');"></div>
+      <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?auto=format&fit=crop&w=1600&q=80');"></div>
+      <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=1600&q=80');"></div>
+      <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=1600&q=80');"></div>
+    </div>
     <div class="hero-content">
       <h1>Find Your Dream Car</h1>
       <p>Luxury. Speed. Style.</p>
@@ -167,7 +214,7 @@
   </section>
 
   <!-- Urgent Sales -->
-  <section class="section">
+  <section id="urgent" class="section">
     <h2>Urgent Sales</h2>
     <div class="car-grid" id="carGrid"></div>
   </section>
@@ -203,16 +250,11 @@
     let globalCars = [];
     let whatsappNumber = "";
 
-    // Load JSON with fallback to localStorage
     async function loadData() {
       try {
         const bannerRes = await fetch('banners.json');
         if (bannerRes.ok) {
           const savedBanners = await bannerRes.json();
-          renderBanners(savedBanners);
-          whatsappNumber = savedBanners.whatsapp || localStorage.getItem("whatsappNumber") || "";
-        } else {
-          const savedBanners = JSON.parse(localStorage.getItem("banners")) || {};
           renderBanners(savedBanners);
           whatsappNumber = savedBanners.whatsapp || localStorage.getItem("whatsappNumber") || "";
         }
@@ -269,7 +311,6 @@
       });
     }
 
-    // Modal
     function openModal(index) {
       const car = globalCars[index];
       document.getElementById('modalTitle').textContent = car.name + " - " + car.model;
