@@ -18,16 +18,16 @@
       color: var(--text-light);
       padding: 15px;
     }
-    h1 { width: 100%; font-size: 1.8rem; text-align: center; color: var(--red); margin-bottom: 15px; }
+    h1 { text-align: center; color: var(--red); margin-bottom: 20px; }
     .flex-row { display: flex; gap: 15px; flex-wrap: wrap; }
     .section {
       background: var(--bg-card);
       padding: 15px;
       border-radius: 8px;
-	  margin-top: 10px;
       border: 1px solid var(--red);
       flex: 1;
       min-width: 320px;
+      margin-bottom: 15px;
     }
     h2 { margin: 0 0 10px; color: var(--red); font-size: 18px; }
     label { display: block; margin-top: 8px; font-size: 14px; }
@@ -49,18 +49,37 @@
     th { background: #222; }
     td img { max-width: 80px; border-radius: 4px; }
     tr.dragging { opacity: 0.5; background: #333; }
-
-    .export-buttons { margin-top: 20px; display: flex; gap: 10px; }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .flex-row { flex-direction: column; }
-      table { font-size: 12px; }
-      th, td { padding: 4px; }
+    .export-buttons { margin-top: 10px; display: flex; gap: 10px; flex-wrap: wrap; }
+    /* Login Overlay */
+    #loginOverlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.9);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 9999;
     }
+    #loginBox {
+      background: var(--bg-card);
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid var(--red);
+      width: 300px;
+      text-align: center;
+    }
+    #loginBox h2 { margin-bottom: 15px; }
   </style>
 </head>
 <body>
+
+  <div id="loginOverlay">
+    <div id="loginBox">
+      <h2>Admin Login</h2>
+      <input type="password" id="loginPassword" placeholder="Enter Password">
+      <button onclick="checkLogin()">Login</button>
+      <hr style="margin:15px 0;border:0;border-top:1px solid #333;">
+      <h3 style="color:var(--red);font-size:16px;">Set New Password</h3>
+      <input type="password" id="newPassword" placeholder="New Password">
+      <button onclick="setPassword()">Save Password</button>
+    </div>
+  </div>
 
   <h1>Admin Panel</h1>
 
@@ -73,7 +92,6 @@
         <option value="urgent">Urgent Sale</option>
         <option value="normal">Normal</option>
       </select>
-
       <label>Car Name</label><input type="text" id="carName">
       <label>Model</label><input type="text" id="carModel">
       <label>Specs</label><input type="text" id="carSpecs">
@@ -81,23 +99,18 @@
       <label>Mileage</label><input type="text" id="carMileage">
       <label>Milkiya</label><input type="text" id="carMilkiya">
       <label>Accident History</label><input type="text" id="carAccident">
-
       <label>Price</label>
       <div class="inline">
         <input type="text" id="carPrice" placeholder="e.g. $25,000">
         <label><input type="checkbox" id="carNegotiable"> Negotiable</label>
       </div>
-
-      <label>Ribbon (Editable)</label>
+      <label>Ribbon</label>
       <input type="text" id="carRibbon" placeholder="e.g. Hot Deal, Limited">
-
       <label>Details</label>
-      <textarea id="carDetails" placeholder="Enter full car details..."></textarea>
-
+      <textarea id="carDetails"></textarea>
       <label>Upload Car Images (Multiple)</label>
       <input type="file" id="carImages" accept="image/*" multiple>
       <div id="carImagePreview"></div>
-
       <button onclick="addCar()">Add Car</button>
     </div>
 
@@ -107,17 +120,13 @@
       <label>Left Banner</label>
       <input type="file" id="leftBanner" accept="image/*">
       <img id="leftPreview" class="preview" style="display:none;" />
-
       <label>Right Banner</label>
       <input type="file" id="rightBanner" accept="image/*">
       <img id="rightPreview" class="preview" style="display:none;" />
-
       <label>Horizontal Banner</label>
       <input type="file" id="horizontalBanner" accept="image/*">
       <img id="horizontalPreview" class="preview" style="display:none;" />
-
       <button onclick="saveBanners()">Save Banners</button>
-
       <table id="bannerTable">
         <thead>
           <tr><th>Type</th><th>Preview</th><th>Actions</th></tr>
@@ -126,16 +135,39 @@
       </table>
     </div>
 
-    <!-- WhatsApp Settings -->
+    <!-- Hero Images -->
+    <div class="section">
+      <h2>Hero Slideshow</h2>
+      <label>Hero Image 1</label><input type="file" id="hero1" accept="image/*">
+      <label>Hero Image 2</label><input type="file" id="hero2" accept="image/*">
+      <label>Hero Image 3</label><input type="file" id="hero3" accept="image/*">
+      <label>Hero Image 4</label><input type="file" id="hero4" accept="image/*">
+      <button onclick="saveHero()">Save Hero Images</button>
+      <table id="heroTable">
+        <thead><tr><th>Image</th><th>Preview</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <!-- WhatsApp -->
     <div class="section">
       <h2>WhatsApp Settings</h2>
-      <label>WhatsApp Business Number (with country code)</label>
-      <input type="text" id="whatsappNumber" placeholder="e.g. 923001234567">
+      <label>WhatsApp Number</label>
+      <input type="text" id="whatsappNumber" placeholder="923001234567">
       <button onclick="saveWhatsApp()">Save Number</button>
+    </div>
+
+    <!-- Export -->
+    <div class="section">
+      <h2>Export Data</h2>
+      <div class="export-buttons">
+        <button onclick="exportCars()">Export cars.json</button>
+        <button onclick="exportBanners()">Export banners.json</button>
+      </div>
     </div>
   </div>
 
-  <!-- Car Table -->
+  <!-- Cars List -->
   <div class="section">
     <h2>Cars List (Drag to Reorder)</h2>
     <table id="carTable">
@@ -148,297 +180,159 @@
     </table>
   </div>
 
-  <!-- Export JSON -->
-  <div class="section">
-    <h2>Export Data</h2>
-    <div class="export-buttons">
-      <button onclick="exportCars()">Export cars.json</button>
-      <button onclick="exportBanners()">Export banners.json</button>
-    </div>
-  </div>
-
 <script>
-  let editIndex = null;
-  const carImagesInput = document.getElementById("carImages");
-  const carImagePreview = document.getElementById("carImagePreview");
+let cars = JSON.parse(localStorage.getItem("cars")) || [];
+let banners = JSON.parse(localStorage.getItem("banners")) || {};
+let storedPassword = localStorage.getItem("adminPassword") || "admin123";
 
-  carImagesInput.addEventListener("change", () => {
-    carImagePreview.innerHTML = "";
-    [...carImagesInput.files].forEach(file => {
-      const reader = new FileReader();
-      reader.onload = e => {
-        const img = document.createElement("img");
-        img.src = e.target.result;
-        img.style.maxWidth = "80px";
-        img.style.margin = "5px";
-        img.style.borderRadius = "4px";
-        carImagePreview.appendChild(img);
-      };
-      reader.readAsDataURL(file);
-    });
+function checkLogin() {
+  const pass = document.getElementById("loginPassword").value;
+  if (pass === storedPassword) {
+    document.getElementById("loginOverlay").style.display = "none";
+  } else {
+    alert("Wrong password!");
+  }
+}
+function setPassword() {
+  const newPass = document.getElementById("newPassword").value;
+  if (newPass.trim() !== "") {
+    localStorage.setItem("adminPassword", newPass);
+    storedPassword = newPass;
+    alert("Password updated!");
+  } else {
+    alert("Password cannot be empty.");
+  }
+}
+
+/* ---- Car functions ---- */
+function addCar() {
+  const car = {
+    category: document.getElementById("carCategory").value,
+    name: document.getElementById("carName").value,
+    model: document.getElementById("carModel").value,
+    specs: document.getElementById("carSpecs").value,
+    color: document.getElementById("carColor").value,
+    mileage: document.getElementById("carMileage").value,
+    milkiya: document.getElementById("carMilkiya").value,
+    accident: document.getElementById("carAccident").value,
+    price: document.getElementById("carPrice").value,
+    negotiable: document.getElementById("carNegotiable").checked,
+    ribbon: document.getElementById("carRibbon").value,
+    details: document.getElementById("carDetails").value,
+    images: []
+  };
+  const files = document.getElementById("carImages").files;
+  for (let f of files) {
+    car.images.push(URL.createObjectURL(f));
+  }
+  cars.unshift(car);
+  localStorage.setItem("cars", JSON.stringify(cars));
+  renderCarTable();
+}
+function renderCarTable() {
+  const tbody = document.querySelector("#carTable tbody");
+  tbody.innerHTML = "";
+  cars.forEach((c,i)=>{
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${c.images[0] ? `<img src="${c.images[0]}">` : ""}</td>
+      <td>${c.name}</td>
+      <td>${c.model}</td>
+      <td>${c.specs}</td>
+      <td>${c.price}</td>
+      <td><button onclick="deleteCar(${i})">Delete</button></td>
+    `;
+    tbody.appendChild(tr);
   });
+}
+function deleteCar(i) {
+  cars.splice(i,1);
+  localStorage.setItem("cars", JSON.stringify(cars));
+  renderCarTable();
+}
 
-  function loadCars() {
-    const cars = JSON.parse(localStorage.getItem("cars")) || [];
-    const tbody = document.querySelector("#carTable tbody");
-    tbody.innerHTML = "";
-    cars.forEach((car, i) => {
-      const row = document.createElement("tr");
-      row.draggable = true;
-      row.innerHTML = `
-        <td>${car.images?.length ? `<img src="${car.images[0]}">` : ""}</td>
-        <td>${car.name}</td>
-        <td>${car.model}</td>
-        <td>${car.specs}</td>
-        <td>${car.price} ${car.negotiable ? "(Negotiable)" : ""}</td>
-        <td>
-          <button onclick="editCar(${i})">Edit</button>
-          <button onclick="deleteCar(${i})">Delete</button>
-        </td>`;
-      tbody.appendChild(row);
-    });
-    enableDragDrop();
-  }
-
-  async function addCar() {
-    const cars = JSON.parse(localStorage.getItem("cars")) || [];
-    const files = carImagesInput.files;
-
-    const images = await Promise.all([...files].map(file => new Promise(res => {
-      const reader = new FileReader();
-      reader.onload = e => res(e.target.result);
-      reader.readAsDataURL(file);
-    })));
-
-    const newCar = {
-      category: carCategory.value,
-      name: carName.value,
-      model: carModel.value,
-      specs: carSpecs.value,
-      color: carColor.value,
-      mileage: carMileage.value,
-      milkiya: carMilkiya.value,
-      accident: carAccident.value,
-      price: carPrice.value,
-      negotiable: carNegotiable.checked,
-      ribbon: carRibbon.value,
-      details: carDetails.value,
-      images: images.length ? images : (editIndex !== null ? cars[editIndex].images : [])
-    };
-
-    if (editIndex !== null) {
-      cars[editIndex] = newCar;
-      editIndex = null;
-    } else {
-      cars.unshift(newCar);
+/* ---- Banner functions ---- */
+function saveBanners() {
+  ["left","right","horizontal"].forEach(type=>{
+    const file = document.getElementById(type+"Banner").files[0];
+    if (file) {
+      banners[type] = URL.createObjectURL(file);
     }
-
-    localStorage.setItem("cars", JSON.stringify(cars));
-    loadCars();
-    resetForm();
-  }
-
-  function resetForm() {
-    carName.value = carModel.value = carSpecs.value = carColor.value = "";
-    carMileage.value = carMilkiya.value = carAccident.value = carPrice.value = "";
-    carNegotiable.checked = false;
-    carRibbon.value = carDetails.value = "";
-    carImagesInput.value = "";
-    carImagePreview.innerHTML = "";
-  }
-
-  function deleteCar(i) {
-    const cars = JSON.parse(localStorage.getItem("cars")) || [];
-    cars.splice(i, 1);
-    localStorage.setItem("cars", JSON.stringify(cars));
-    loadCars();
-  }
-
-  function editCar(i) {
-    const cars = JSON.parse(localStorage.getItem("cars")) || [];
-    const c = cars[i];
-    carCategory.value = c.category;
-    carName.value = c.name;
-    carModel.value = c.model;
-    carSpecs.value = c.specs;
-    carColor.value = c.color;
-    carMileage.value = c.mileage;
-    carMilkiya.value = c.milkiya;
-    carAccident.value = c.accident;
-    carPrice.value = c.price;
-    carNegotiable.checked = c.negotiable;
-    carRibbon.value = c.ribbon;
-    carDetails.value = c.details;
-    editIndex = i;
-  }
-
-  function enableDragDrop() {
-    const tbody = document.querySelector("#carTable tbody");
-    let draggingRow;
-
-    tbody.querySelectorAll("tr").forEach(row => {
-      row.addEventListener("dragstart", e => {
-        draggingRow = row;
-        row.classList.add("dragging");
-      });
-      row.addEventListener("dragend", e => {
-        row.classList.remove("dragging");
-        saveOrder();
-      });
-    });
-
-    tbody.addEventListener("dragover", e => {
-      e.preventDefault();
-      const afterElement = getDragAfterElement(tbody, e.clientY);
-      if (afterElement == null) {
-        tbody.appendChild(draggingRow);
-      } else {
-        tbody.insertBefore(draggingRow, afterElement);
-      }
-    });
-  }
-
-  function getDragAfterElement(container, y) {
-    const draggableElements = [...container.querySelectorAll("tr:not(.dragging)")];
-    return draggableElements.reduce((closest, child) => {
-      const box = child.getBoundingClientRect();
-      const offset = y - box.top - box.height / 2;
-      if (offset < 0 && offset > closest.offset) {
-        return { offset, element: child };
-      } else {
-        return closest;
-      }
-    }, { offset: Number.NEGATIVE_INFINITY }).element;
-  }
-
-  function saveOrder() {
-    let cars = JSON.parse(localStorage.getItem("cars")) || [];
-    const rows = document.querySelectorAll("#carTable tbody tr");
-    const newOrder = [];
-
-    rows.forEach(row => {
-      const name = row.querySelector("td:nth-child(2)").textContent;
-      const car = cars.find(c => c.name === name);
-      if (car) newOrder.push(car);
-    });
-
-    localStorage.setItem("cars", JSON.stringify(newOrder));
-    loadCars();
-  }
-
-  /* ---------------- Banner Management ---------------- */
-  let banners = JSON.parse(localStorage.getItem("banners")) || {};
-
-  function previewBanner(inputId, previewId, key) {
-    const input = document.getElementById(inputId);
-    const preview = document.getElementById(previewId);
-
-    input.addEventListener("change", () => {
-      const file = input.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = e => {
-          preview.src = e.target.result;
-          preview.style.display = "block";
-        };
-        reader.readAsDataURL(file);
-      }
-    });
-
-    if (banners[key]) {
-      preview.src = banners[key];
-      preview.style.display = "block";
-    }
-  }
-
-  previewBanner("leftBanner", "leftPreview", "left");
-  previewBanner("rightBanner", "rightPreview", "right");
-  previewBanner("horizontalBanner", "horizontalPreview", "horizontal");
-
-  function saveBanners() {
-    const left = document.getElementById("leftBanner").files[0];
-    const right = document.getElementById("rightBanner").files[0];
-    const horizontal = document.getElementById("horizontalBanner").files[0];
-
-    function fileToBase64(file) {
-      return new Promise(resolve => {
-        const reader = new FileReader();
-        reader.onload = e => resolve(e.target.result);
-        reader.readAsDataURL(file);
-      });
-    }
-
-    Promise.all([
-      left ? fileToBase64(left) : banners.left,
-      right ? fileToBase64(right) : banners.right,
-      horizontal ? fileToBase64(horizontal) : banners.horizontal
-    ]).then(([leftData, rightData, horizontalData]) => {
-      banners = { left: leftData, right: rightData, horizontal: horizontalData };
-      localStorage.setItem("banners", JSON.stringify(banners));
-      renderBanners();
-    });
-  }
-
-  function renderBanners() {
-    const tbody = document.querySelector("#bannerTable tbody");
-    tbody.innerHTML = "";
-    for (const [key, src] of Object.entries(banners)) {
-      if (!src) continue;
+  });
+  localStorage.setItem("banners", JSON.stringify(banners));
+  renderBannerTable();
+}
+function renderBannerTable() {
+  const tbody = document.querySelector("#bannerTable tbody");
+  tbody.innerHTML = "";
+  ["left","right","horizontal"].forEach(type=>{
+    if (banners[type]) {
       const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td>${key}</td>
-        <td><img src="${src}" style="max-width:100px;border-radius:4px"></td>
-        <td><button onclick="deleteBanner('${key}')">Delete</button></td>
-      `;
+      tr.innerHTML = `<td>${type}</td><td><img src="${banners[type]}"></td>
+      <td><button onclick="removeBanner('${type}')">Delete</button></td>`;
       tbody.appendChild(tr);
     }
-  }
-
-  function deleteBanner(type) {
-    delete banners[type];
-    localStorage.setItem("banners", JSON.stringify(banners));
-    renderBanners();
-    if (type === "left") document.getElementById("leftPreview").style.display = "none";
-    if (type === "right") document.getElementById("rightPreview").style.display = "none";
-    if (type === "horizontal") document.getElementById("horizontalPreview").style.display = "none";
-  }
-
-  /* ---------------- WhatsApp Settings ---------------- */
-  function saveWhatsApp() {
-    const number = document.getElementById("whatsappNumber").value.trim();
-    if (!number) return alert("Please enter a WhatsApp number");
-    localStorage.setItem("whatsappNumber", number);
-    alert("WhatsApp number saved!");
-  }
-
-  /* ---------------- Export JSON ---------------- */
-  function exportCars() {
-    const cars = JSON.parse(localStorage.getItem("cars")) || [];
-    const blob = new Blob([JSON.stringify(cars, null, 2)], {type:"application/json"});
-    const url = URL.createObjectURL(blob);
-    downloadFile(url, "cars.json");
-  }
-
-  function exportBanners() {
-    const banners = JSON.parse(localStorage.getItem("banners")) || {};
-    const blob = new Blob([JSON.stringify(banners, null, 2)], {type:"application/json"});
-    const url = URL.createObjectURL(blob);
-    downloadFile(url, "banners.json");
-  }
-
-  function downloadFile(url, filename) {
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = filename;
-    a.click();
-    URL.revokeObjectURL(url);
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    loadCars();
-    renderBanners();
-    document.getElementById("whatsappNumber").value = localStorage.getItem("whatsappNumber") || "";
   });
+}
+function removeBanner(type) {
+  delete banners[type];
+  localStorage.setItem("banners", JSON.stringify(banners));
+  renderBannerTable();
+}
+
+/* ---- Hero functions ---- */
+function saveHero() {
+  ["hero1","hero2","hero3","hero4"].forEach((id,i)=>{
+    const file = document.getElementById(id).files[0];
+    if (file) {
+      banners["hero"+(i+1)] = URL.createObjectURL(file);
+    }
+  });
+  localStorage.setItem("banners", JSON.stringify(banners));
+  renderHeroTable();
+}
+function renderHeroTable() {
+  const tbody = document.querySelector("#heroTable tbody");
+  tbody.innerHTML = "";
+  ["hero1","hero2","hero3","hero4"].forEach(key=>{
+    if (banners[key]) {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td>${key}</td><td><img src="${banners[key]}" style="max-width:120px;"></td>`;
+      tbody.appendChild(tr);
+    }
+  });
+}
+
+/* ---- WhatsApp ---- */
+function saveWhatsApp() {
+  banners.whatsapp = document.getElementById("whatsappNumber").value;
+  localStorage.setItem("banners", JSON.stringify(banners));
+  alert("Saved!");
+}
+
+/* ---- Export ---- */
+function exportCars() {
+  const blob = new Blob([JSON.stringify(cars,null,2)], {type:"application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "cars.json";
+  a.click();
+}
+function exportBanners() {
+  const blob = new Blob([JSON.stringify(banners,null,2)], {type:"application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "banners.json";
+  a.click();
+}
+
+window.onload = function() {
+  renderCarTable();
+  renderBannerTable();
+  renderHeroTable();
+  document.getElementById("whatsappNumber").value = banners.whatsapp || "";
+};
 </script>
+
 </body>
 </html>
