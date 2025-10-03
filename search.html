@@ -2,161 +2,129 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Click Worx - Search Cars</title>
+  <title>Search - ClickWorx</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
   <style>
-    body { margin: 0; font-family: Arial, sans-serif; background: #000; color: #fff; }
-
-    /* Header (same as index.html) */
-    header { 
-      position: fixed; 
-      top: 0; left: 0; right: 0; 
-      z-index: 60; 
-      display: flex; 
-      justify-content: space-between; 
-      border-bottom: 2px solid #e50914; 
-      border-radius: 0 0 12px 12px; 
-      align-items: center; 
-      padding: 12px 18px; 
-      background: rgba(0, 0, 0, 0.78); 
-      backdrop-filter: blur(6px);
+    /* Extra for Search page readability */
+    .hero { margin-top:70px; height:70vh; position:relative; overflow:hidden; }
+    .hero-slide {
+      position:absolute; inset:0;
+      background-size:cover; background-position:center;
+      opacity:0; transition:opacity 1s ease-in-out;
     }
-    header h1 { 
-      margin: 0; 
-      font-size: 20px; 
-      color: #e50914; 
+    .hero-slide.active { opacity:1; }
+    .hero::after {
+      content:""; position:absolute; inset:0;
+      background:rgba(0,0,0,0.5); /* Dark overlay */
+      z-index:1;
     }
-    nav a { 
-      color: #fff; 
-      text-decoration: none; 
-      margin-left: 12px; 
-      font-weight: 600; 
-      font-size: 14px; 
+    .hero-content {
+      position:absolute; inset:0;
+      display:flex; flex-direction:column;
+      justify-content:center; align-items:center;
+      text-align:center; z-index:2; color:#fff;
     }
-    nav a.admin { 
-      background: #e50914; 
-      padding: 6px 10px; 
-      border-radius: 6px; 
+    .hero-content h1 { font-size:2.5rem; margin-bottom:10px; }
+    .hero-content p { font-size:1.2rem; color:#f5f5f5; }
+    .dots {
+      position:absolute; bottom:20px; width:100%; text-align:center; z-index:3;
     }
-
-    .page-top { height: 64px; } /* space for header */
-
-    /* Slideshow */
-    .slideshow {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      overflow: hidden; z-index: -1;
+    .dots span {
+      display:inline-block; width:12px; height:12px; margin:0 4px;
+      border-radius:50%; background:#fff; opacity:0.5; cursor:pointer;
     }
-    .slideshow img {
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      object-fit: cover; opacity: 0; transition: opacity 1s ease-in-out;
-    }
-    .slideshow img.active { opacity: 1; }
-
-    /* Search Section */
-    .search-section {
-      max-width: 720px;
-      background: rgba(20,20,20,0.9); padding: 25px; border-radius: 10px; border: 1px solid #e50914;
-      position: relative; z-index: 5; margin: auto;
-    }
-    .search-section h2 { margin-top: 0; color: #e60000; text-align:center; }
-    .search-bar {
-      display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-top: 15px;
-    }
-    .search-bar input, .search-bar select {
-      padding: 10px; border-radius: 6px; border: none; font-size: 14px; width: 100%;
-      box-sizing: border-box;
-    }
-    .search-bar textarea {
-      grid-column: span 3;
-      height: 80px;
-      resize: none;
-      width: 100%;
-      box-sizing: border-box;
-    }
-    .search-btn {
-      grid-column: span 3;
-      background: #e60000; color: #fff; padding: 12px; border: none;
-      border-radius: 6px; cursor: pointer; font-weight: bold; text-align:center;
-      width: 100%;
-      box-sizing: border-box;
-    }
-    .search-btn:hover { background: #c00000; }
-
-    /* Banner */
-    .banner {
-      max-width: 720px;
-      height: 120px;
-      background: #333;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 20px auto;
-      border: 2px dashed #666;
-      color: #aaa;
-      font-size: 18px;
-      border-radius: 10px;
-    }
+    .dots span.active { opacity:1; background:#e50914; }
   </style>
 </head>
 <body>
   <header>
-    <h1>Click Worx</h1>
+    <div class="brand">
+      <img src="images/Logo/logo.png" alt="Logo" />
+      <a href="index.html" class="logo">CLICK<span>WORX</span></a>
+    </div>
     <nav>
-      <a href="index.html" class="home">Home</a>
-      <a href="search.html" class="search">Search</a>
-      <a href="about.html" class="about">About</a>
-      <a href="contact.html" class="contact">Contact</a>
-      <a href="#" class="admin" onclick="adminLogin()">Admin</a>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="urgent.html">Urgent Sale</a></li>
+        <li><a href="more.html">More Cars</a></li>
+        <li><a href="search.html" class="active">Search</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="admin.html" class="admin-link">Admin</a></li>
+      </ul>
     </nav>
   </header>
 
-  <div class="page-top"></div>
-
-  <!-- Background slideshow -->
-  <div class="slideshow" id="slideshow">
-    <img src="images/BG/01.jpg" class="active">
-    <img src="images/BG/02.jpg">
-    <img src="images/BG/03.jpg">
-    <img src="images/BG/04.jpg">
-  </div>
-
-  <!-- Search Section -->
-  <div class="search-section" id="search">
-    <h2>Search Cars</h2>
-    <div class="search-bar">
-      <input type="text" id="searchName" placeholder="Name of Car">
-      <input type="text" id="searchModel" placeholder="Model">
-      <input type="text" id="searchColor" placeholder="Color">
-      <input type="text" id="searchSpecs" placeholder="Specs">
-      <input type="text" id="searchEstate" placeholder="Estate">
-      <input type="number" id="searchPrice" placeholder="Max Price">
-      <textarea id="autosized-area" placeholder="Describe what you're looking for" maxlength="200"></textarea>
-      <button class="search-btn" onclick="applySearch()">Search</button>
+  <!-- ✅ Hero Slideshow -->
+  <section class="hero">
+    <div id="heroSlides"></div>
+    <div class="hero-content">
+      <h1>Search Cars Easily</h1>
+      <p>Filter, browse and find the perfect car for your needs.</p>
     </div>
-  </div>
+    <div class="dots" id="heroDots"></div>
+  </section>
 
-  <!-- Banner -->
-  <div class="banner">120 x 480 Banner Ad</div>
+  <div class="content">
+    <h2>Search Cars</h2>
+    <p>Here you can integrate your search filters and results listing.</p>
+  </div>
 
   <script>
-    function adminLogin(){
-      const pass=prompt("Enter admin password:");
-      if(pass==="1234"){ window.location.href="admin.html"; }
-      else{ alert("Wrong password!"); }
+  /* ---------- Hero Slideshow Loader ---------- */
+  async function loadHeroSlides() {
+    let savedBanners = {};
+    try {
+      const res = await fetch('banners.json');
+      if (res.ok) savedBanners = await res.json();
+    } catch {
+      savedBanners = JSON.parse(localStorage.getItem("banners")) || {};
     }
 
-    // Slideshow
-    const slides=document.querySelectorAll('.slideshow img');
-    let cur=0;
-    setInterval(()=>{
-      slides[cur].classList.remove('active');
-      cur=(cur+1)%slides.length;
-      slides[cur].classList.add('active');
-    },4000);
+    const heroContainer = document.getElementById("heroSlides");
+    heroContainer.innerHTML = "";
 
-    // Search button (currently no results list)
-    function applySearch(){
-      alert("Search functionality is under construction. Filters entered will be used soon.");
+    const heroImages = ["hero1","hero2","hero3","hero4"]
+      .map(id => savedBanners[id])
+      .filter(Boolean);
+
+    const fallback = ["images/BG/car02.jpg","images/BG/car03.jpg","images/BG/bg1.jpg","images/BG/bg3.jpg"];
+    const slides = heroImages.length ? heroImages : fallback;
+
+    slides.forEach((src,i)=>{
+      const div=document.createElement("div");
+      div.className="hero-slide";
+      div.style.backgroundImage=`url(${src})`;
+      if(i===0) div.classList.add("active");
+      heroContainer.appendChild(div);
+    });
+
+    // dots
+    const dotsContainer=document.getElementById("heroDots");
+    dotsContainer.innerHTML="";
+    slides.forEach((_,i)=>{
+      const dot=document.createElement("span");
+      dot.addEventListener("click",()=>showSlide(i));
+      dotsContainer.appendChild(dot);
+    });
+    const dots=dotsContainer.querySelectorAll("span");
+
+    let index=0;
+    function showSlide(n){
+      const allSlides=document.querySelectorAll(".hero-slide");
+      allSlides.forEach(s=>s.classList.remove("active"));
+      dots.forEach(d=>d.classList.remove("active"));
+      index=(n+allSlides.length)%allSlides.length;
+      allSlides[index].classList.add("active");
+      dots[index].classList.add("active");
     }
+    function nextSlide(){showSlide(index+1);}
+    setInterval(nextSlide,5000);
+    showSlide(0);
+  }
+
+  window.onload = loadHeroSlides;
   </script>
 </body>
 </html>

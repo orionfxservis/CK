@@ -23,35 +23,75 @@
       scroll-behavior: smooth;
     }
 
-    /* Header */
+    /* ✅ Header */
     header {
-      position: fixed; top: 0; left: 0; right: 0;
-      height: 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       background: rgba(0,0,0,0.95);
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 0 10px;
+      padding: 8px 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
       z-index: 1000;
       border-bottom: 2px solid var(--red-dark);
       border-radius: 0 0 12px 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
-    header .logo { font-size: 1.5rem; font-weight: 700; color: var(--text-light); }
-    header .logo span { color: var(--red); }
-    nav ul { list-style: none; display: flex; margin: 0; padding: 0; }
-    nav ul li { margin-left: 10px; }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand img {
+      height: 32px; width: auto; border-radius: 8px;
+    }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      text-decoration: none;
+    }
+    .logo span { color: var(--red); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 16px;
+      margin: 0;
+      padding: 0;
+    }
+    nav ul li { display: inline; }
     nav ul li a {
-      color: var(--text-light); text-decoration: none; font-weight: 500;
-      padding: 6px 10px; transition: all 0.3s ease;
+      text-decoration: none;
+      color: #fff;
+      font-weight: 600;
+      font-size: 13px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      transition: color 0.3s, box-shadow 0.3s, background 0.3s;
     }
-    nav ul li a:hover { color: var(--red); border-bottom: 2px solid var(--red); }
+    nav ul li a:hover,
+    nav ul li a.active {
+      color: var(--red);
+      box-shadow: 0 2px 6px rgba(229,9,20,0.6);
+      background: rgba(255,255,255,0.05);
+    }
     nav ul li a.admin-link {
-      background: var(--red); color: #fff !important;
-      padding: 6px 14px; border-radius: 6px; font-weight: 600;
+      background: var(--red);
+      color: #fff !important;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-weight: 600;
     }
     nav ul li a.admin-link:hover {
-      background: var(--red-dark); border-bottom: none;
+      background: var(--red-dark);
+      box-shadow: 0 2px 6px rgba(229,9,20,0.6);
     }
 
-    /* ✅ Hero - static slideshow */
+    /* ✅ Hero - slideshow */
     .hero { margin-top:70px; height:90vh; position:relative; overflow:hidden; }
     .hero-slide {
       position:absolute; inset:0;
@@ -153,28 +193,29 @@
 </head>
 <body>
 
-  <!-- Header -->
+  <!-- ✅ Header -->
   <header>
-    <div class="logo">CLICK<span>WORX</span></div>
-    <nav>
-      <ul>
-        <li><a href="#home">Home</a></li>
-        <li><a href="#urgent">Urgent Sale</a></li>
-        <li><a href="#morecars">More Cars</a></li>
-        <li><a href="#search">Search</a></li>
-        <li><a href="#about">About Us</a></li>
-        <li><a href="#contact">Contact Us</a></li>
-        <li><a href="admin.html" class="admin-link">Admin</a></li>
-      </ul>
-    </nav>
-  </header>
+  <div class="brand">
+    <img src="images/Logo/logo.png" alt="Logo" />
+    <a href="index.html" class="logo">CLICK<span>WORX</span></a>
+  </div>
+  <nav>
+    <ul>
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="#urgent">Urgent Sale</a></li>
+      <li><a href="more.html">More Cars</a></li>
+      <li><a href="search.html">Search</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Contact Us</a></li>
+      <li><a href="admin.html" class="admin-link">Admin</a></li>
+    </ul>
+  </nav>
+</header>
+
 
   <!-- ✅ Hero -->
   <section id="home" class="hero">
-    <div class="hero-slide" style="background-image:url('images/BG/bg1.jpg');"></div>
-    <div class="hero-slide" style="background-image:url('images/BG/car03.jpg');"></div>
-    <div class="hero-slide" style="background-image:url('images/BG/car02.jpg');"></div>
-    <div class="hero-slide" style="background-image:url('images/BG/bg3.jpg');"></div>
+    <div id="heroSlides"></div>
 
     <div class="hero-content">
       <h1>Find Your Dream Car</h1>
@@ -232,12 +273,12 @@
         if (bannerRes.ok) {
           const savedBanners = await bannerRes.json();
           renderBanners(savedBanners);
-          whatsappNumber = savedBanners.whatsapp || localStorage.getItem("whatsappNumber") || "";
+          whatsappNumber = savedBanners.whatsapp || localStorage.getItem("+923330360487") || "";
         }
       } catch {
         const savedBanners = JSON.parse(localStorage.getItem("banners")) || {};
         renderBanners(savedBanners);
-        whatsappNumber = savedBanners.whatsapp || localStorage.getItem("whatsappNumber") || "";
+        whatsappNumber = savedBanners.whatsapp || localStorage.getItem("+") || "";
       }
 
       try {
@@ -277,6 +318,7 @@
         const mainImg = (car.images && car.images.length) ? car.images[0] : car.image || '';
         card.innerHTML = `
           ${car.ribbon ? `<div class="ribbon">${car.ribbon}</div>` : ""}
+
           <img src="${mainImg}" alt="${car.name}">
           <div class="info">
             <h3>${car.name} - ${car.model}</h3>
@@ -315,30 +357,64 @@
       window.open(`https://wa.me/${whatsappNumber}?text=${text}`, '_blank');
     }
 
-    // ✅ Hero slideshow
-    let heroIndex = 0;
-    const slides = document.querySelectorAll(".hero-slide");
-    const dotsContainer = document.getElementById("heroDots");
+    /* ---------- Hero Slideshow Loader ---------- */
+    async function loadHeroSlides() {
+      let savedBanners = {};
+      try {
+        const res = await fetch('banners.json');
+        if (res.ok) savedBanners = await res.json();
+      } catch {
+        savedBanners = JSON.parse(localStorage.getItem("banners")) || {};
+      }
 
-    slides.forEach((_, i) => {
-      const dot = document.createElement("span");
-      dot.addEventListener("click", () => showSlide(i));
-      dotsContainer.appendChild(dot);
-    });
-    const dots = dotsContainer.querySelectorAll("span");
+      const heroContainer = document.getElementById("heroSlides");
+      heroContainer.innerHTML = "";
 
-    function showSlide(n) {
-      slides.forEach(s => s.classList.remove("active"));
-      dots.forEach(d => d.classList.remove("active"));
-      heroIndex = (n+slides.length)%slides.length;
-      slides[heroIndex].classList.add("active");
-      dots[heroIndex].classList.add("active");
+      const heroImages = ["hero1","hero2","hero3","hero4"]
+        .map(id => savedBanners[id])
+        .filter(Boolean);
+
+      if (heroImages.length > 0) {
+        heroImages.forEach((src,i) => {
+          const div = document.createElement("div");
+          div.className = "hero-slide";
+          div.style.backgroundImage = `url(${src})`;
+          if (i===0) div.classList.add("active");
+          heroContainer.appendChild(div);
+        });
+      } else {
+        ["images/BG/bg1.jpg","images/BG/car03.jpg","images/BG/car02.jpg","images/BG/bg3.jpg"]
+          .forEach((src,i) => {
+            const div = document.createElement("div");
+            div.className = "hero-slide";
+            div.style.backgroundImage = `url(${src})`;
+            if (i===0) div.classList.add("active");
+            heroContainer.appendChild(div);
+          });
+      }
+      initHeroSlideshow();
     }
-    function nextSlide() { showSlide(heroIndex+1); }
-    setInterval(nextSlide, 5000);
-    showSlide(0);
 
-    loadData();
+    function initHeroSlideshow() {
+      const slides = document.querySelectorAll(".hero-slide");
+      const dotsContainer = document.getElementById("heroDots");
+      dotsContainer.innerHTML = "";
+      slides.forEach((_,i) => {
+        const dot = document.createElement("span");
+        if (i===0) dot.classList.add("active");
+        dot.addEventListener("click", () => showSlide(i));
+        dotsContainer.appendChild(dot);
+      });
+      let index=0;
+      function showSlide(i){
+        slides.forEach((s,si)=> s.classList.toggle("active",si===i));
+        dotsContainer.querySelectorAll("span").forEach((d,di)=> d.classList.toggle("active",di===i));
+        index=i;
+      }
+      setInterval(()=> showSlide((index+1)%slides.length),5000);
+    }
+
+    window.onload = () => { loadData(); loadHeroSlides(); };
   </script>
 </body>
 </html>

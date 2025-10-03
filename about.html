@@ -2,100 +2,140 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Click Worx - About</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- ✅ Mobile scaling -->
+  <title>About Us - ClickWorx</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
   <style>
-    body { margin: 0; font-family: Arial, sans-serif; background: #000; color: #fff; }
-
-    header{ position:fixed; top:0; left:0; right:0; z-index:60; display:flex; justify-content:space-between; border-bottom: 2px solid #e50914; border-radius: 0 0 12px 12px; align-items:center; padding:12px 18px; background:rgba(0,0,0,0.78); backdrop-filter:blur(6px);}
-    header h1{ margin:0; font-size:20px; color:#e50914; }
-    nav a{ color:#fff; text-decoration:none; margin-left:12px; font-weight:600; font-size:14px; }
-    nav a.admin{ background:#e50914; padding:6px 10px; border-radius:6px; }
-
-    .page-top{ height:64px; } /* space for header */
-
-    .slideshow {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      overflow: hidden; z-index: -1;
+    /* Hero Slideshow */
+    .hero { margin-top:70px; height:70vh; position:relative; overflow:hidden; }
+    .hero-slide {
+      position:absolute; inset:0;
+      background-size:cover; background-position:center;
+      opacity:0; transition:opacity 1s ease-in-out;
     }
-    .slideshow img {
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      object-fit: cover; opacity: 0; transition: opacity 1s ease-in-out;
+    .hero-slide.active { opacity:1; }
+    .hero::after {
+      content:""; position:absolute; inset:0;
+      background:rgba(0,0,0,0.55); /* overlay */
+      z-index:1;
     }
-    .slideshow img.active { opacity: 1; }
-
-    .content {
-      max-width: 900px; margin: 20px auto; padding: 20px;
-      border: 1px solid #e50914; background: rgba(20,20,20,0.9);
-      border-radius: 10px;
-      position: relative; z-index: 5;
+    .hero-content {
+      position:absolute; inset:0;
+      display:flex; flex-direction:column;
+      justify-content:center; align-items:center;
+      text-align:center; z-index:2; color:#fff;
     }
-    h2 { margin-top: 0; text-align: center; }
-
-    .content p { line-height: 1.6; margin-bottom: 16px; }
-
-    /* Responsive tweaks */
-    @media (max-width: 768px) {
-      header h1 { font-size: 18px; }
-      nav a { font-size: 13px; margin-left: 8px; }
-      .content { margin: 15px; padding: 15px; }
+    .hero-content h1 { font-size:2.5rem; margin-bottom:10px; }
+    .hero-content p { font-size:1.2rem; color:#f5f5f5; }
+    .dots {
+      position:absolute; bottom:20px; width:100%; text-align:center; z-index:3;
     }
-
-    @media (max-width: 480px) {
-      header { flex-direction: column; align-items: flex-start; padding: 10px; }
-      nav { margin-top: 6px; }
-      nav a { margin: 4px 6px 0 0; font-size: 12px; }
-      .page-top { height: 95px; } 
-      .content { margin: 10px; padding: 12px; }
-      h2 { font-size: 18px; }
+    .dots span {
+      display:inline-block; width:12px; height:12px; margin:0 4px;
+      border-radius:50%; background:#fff; opacity:0.5; cursor:pointer;
     }
+    .dots span.active { opacity:1; background:#e50914; }
+    .content { padding:40px 20px; max-width:1000px; margin:auto; color:#fff; }
   </style>
 </head>
 <body>
   <header>
-    <h1>Click Worx</h1>
+    <div class="brand">
+      <img src="images/Logo/logo.png" alt="Logo" />
+      <a href="index.html" class="logo">CLICK<span>WORX</span></a>
+    </div>
     <nav>
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-      <a href="#" class="admin" onclick="adminLogin()">Admin</a>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="urgent.html">Urgent Sale</a></li>
+        <li><a href="more.html">More Cars</a></li>
+        <li><a href="search.html">Search</a></li>
+        <li><a href="about.html" class="active">About Us</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="admin.html" class="admin-link">Admin</a></li>
+      </ul>
     </nav>
   </header>
 
-  <div class="page-top"></div>
+  <!-- Hero Slideshow -->
+  <section class="hero">
+    <div id="heroSlides"></div>
+    <div class="hero-content">
+      <h1>About ClickWorx</h1>
+      <p>Luxury, Speed & Style – Redefining Car Sales Online</p>
+    </div>
+    <div class="dots" id="heroDots"></div>
+  </section>
 
-  <div class="slideshow">
-    <img src="images/BG/01.jpg" class="active">
-    <img src="images/BG/02.jpg">
-    <img src="images/BG/03.jpg">
-    <img src="images/BG/04.jpg">
-  </div>
-
+  <!-- SEO Optimized About Section -->
   <div class="content">
-    <h2>About Us</h2>
-    <p>Welcome to <strong>Click Worx</strong>, your trusted partner for buying and selling cars. 
-       We are passionate about connecting car buyers and sellers with transparency and efficiency.</p>
-    <p>Our mission is to provide a reliable platform where users can find a wide range of vehicles, 
-       from budget-friendly options to premium models, all while enjoying a seamless experience.</p>
-    <p>At Click Worx, customer satisfaction comes first. We combine technology with expertise 
-       to make sure you get the best value and service every time.</p>
+    <h2>Who We Are</h2>
+    <p>
+      At <strong>ClickWorx</strong>, we specialize in connecting passionate car enthusiasts and everyday drivers with 
+      their dream vehicles. From <em>luxury cars</em> and <em>sports models</em> to reliable everyday rides, 
+      we focus on delivering a seamless car buying experience that combines trust, quality, and transparency. 
+      Our platform is designed for buyers looking for <strong>affordable used cars</strong>, 
+      <strong>urgent car sales</strong>, and premium vehicles that reflect true <em>style, speed, and performance</em>. 
+      With a customer-first approach, we aim to make <strong>online car sales in Pakistan</strong> simple, 
+      reliable, and stress-free. Whether you’re searching for your next car or planning to sell, 
+      ClickWorx ensures that your journey is smooth, secure, and rewarding.
+    </p>
   </div>
 
   <script>
-    function adminLogin(){
-      const pass = prompt("Enter admin password:");
-      if(pass === "1234"){ window.location.href = "admin.html"; }
-      else{ alert("Wrong password!"); }
+  /* Hero Slideshow Loader */
+  async function loadHeroSlides() {
+    let savedBanners = {};
+    try {
+      const res = await fetch('banners.json');
+      if (res.ok) savedBanners = await res.json();
+    } catch {
+      savedBanners = JSON.parse(localStorage.getItem("banners")) || {};
     }
 
-    // Slideshow
-    const slides = document.querySelectorAll('.slideshow img');
-    let cur = 0;
-    setInterval(()=>{
-      slides[cur].classList.remove('active');
-      cur = (cur+1) % slides.length;
-      slides[cur].classList.add('active');
-    },4000);
+    const heroContainer = document.getElementById("heroSlides");
+    heroContainer.innerHTML = "";
+
+    const heroImages = ["hero1","hero2","hero3","hero4"]
+      .map(id => savedBanners[id])
+      .filter(Boolean);
+
+    const fallback = ["images/BG/car03.jpg","images/BG/car02.jpg","images/BG/bg1.jpg","images/BG/bg3.jpg"];
+    const slides = heroImages.length ? heroImages : fallback;
+
+    slides.forEach((src,i)=>{
+      const div=document.createElement("div");
+      div.className="hero-slide";
+      div.style.backgroundImage=`url(${src})`;
+      if(i===0) div.classList.add("active");
+      heroContainer.appendChild(div);
+    });
+
+    // dots
+    const dotsContainer=document.getElementById("heroDots");
+    dotsContainer.innerHTML="";
+    slides.forEach((_,i)=>{
+      const dot=document.createElement("span");
+      dot.addEventListener("click",()=>showSlide(i));
+      dotsContainer.appendChild(dot);
+    });
+    const dots=dotsContainer.querySelectorAll("span");
+
+    let index=0;
+    function showSlide(n){
+      const allSlides=document.querySelectorAll(".hero-slide");
+      allSlides.forEach(s=>s.classList.remove("active"));
+      dots.forEach(d=>d.classList.remove("active"));
+      index=(n+allSlides.length)%allSlides.length;
+      allSlides[index].classList.add("active");
+      dots[index].classList.add("active");
+    }
+    function nextSlide(){showSlide(index+1);}
+    setInterval(nextSlide,5000);
+    showSlide(0);
+  }
+
+  window.onload = loadHeroSlides;
   </script>
 </body>
 </html>
