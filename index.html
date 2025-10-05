@@ -197,6 +197,7 @@
   <header>
   <div class="brand">
     <img src="images/Logo/Logo.png" alt="Logo" />
+	<button class="menu-toggle" id="menuToggle">☰</button>
     <a href="index.html" class="logo">CLICK<span>WORX</span></a>
   </div>
   <nav>
@@ -411,6 +412,14 @@
     }
 
     window.onload = () => { loadData(); loadHeroSlides(); };
+	
+	const menuToggle = document.getElementById('menuToggle');
+const navbar = document.getElementById('navbar');
+if (menuToggle && navbar) {
+  menuToggle.addEventListener('click', () => {
+    navbar.classList.toggle('active');
+  });
+}
   </script>
 </body>
 </html>
