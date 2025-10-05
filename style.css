@@ -202,68 +202,48 @@ body {
 }
 
 /* ===== MOBILE MENU FIX (Add at END of style.css) ===== */
+/* ---------- Mobile Menu Fix ---------- */
 .menu-toggle {
   display: none;
-  font-size: 28px;
-  color: #fff;
+  font-size: 26px;
+  color: var(--text-light);
   background: none;
   border: none;
   cursor: pointer;
-  margin-right: 10px;
+  z-index: 1001;
 }
 
 @media (max-width: 768px) {
-  header {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background: rgba(0,0,0,0.9);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    z-index: 1000;
-  }
-
-  .menu-toggle {
-    display: block;
-  }
-
   nav {
     position: absolute;
-    top: 60px;
+    top: 70px;
     left: 0;
     width: 100%;
-    background: rgba(0,0,0,0.95);
+    background: rgba(0, 0, 0, 0.95);
     transform: translateY(-200%);
     transition: transform 0.3s ease-in-out;
     text-align: center;
-    z-index: 999;
+    z-index: 1000;
+  }
+
+  nav ul {
+    flex-direction: column;
+    padding: 20px 0;
+  }
+
+  nav ul li {
+    margin: 15px 0;
   }
 
   nav.active {
     transform: translateY(0);
   }
 
-  nav ul {
-    flex-direction: column;
-    gap: 10px;
-    padding: 15px 0;
-  }
-
-  nav ul li {
+  .menu-toggle {
     display: block;
-  }
-
-  nav ul li a {
-    color: #fff;
-    display: block;
-    padding: 10px 0;
-    text-decoration: none;
-  }
-
-  .brand img {
-    height: 40px;
+    position: absolute;
+    top: 22px;
+    right: 20px;
   }
 }
 
