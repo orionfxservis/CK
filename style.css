@@ -204,30 +204,41 @@ body {
 /* ===== MOBILE MENU FIX (Add at END of style.css) ===== */
 .menu-toggle {
   display: none;
-  font-size: 26px;
+  font-size: 28px;
   color: #fff;
   background: none;
   border: none;
   cursor: pointer;
+  margin-right: 10px;
 }
 
 @media (max-width: 768px) {
   header {
-    flex-wrap: wrap;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.9);
+    display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 10px 20px;
+    z-index: 1000;
+  }
+
+  .menu-toggle {
+    display: block;
   }
 
   nav {
-    width: 100%;
-    background: rgba(0,0,0,0.95);
     position: absolute;
     top: 60px;
     left: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.95);
     transform: translateY(-200%);
     transition: transform 0.3s ease-in-out;
     text-align: center;
-    z-index: 1000;
+    z-index: 999;
   }
 
   nav.active {
@@ -245,15 +256,15 @@ body {
   }
 
   nav ul li a {
-    display: inline-block;
-    padding: 10px 0;
-    width: 100%;
     color: #fff;
+    display: block;
+    padding: 10px 0;
     text-decoration: none;
   }
 
-  .menu-toggle {
-    display: block;
+  .brand img {
+    height: 40px;
   }
 }
+
 
