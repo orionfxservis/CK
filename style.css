@@ -1,112 +1,202 @@
-/* 🔹 Header / Navbar Base */
-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background: rgba(0, 0, 0, 0.9);
-  color: #fff;
-  z-index: 9999;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 25px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+/* -------- Global Theme -------- */
+:root {
+  --red: #e50914;
+  --red-dark: #b00610;
+  --bg-dark: #0d0d0d;
+  --text-light: #fff;
+  --text-muted: #ccc;
+  --nav-height: 70px;
 }
 
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.brand img {
-  height: 40px;
-  width: auto;
-}
-
-.logo {
-  color: #fff;
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 22px;
-  letter-spacing: 1px;
-}
-
-.logo span {
-  color: #e50914;
-}
-
-/* 🔹 Desktop Navigation */
-nav ul {
-  display: flex;
-  list-style: none;
-  gap: 25px;
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
-nav ul li a {
+body {
+  font-family: Arial, sans-serif;
+  background: #111;
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+/* -------- Header & Navbar -------- */
+/* ✅ Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0,0,0,0.95);
+      padding: 8px 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      z-index: 1000;
+      border-bottom: 2px solid var(--red-dark);
+      border-radius: 0 0 12px 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand img {
+      height: 32px; width: auto; border-radius: 8px;
+    }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      text-decoration: none;
+    }
+    .logo span { color: var(--red); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 16px;
+      margin: 0;
+      padding: 0;
+    }
+    nav ul li { display: inline; }
+    nav ul li a {
+      text-decoration: none;
+      color: #fff;
+      font-weight: 600;
+      font-size: 13px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      transition: color 0.3s, box-shadow 0.3s, background 0.3s;
+    }
+    nav ul li a:hover,
+    nav ul li a.active {
+      color: var(--red);
+      box-shadow: 0 2px 6px rgba(229,9,20,0.6);
+      background: rgba(255,255,255,0.05);
+    }
+    nav ul li a.admin-link {
+      background: var(--red);
+      color: #fff !important;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+    nav ul li a.admin-link:hover {
+      background: var(--red-dark);
+      box-shadow: 0 2px 6px rgba(229,9,20,0.6);
+    }
+
+/* -------- Slideshow (shared for all pages) -------- */
+.slideshow {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+}
+
+.slideshow img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(40%); /* dim images so text is readable */
+}
+
+.slideshow-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
   color: #fff;
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.3s, border-color 0.3s;
-  padding-bottom: 2px;
+  max-width: 90%;
 }
 
-nav ul li a:hover,
-nav ul li a.active {
-  color: #00bcd4;
-  border-bottom: 2px solid #00bcd4;
+.slideshow-text h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
 }
 
-/* 🔹 Mobile Menu Toggle Button */
-.menu-toggle {
-  display: none;
-  background: none;
+.slideshow-text p {
+  font-size: 18px;
+}
+
+/* -------- Page Content -------- */
+.content {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+/* -------- Contact Form -------- */
+.contact-card {
+  background: rgba(20, 20, 20, 0.85);
+  color: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.contact-card h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: var(--red);
+}
+
+.contact-card input,
+.contact-card textarea {
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
   border: none;
+  border-radius: 6px;
+  outline: none;
+}
+
+.contact-card button {
+  background: var(--red);
   color: #fff;
-  font-size: 26px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
-  transition: transform 0.3s;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+.contact-card button:hover {
+  background: var(--red-dark);
 }
 
-.menu-toggle:active {
-  transform: scale(0.9);
-}
-
-/* 🔹 Responsive (Mobile) Styles */
+/* -------- Responsive -------- */
 @media (max-width: 768px) {
-  nav {
-    position: absolute;
-    top: 65px;
-    right: 0;
-    width: 220px;
-    background: rgba(0, 0, 0, 0.95);
-    border-left: 1px solid #222;
-    border-bottom: 1px solid #222;
-    transform: translateX(100%);
-    transition: transform 0.3s ease-in-out;
-    border-radius: 0 0 0 10px;
-  }
-
-  nav.active {
-    transform: translateX(0);
-  }
-
   nav ul {
     flex-direction: column;
-    text-align: right;
-    padding: 10px 20px;
-    gap: 15px;
+    background: var(--bg-dark);
+    position: absolute;
+    top: var(--nav-height);
+    right: 0;
+    width: 200px;
+    display: none;
+    padding: 15px;
   }
-
+  nav ul.active {
+    display: flex;
+  }
+  nav ul li {
+    margin: 10px 0;
+  }
   .menu-toggle {
     display: block;
+    cursor: pointer;
+    font-size: 22px;
+    color: var(--text-light);
   }
 }
-
-/* 🔹 Adjust page top spacing so header doesn’t overlap */
-body {
-  padding-top: 70px;
+@media (min-width: 769px) {
+  .menu-toggle {
+    display: none;
+  }
 }
