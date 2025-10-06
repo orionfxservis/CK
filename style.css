@@ -202,23 +202,8 @@ body {
 }
 
 /* ===== MOBILE MENU FIX (Add at END of style.css) ===== */
-/* ---------- Mobile Menu Fix ---------- */
-.menu-toggle {
-  display: none;
-  font-size: 26px;
-  color: var(--text-light);
-  background: none;
-  border: none;
-  cursor: pointer;
-  z-index: 1001;
-}
-
-@media (max-width: 768px) {
-  header {
-    position: relative;
-    z-index: 1000;
-  }
-
+/* ✅ Mobile & Tablet Header */
+@media (max-width: 992px) {
   .menu-toggle {
     display: block;
     font-size: 26px;
@@ -227,6 +212,7 @@ body {
     border: none;
     cursor: pointer;
     margin-left: auto;
+    z-index: 1100;
   }
 
   nav {
@@ -238,6 +224,7 @@ body {
     transform: translateY(-200%);
     transition: transform 0.3s ease-in-out;
     text-align: center;
+    z-index: 1000;
   }
 
   nav.active {
@@ -247,13 +234,20 @@ body {
   nav ul {
     display: flex;
     flex-direction: column;
+    margin: 0;
     padding: 10px 0;
   }
 
   nav ul li {
     padding: 10px 0;
   }
+
+  /* Hide Admin on mobile/tablet */
+  nav ul li .admin-link {
+    display: none;
+  }
 }
+
 
 
 

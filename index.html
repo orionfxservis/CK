@@ -196,7 +196,7 @@
   <!-- ✅ Header -->
   <header>
   <div class="brand">
-  <img src="images/Logo/Logo.png" alt="Logo" />
+    <img src="images/Logo/Logo.png" alt="Logo" />
     <a href="index.html" class="logo">CLICK<span>WORX</span></a>
   </div>
 
@@ -204,8 +204,8 @@
 
   <nav id="navbar">
     <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="urgent.html" class="active">Urgent Sale</a></li>
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="urgent.html" >Urgent Sale</a></li>
       <li><a href="more.html">More Cars</a></li>
       <li><a href="search.html">Search</a></li>
       <li><a href="about.html">About Us</a></li>
@@ -214,6 +214,7 @@
     </ul>
   </nav>
 </header>
+
 
 
 
@@ -428,7 +429,7 @@
   }
 });
 
-<!-- ✅ Mobile Menu Toggle Script -->
+<!-- ✅ Mobile Menu Toggle -->
 document.addEventListener("DOMContentLoaded", () => {
   const menuToggle = document.getElementById("menuToggle");
   const navbar = document.getElementById("navbar");
@@ -439,7 +440,6 @@ document.addEventListener("DOMContentLoaded", () => {
       navbar.classList.toggle("active");
     });
 
-    // Close menu when clicking outside
     document.addEventListener("click", (event) => {
       if (!navbar.contains(event.target) && !menuToggle.contains(event.target)) {
         navbar.classList.remove("active");
