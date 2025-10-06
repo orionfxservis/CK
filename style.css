@@ -214,6 +214,21 @@ body {
 }
 
 @media (max-width: 768px) {
+  header {
+    position: relative;
+    z-index: 1000;
+  }
+
+  .menu-toggle {
+    display: block;
+    font-size: 26px;
+    color: #fff;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: auto;
+  }
+
   nav {
     position: absolute;
     top: 70px;
@@ -223,28 +238,22 @@ body {
     transform: translateY(-200%);
     transition: transform 0.3s ease-in-out;
     text-align: center;
-    z-index: 1000;
-  }
-
-  nav ul {
-    flex-direction: column;
-    padding: 20px 0;
-  }
-
-  nav ul li {
-    margin: 15px 0;
   }
 
   nav.active {
     transform: translateY(0);
   }
 
-  .menu-toggle {
-    display: block;
-    position: absolute;
-    top: 22px;
-    right: 20px;
+  nav ul {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0;
+  }
+
+  nav ul li {
+    padding: 10px 0;
   }
 }
+
 
 
