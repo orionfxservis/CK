@@ -39,7 +39,7 @@
     .content { padding:40px 20px; max-width:1000px; margin:auto; color:#fff; }
     .contact-wrapper { display:grid; grid-template-columns:1fr 1fr; gap:30px; margin-top:30px; }
     .contact-card, .social-card {
-      background:#111; padding:25px; border-radius:12px;
+      background:#111; padding:25px; border-radius:12px; border: 1px solid var(--red);
       box-shadow:0 4px 10px rgba(0,0,0,0.4);
     }
     .contact-card form { display:flex; flex-direction:column; gap:12px; }
@@ -206,7 +206,40 @@
     const url=`https://wa.me/${phone}?text=${text}`;
     window.open(url, "_blank");
   });
+  
+ 
+document.addEventListener("DOMContentLoaded", () => {
+  const menuToggle = document.getElementById("menuToggle");
+  const navList = document.querySelector("nav ul");
+
+  if (menuToggle && navList) {
+    // ✅ Toggle menu open/close
+    menuToggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      navList.classList.toggle("active");
+    });
+
+    // ✅ Close menu when clicking anywhere outside it
+    document.addEventListener("click", (event) => {
+      if (!navList.contains(event.target) && !menuToggle.contains(event.target)) {
+        navList.classList.remove("active");
+      }
+    });
+
+    // ✅ Close menu when a link is clicked (auto-hide on page change)
+    navList.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        navList.classList.remove("active");
+      });
+    });
+
+    // ✅ Always hide menu on page load (if it was open before)
+    window.addEventListener("pageshow", () => {
+      navList.classList.remove("active");
+    });
+  }
+});
+
   </script>
 </body>
 </html>
-

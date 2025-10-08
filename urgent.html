@@ -270,6 +270,40 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 });
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const menuToggle = document.getElementById("menuToggle");
+  const navList = document.querySelector("nav ul");
+
+  if (menuToggle && navList) {
+    // ✅ Toggle menu open/close
+    menuToggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      navList.classList.toggle("active");
+    });
+
+    // ✅ Close menu when clicking anywhere outside it
+    document.addEventListener("click", (event) => {
+      if (!navList.contains(event.target) && !menuToggle.contains(event.target)) {
+        navList.classList.remove("active");
+      }
+    });
+
+    // ✅ Close menu when a link is clicked (auto-hide on page change)
+    navList.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        navList.classList.remove("active");
+      });
+    });
+
+    // ✅ Always hide menu on page load (if it was open before)
+    window.addEventListener("pageshow", () => {
+      navList.classList.remove("active");
+    });
+  }
+});
+
 </script>
 </body>
 </html>

@@ -7,107 +7,234 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <style>
-/* Hero */
-.hero { margin-top:70px; height:70vh; position:relative; overflow:hidden; z-index:1; }
-.hero-slide { position:absolute; inset:0; background-size:cover; background-position:center; opacity:0; transition:opacity 1s ease-in-out; }
-.hero-slide.active { opacity:1; }
-.hero::after { content:""; position:absolute; inset:0; background:rgba(0,0,0,0.4); z-index:1; }
-.hero-content { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; z-index:2; color:#fff; }
-.hero-content h1 { font-size:2.5rem; margin-bottom:10px; }
-.hero-content p { font-size:1.2rem; color:#f1f1f1; }
-.dots { position:absolute; bottom:20px; width:100%; text-align:center; z-index:3; }
-.dots span { display:inline-block; width:12px; height:12px; margin:0 4px; border-radius:50%; background:#fff; opacity:0.5; cursor:pointer; }
-.dots span.active { opacity:1; background:#e50914; }
-
-/* Cars Table Overlay */
-.content-wrapper {
-  position:relative; z-index:2; max-width:1200px; margin:-120px auto 40px; padding:20px;
-  background:rgba(17,17,17,0.85); border-radius:12px; border: 1px solid var(--red); backdrop-filter:blur(6px);
+/* Hero Background Fixed */
+.hero {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70vh;
+  overflow: hidden;
+  z-index: -1;
 }
-.content-wrapper h2 { text-align:center; margin-bottom:20px; color:#fff; }
-.car-table { width:100%; border-collapse:collapse; border-radius:12px; overflow:hidden; }
-.car-table th, .car-table td { padding:12px; text-align:center; border-bottom:1px solid #333; color:#fff; }
-.car-table th { background:#111; }
-.car-image { width:80px; height:40px; object-fit:cover; border-radius:6px; }
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out;
+}
+.hero-slide.active { opacity: 1; }
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.6); /* darker overlay */
+  z-index: 1;
+}
+.hero-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  z-index: 2;
+  color: #fff;
+}
+.hero-content h1 { font-size: 2.5rem; margin-bottom: 10px; }
+.hero-content p { font-size: 1.2rem; color: #f1f1f1; }
+
+.dots {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+  z-index: 3;
+}
+.dots span {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin: 0 4px;
+  border-radius: 50%;
+  background: #fff;
+  opacity: 0.5;
+  cursor: pointer;
+}
+.dots span.active { opacity: 1; background: #e50914; }
+
+/* Content Overlay */
+.content-wrapper {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 70vh auto 40px;
+  padding: 20px;
+  background: rgba(17,17,17,0.85);
+  border-radius: 12px;
+  border: 1px solid var(--red);
+  backdrop-filter: blur(6px);
+}
+.content-wrapper h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #fff;
+}
+.car-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.car-table th, .car-table td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #333;
+  color: #fff;
+}
+.car-table th { background: #111; }
+.car-image {
+  width: 80px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 6px;
+}
 
 /* Buttons */
-.btn { padding:8px 16px; border:none; border-radius:6px; background:#e50914; color:#fff; font-weight:600; cursor:pointer; transition:0.3s; }
-.btn:hover { background:#c40812; }
+.btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  background: #e50914;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.btn:hover { background: #c40812; }
 
-/* Modal (same as index.html) */
-.modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:2000; justify-content:center; align-items:center; }
-.modal-content { background:#1a1a1a; border:1px solid #e50914; padding:20px; border-radius:10px; max-width:900px; width:90%; max-height:90vh; display:flex; gap:20px; overflow:hidden; }
-.modal-left { flex:1; overflow-y:auto; }
-.modal-left img { width:100%; margin-bottom:10px; border-radius:6px; }
-.modal-right { flex:1; overflow-y:auto; }
-.modal-close { position:absolute; top:20px; right:20px; font-size:30px; color:#fff; cursor:pointer; }
-.buy-form { margin-top:15px; display:none; flex-direction:column; gap:10px; }
-.buy-form input, .buy-form textarea { width:95%; padding:10px; border:none; border-radius:5px; }
-@media(max-width:768px){ .modal-content{ flex-direction:column; } .modal-left{ display:flex; flex-direction:row; overflow-x:auto; gap:10px; } .modal-left img{ width:80%; flex-shrink:0; } }
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+}
+.modal-content {
+  background: #1a1a1a;
+  border: 1px solid #e50914;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 900px;
+  width: 90%;
+  max-height: 90vh;
+  display: flex;
+  gap: 20px;
+  overflow: hidden;
+}
+.modal-left { flex: 1; overflow-y: auto; }
+.modal-left img { width: 100%; margin-bottom: 10px; border-radius: 6px; }
+.modal-right { flex: 1; overflow-y: auto; }
+.modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 30px;
+  color: #fff;
+  cursor: pointer;
+}
+.buy-form {
+  margin-top: 15px;
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+}
+.buy-form input, .buy-form textarea {
+  width: 95%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+}
+@media(max-width:768px){
+  .modal-content{ flex-direction: column; }
+  .modal-left{ display: flex; flex-direction: row; overflow-x: auto; gap: 10px; }
+  .modal-left img{ width: 80%; flex-shrink: 0; }
+}
 </style>
 </head>
 <body>
 <header>
-<div class="brand"><img src="images/Logo/Logo.png" alt="Logo"><a href="index.html" class="logo">CLICK<span>WORX</span></a></div>
-<nav>
-<ul>
-<li><a href="index.html">Home</a></li>
-<li><a href="urgent.html">Urgent Sale</a></li>
-<li><a href="more.html" class="active">More Cars</a></li>
-<li><a href="search.html">Search</a></li>
-<li><a href="about.html">About Us</a></li>
-<li><a href="contact.html">Contact Us</a></li>
-<li><a href="admin.html" class="admin-link">Admin</a></li>
-</ul>
-</nav>
+  <div class="brand">
+    <img src="images/Logo/Logo.png" alt="Logo">
+    <a href="index.html" class="logo">CLICK<span>WORX</span></a>
+  </div>
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="urgent.html">Urgent Sale</a></li>
+      <li><a href="more.html" class="active">More Cars</a></li>
+      <li><a href="search.html">Search</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Contact Us</a></li>
+      <li><a href="admin.html" class="admin-link">Admin</a></li>
+    </ul>
+  </nav>
 </header>
 
 <section class="hero">
-<div id="heroSlides"></div>
-<div class="hero-content">
-<h1>Explore More Cars</h1>
-<p>Luxury, Performance & Style at ClickWorx</p>
-</div>
-<div class="dots" id="heroDots"></div>
+  <div id="heroSlides"></div>
+  <div class="hero-content">
+    <h1>Explore More Cars</h1>
+    <p>Luxury, Performance & Style at ClickWorx</p>
+  </div>
+  <div class="dots" id="heroDots"></div>
 </section>
 
 <div class="content-wrapper">
-<h2>More Cars Listing</h2>
-<table class="car-table" id="moreCarsTable">
-<thead>
-<tr>
-<th>Image</th>
-<th>Name</th>
-<th>Model</th>
-<th>Specs</th>
-<th>Mileage</th>
-<th>Price</th>
-<th>Action</th>
-</tr>
-</thead>
-<tbody></tbody>
-</table>
+  <h2>More Cars Listing</h2>
+  <table class="car-table" id="moreCarsTable">
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Name</th>
+        <th>Model</th>
+        <th>Specs</th>
+        <th>Color</th>
+        <th>Mileage</th>
+        <th>Location</th>
+        <th>Price</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
 </div>
 
 <!-- Modal -->
 <div class="modal" id="carModal">
-<div class="modal-content">
-<span class="modal-close" onclick="closeModal()">&times;</span>
-<div class="modal-left" id="modalImages"></div>
-<div class="modal-right">
-<h2 id="modalTitle"></h2>
-<p id="modalDetails"></p>
-<p id="modalPrice" style="color:#e50914;font-weight:700;"></p>
-<button class="btn" onclick="openBuyForm()">I Want To Buy</button>
-<div class="buy-form" id="buyForm">
-<input type="text" id="carNameField" readonly>
-<input type="text" id="customerName" placeholder="Your Name">
-<input type="text" id="contactNo" placeholder="Contact No">
-<textarea id="message" placeholder="Message"></textarea>
-<button class="btn" onclick="sendWhatsApp()">Send via WhatsApp</button>
-</div>
-</div>
-</div>
+  <div class="modal-content">
+    <span class="modal-close" onclick="closeModal()">&times;</span>
+    <div class="modal-left" id="modalImages"></div>
+    <div class="modal-right">
+      <h2 id="modalTitle"></h2>
+      <p id="modalDetails"></p>
+      <p id="modalPrice" style="color:#e50914;font-weight:700;"></p>
+      <button class="btn" onclick="openBuyForm()">I Want To Buy</button>
+      <div class="buy-form" id="buyForm">
+        <input type="text" id="carNameField" readonly>
+        <input type="text" id="customerName" placeholder="Your Name">
+        <input type="text" id="contactNo" placeholder="Contact No">
+        <textarea id="message" placeholder="Message"></textarea>
+        <button class="btn" onclick="sendWhatsApp()">Send via WhatsApp</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -117,7 +244,8 @@ let whatsappNumber = "";
 // Load banners and cars
 async function loadData(){
   let savedBanners = {};
-  try{ const res = await fetch('banners.json'); if(res.ok) savedBanners = await res.json(); }catch{ savedBanners = JSON.parse(localStorage.getItem("banners"))||{}; }
+  try{ const res = await fetch('banners.json'); if(res.ok) savedBanners = await res.json(); }
+  catch{ savedBanners = JSON.parse(localStorage.getItem("banners"))||{}; }
 
   const heroContainer = document.getElementById("heroSlides");
   heroContainer.innerHTML="";
@@ -133,7 +261,6 @@ async function loadData(){
     heroContainer.appendChild(div);
   });
 
-  // dots
   const dotsContainer=document.getElementById("heroDots");
   dotsContainer.innerHTML="";
   slides.forEach((_,i)=>{
@@ -157,7 +284,8 @@ async function loadData(){
   showSlide(0);
 
   // Load cars
-  try{ const res = await fetch('cars.json'); if(res.ok) moreCars = await res.json(); else moreCars = JSON.parse(localStorage.getItem("cars"))||[]; }catch{ moreCars = JSON.parse(localStorage.getItem("cars"))||[]; }
+  try{ const res = await fetch('cars.json'); if(res.ok) moreCars = await res.json(); else moreCars = JSON.parse(localStorage.getItem("cars"))||[]; }
+  catch{ moreCars = JSON.parse(localStorage.getItem("cars"))||[]; }
   whatsappNumber = savedBanners.whatsapp || localStorage.getItem("+923330360487") || "";
   renderMoreCars();
 }
@@ -173,7 +301,9 @@ function renderMoreCars(){
       <td>${car.name}</td>
       <td>${car.model}</td>
       <td>${car.specs||""}</td>
+      <td>${car.color||""}</td>
       <td>${car.mileage||""}</td>
+      <td>${car.location||""}</td>
       <td>${car.price}</td>
       <td><button class="btn" onclick="openModal(${i})">Details</button></td>
     `;
@@ -181,7 +311,6 @@ function renderMoreCars(){
   });
 }
 
-// Modal functions
 function openModal(index){
   const car = moreCars[index];
   document.getElementById('modalTitle').textContent = car.name+" - "+car.model;
@@ -205,6 +334,39 @@ function sendWhatsApp(){
 }
 
 window.onload = loadData;
+
+document.addEventListener("DOMContentLoaded", () => {
+  const menuToggle = document.getElementById("menuToggle");
+  const navList = document.querySelector("nav ul");
+
+  if (menuToggle && navList) {
+    // ✅ Toggle menu open/close
+    menuToggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      navList.classList.toggle("active");
+    });
+
+    // ✅ Close menu when clicking anywhere outside it
+    document.addEventListener("click", (event) => {
+      if (!navList.contains(event.target) && !menuToggle.contains(event.target)) {
+        navList.classList.remove("active");
+      }
+    });
+
+    // ✅ Close menu when a link is clicked (auto-hide on page change)
+    navList.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        navList.classList.remove("active");
+      });
+    });
+
+    // ✅ Always hide menu on page load (if it was open before)
+    window.addEventListener("pageshow", () => {
+      navList.classList.remove("active");
+    });
+  }
+});
+
 </script>
 </body>
 </html>
