@@ -23,14 +23,14 @@
   background-size: cover;
   background-position: center;
   opacity: 0;
-  transition: opacity 1.5s ease-in-out;
+  transition: opacity 1s ease-in-out;
 }
 .hero-slide.active { opacity: 1; }
 .hero::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.6); /* darker overlay */
+  background: rgba(0,0,0,0.6);
   z-index: 1;
 }
 .hero-content {
@@ -71,7 +71,7 @@
   position: relative;
   z-index: 2;
   max-width: 1200px;
-  margin: 70vh auto 40px;
+  margin: calc(70vh + 20px) auto 40px;
   padding: 20px;
   background: rgba(17,17,17,0.85);
   border-radius: 12px;
@@ -171,23 +171,22 @@
 <body>
 <header>
   <div class="brand">
-    <img src="images/Logo/logo.png" alt="Logo" />
+    <img src="images/Logo/Logo.png" alt="Logo">
     <a href="index.html" class="logo">CLICK<span>WORX</span></a>
   </div>
+  <div class="menu-toggle">☰</div>
   <nav>
     <ul>
       <li><a href="index.html">Home</a></li>
-      <li><a href="index.html#urgent">Urgent Sale</a></li>
-      <li><a href="index.html#morecars">More Cars</a></li>
+      <li><a href="urgent.html">Urgent Sale</a></li>
+      <li><a href="more.html" class="active">More Cars</a></li>
       <li><a href="search.html">Search</a></li>
       <li><a href="about.html">About Us</a></li>
       <li><a href="contact.html">Contact Us</a></li>
       <li><a href="admin.html" class="admin-link">Admin</a></li>
     </ul>
   </nav>
-  <button class="menu-toggle" id="menuToggle">☰</button>
 </header>
-
 
 <section class="hero">
   <div id="heroSlides"></div>
@@ -240,10 +239,20 @@
 </div>
 
 <script>
+// ===== Mobile Menu =====
+const menuToggle = document.querySelector('.menu-toggle');
+const navMenu = document.querySelector('nav ul');
+menuToggle.addEventListener('click', () => {
+  navMenu.classList.toggle('active');
+});
+// Auto-hide menu on navigation
+document.querySelectorAll('nav a').forEach(link => {
+  link.addEventListener('click', () => navMenu.classList.remove('active'));
+});
+
 let moreCars = [];
 let whatsappNumber = "";
 
-// Load banners and cars
 async function loadData(){
   let savedBanners = {};
   try{ const res = await fetch('banners.json'); if(res.ok) savedBanners = await res.json(); }
@@ -285,7 +294,6 @@ async function loadData(){
   setInterval(nextSlide,5000);
   showSlide(0);
 
-  // Load cars
   try{ const res = await fetch('cars.json'); if(res.ok) moreCars = await res.json(); else moreCars = JSON.parse(localStorage.getItem("cars"))||[]; }
   catch{ moreCars = JSON.parse(localStorage.getItem("cars"))||[]; }
   whatsappNumber = savedBanners.whatsapp || localStorage.getItem("+923330360487") || "";
@@ -336,39 +344,6 @@ function sendWhatsApp(){
 }
 
 window.onload = loadData;
-
-document.addEventListener("DOMContentLoaded", () => {
-  const menuToggle = document.getElementById("menuToggle");
-  const navList = document.querySelector("nav ul");
-
-  if (menuToggle && navList) {
-    // ✅ Toggle menu open/close
-    menuToggle.addEventListener("click", (e) => {
-      e.stopPropagation();
-      navList.classList.toggle("active");
-    });
-
-    // ✅ Close menu when clicking anywhere outside it
-    document.addEventListener("click", (event) => {
-      if (!navList.contains(event.target) && !menuToggle.contains(event.target)) {
-        navList.classList.remove("active");
-      }
-    });
-
-    // ✅ Close menu when a link is clicked (auto-hide on page change)
-    navList.querySelectorAll("a").forEach(link => {
-      link.addEventListener("click", () => {
-        navList.classList.remove("active");
-      });
-    });
-
-    // ✅ Always hide menu on page load (if it was open before)
-    window.addEventListener("pageshow", () => {
-      navList.classList.remove("active");
-    });
-  }
-});
-
 </script>
 </body>
 </html>
