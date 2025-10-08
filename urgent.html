@@ -23,7 +23,7 @@
       scroll-behavior: smooth;
     }
 
-    /* ================= Header (same style as index) ================= */
+    /* ✅ Header (same as index) */
     header {
       display: flex;
       justify-content: space-between;
@@ -46,17 +46,18 @@
       gap: 10px;
     }
     .brand img { height: 32px; width: auto; border-radius: 8px; }
-    .logo { font-size: 1.5rem; font-weight: 700; color: #fff; text-decoration: none; }
+    .logo {
+      font-size: 1.5rem; font-weight: 700;
+      color: #fff; text-decoration: none;
+    }
     .logo span { color: var(--red); }
 
-    nav { position: relative; z-index: 1001; }
     nav ul {
       list-style: none;
       display: flex;
       gap: 16px;
       margin: 0;
       padding: 0;
-      align-items: center;
     }
     nav ul li a {
       text-decoration: none;
@@ -85,7 +86,7 @@
       box-shadow: 0 2px 6px rgba(229,9,20,0.6);
     }
 
-    /* Mobile menu button */
+    /* ✅ Mobile Menu */
     .menu-toggle {
       display: none;
       cursor: pointer;
@@ -93,10 +94,29 @@
       color: var(--text-light);
       background: none;
       border: none;
-      z-index: 1100;
+    }
+    @media (max-width: 768px) {
+      .menu-toggle { display: block; }
+      nav ul {
+        flex-direction: column;
+        background: var(--bg-dark);
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 200px;
+        display: none;
+        padding: 15px;
+        border-left: 2px solid var(--red-dark);
+        border-bottom: 2px solid var(--red-dark);
+        border-radius: 0 0 12px 12px;
+      }
+      nav ul.active { display: flex; }
+      nav ul li { margin: 10px 0; }
     }
 
-    /* ================= Hero & layout (kept intact) ================= */
+    .section { margin-top: 90px; padding: 20px; text-align: center; }
+
+    /* Hero */
     .hero { margin-top:70px; height:70vh; position:relative; overflow:hidden; }
     .hero-slide {
       position:absolute; inset:0; background-size:cover; background-position:center;
@@ -108,7 +128,7 @@
     .hero-content h1 { font-size:2.5rem; margin-bottom:10px; }
     .dots { position:absolute; bottom:20px; width:100%; text-align:center; z-index:3; }
     .dots span { display:inline-block; width:12px; height:12px; margin:0 4px; border-radius:50%; background:#fff; opacity:0.5; cursor:pointer; }
-    .dots span.active { opacity:1; background:var(--red); }
+    .dots span.active { opacity:1; background:#e50914; }
 
     /* Side banners */
     .side-banner {
@@ -119,333 +139,255 @@
     .side-banner.right { right:0; }
     .side-banner img { width:100%; border-radius:10px; box-shadow:0 0 8px rgba(0,0,0,0.5); }
 
-    /* Car grid (single definition) */
+    /* Car grid */
     .car-grid {
       display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
       gap:20px; padding:40px 60px;
-      margin-top: 10px;
     }
     .car-card {
       background:#1a1a1a; border: 1px solid var(--red); border-radius:12px; overflow:hidden;
       box-shadow:0 2px 8px rgba(0,0,0,0.6); transition:transform .2s;
     }
     .car-card:hover { transform:translateY(-4px); }
-    .car-card img { width:100%; height:180px; object-fit:cover; }
-    .car-info { padding:12px; color:#fff; text-align:center; border-top: 1px solid rgba(255,255,255,0.02); font-weight: 600; }
-    .car-info h3 { margin:6px 0; font-size:1.1rem; color: var(--red); }
+    .car-card img {
+      width:100%; height:180px; object-fit:cover;
+      opacity:0; transition:opacity .4s ease-in-out;
+    }
+    .car-card img.loaded { opacity:1; }
+    .car-info { padding:12px; color:#fff; text-align:center; border: 1px solid var(--red); font-weight: bold;}
+    .car-info h3 { margin:6px 0; font-size:1.1rem; color: var(--red);}
     .car-info p { color:#ccc; margin:0; font-size:.9rem; }
     .ribbon {
       line-height: 20px; position:absolute; top:25px; left:-10px;
-      background:var(--red); color:#fff; padding:5px 15px; font-size:12px;
+      background:#e50914; color:#fff; padding:5px 15px; font-size:12px;
       transform:rotate(-45deg);
     }
     .details-btn {
       display:inline-block; margin-top:10px; padding:8px 14px;
-      background:var(--red); border:none; border-radius:15px; color:#fff; cursor:pointer;
+      background:#e50914; border:none; border-radius:15px; color:#fff; cursor:pointer;
       transition:background 0.3s;
     }
-    .details-btn:hover { background:var(--red-dark); }
+    .details-btn:hover { background:#b00610; }
 
     /* Modal */
     .modal {
-      display:none; position:fixed; inset:0; background:rgba(0,0,0,0.9);
+      display:none; position:fixed; inset:0; background:rgba(0,0,0,0.9); 
       justify-content:center; align-items:center; z-index:9999; overflow:auto;
     }
     .modal-content {
       background:#111; color:#fff; padding:20px; border-radius:12px; border: 1px solid var(--red);
-      max-width:900px; width:90%; display:flex; flex-wrap:wrap; gap:20px; position:relative;
+      max-width:900px; width:90%; display:flex; flex-wrap:wrap; gap:20px;
+      position:relative;
     }
-    .modal-close { position:absolute; top:10px; right:15px; font-size:22px; color:#fff; cursor:pointer; background:none; border:none; }
+    .modal-close {
+      position:absolute; top:10px; right:15px; font-size:22px; color:#fff;
+      cursor:pointer; background:none; border:none;
+    }
     .modal-images { flex:1; min-width:300px; max-height:500px; overflow-y:auto; }
     .modal-images img { width:100%; margin-bottom:10px; border-radius:8px; }
     .modal-details { flex:1; min-width:300px; }
-    .buy-btn { display:inline-block; margin-top:15px; padding:10px 18px; background:var(--red); border:none; border-radius:15px; color:#fff; cursor:pointer; }
-
-    /* WhatsApp form inside modal */
-    .whatsapp-form { display:none; margin-top:15px; background:#1a1a1a; padding:12px; border-radius:8px; }
-    .whatsapp-form input, .whatsapp-form textarea { width:100%; margin-bottom:8px; padding:8px; border:none; border-radius:6px; outline:none; }
-    .whatsapp-form button { background:var(--red); color:#fff; border:none; padding:8px 14px; border-radius:6px; cursor:pointer; width:100%; }
-
-    /* Footer */
-    footer {
-      background: #000; padding: 30px 20px; text-align: center;
-      border-top: 2px solid var(--red-dark); margin-top: 60px;
+    .buy-btn {
+      display:inline-block; margin-top:15px; padding:10px 18px;
+      background:#e50914; border:none; border-radius:15px; color:#fff; cursor:pointer;
     }
-    footer .logo { font-size: 1.2rem; font-weight: 700; }
-    footer .logo span { color: var(--red); }
 
-    /* ================= Responsive: mobile menu behavior ================= */
-    @media (max-width: 768px) {
-      nav ul {
-        flex-direction: column;
-        background: var(--bg-dark);
-        position: absolute;
-        top: 60px;
-        right: 0;
-        width: 220px;
-        display: none;
-        padding: 15px;
-        border-left: 2px solid var(--red-dark);
-        border-bottom: 2px solid var(--red-dark);
-        border-radius: 0 0 12px 12px;
-      }
-      nav ul.active { display: flex; }
-      nav ul li { margin: 10px 0; }
-      .menu-toggle { display: block; }
-      /* Reduce padding for mobile grid */
-      .car-grid { padding: 20px; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); }
-      .hero { height:55vh; }
+    .whatsapp-form {
+      display:none; margin-top:15px; background:#1a1a1a;
+      padding:12px; border-radius:8px;
+    }
+    .whatsapp-form input, .whatsapp-form textarea {
+      width:100%; margin-bottom:8px; padding:8px;
+      border:none; border-radius:6px; outline:none;
+    }
+    .whatsapp-form button {
+      background:#e50914; color:#fff; border:none;
+      padding:8px 14px; border-radius:6px; cursor:pointer; width:100%;
     }
   </style>
 </head>
 <body>
-
-  <header>
-    <div class="brand">
-      <img src="images/Logo/logo.png" alt="Logo" />
-      <a href="index.html" class="logo">CLICK<span>WORX</span></a>
-    </div>
-
-    <nav id="navbar" aria-label="Main navigation">
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="urgent.html" class="active">Urgent Sale</a></li>
-        <li><a href="more.html">More Cars</a></li>
-        <li><a href="search.html">Search</a></li>
-        <li><a href="about.html">About Us</a></li>
-        <li><a href="contact.html">Contact Us</a></li>
-        <li><a href="admin.html" class="admin-link">Admin</a></li>
-      </ul>
-    </nav>
-
-    <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="navbar">☰</button>
-  </header>
-
-  <!-- Hero -->
-  <section class="hero">
-    <div id="heroSlides"></div>
-    <div class="hero-content">
-      <h1>Urgent Sale Cars</h1>
-      <p>Find the best urgent deals today!</p>
-    </div>
-    <div class="dots" id="heroDots"></div>
-  </section>
-
-  <!-- Side banners -->
-  <div class="side-banner left" id="leftBanner"></div>
-  <div class="side-banner right" id="rightBanner"></div>
-
-  <!-- Cars (grid) -->
-  <section class="car-grid" id="carGrid"></section>
-
-  <!-- Modal -->
-  <div class="modal" id="carModal" aria-hidden="true">
-    <div class="modal-content">
-      <button class="modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
-      <div class="modal-images" id="modalImages"></div>
-      <div class="modal-details" id="modalDetails"></div>
-    </div>
+  
+<header>
+  <div class="brand">
+    <img src="images/Logo/logo.png" alt="Logo" />
+    <a href="index.html" class="logo">CLICK<span>WORX</span></a>
   </div>
 
+  <nav id="navbar">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="urgent.html" class="active">Urgent Sale</a></li>
+      <li><a href="more.html">More Cars</a></li>
+      <li><a href="search.html">Search</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Contact Us</a></li>
+      <li><a href="admin.html" class="admin-link">Admin</a></li>
+    </ul>
+  </nav>
+
+  <button class="menu-toggle" id="menuToggle">☰</button>
+</header>
+
+<section class="hero">
+  <div id="heroSlides"></div>
+  <div class="hero-content">
+    <h1>Urgent Sale Cars</h1>
+    <p>Find the best urgent deals today!</p>
+  </div>
+  <div class="dots" id="heroDots"></div>
+</section>
+
+<div class="side-banner left" id="leftBanner"></div>
+<div class="side-banner right" id="rightBanner"></div>
+
+<section class="car-grid" id="carGrid"></section>
+
+<div class="modal" id="carModal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <div class="modal-images" id="modalImages"></div>
+    <div class="modal-details" id="modalDetails"></div>
+  </div>
+</div>
+
 <script>
-/* ===== Load banners + hero slides (same logic, cleaned up) ===== */
+/* ===== Load Banners ===== */
 async function loadBanners() {
   let banners = {};
   try {
     const res = await fetch("banners.json");
     if (res.ok) banners = await res.json();
-  } catch (err) {
-    banners = JSON.parse(localStorage.getItem("banners")) || {};
-  }
+  } catch { banners = JSON.parse(localStorage.getItem("banners")) || {}; }
 
-  // Hero slideshow
   const hero = document.getElementById("heroSlides");
   hero.innerHTML = "";
-  const imgs = ["hero1","hero2","hero3","hero4"].map(id => banners[id]).filter(Boolean);
-  const fallback = ["images/BG/bg1.jpg","images/BG/car02.jpg","images/BG/car03.jpg","images/BG/bg3.jpg"];
+  const imgs = ["hero1","hero2","hero3","hero4"].map(id=>banners[id]).filter(Boolean);
+  const fallback = ["images/BG/bg1.jpg","images/BG/car02.jpg","images/BG/car03.jpg"];
   const slides = imgs.length ? imgs : fallback;
-
-  slides.forEach((src, i) => {
-    const div = document.createElement("div");
-    div.className = "hero-slide";
-    div.style.backgroundImage = `url(${src})`;
-    if (i === 0) div.classList.add("active");
+  slides.forEach((src,i)=>{
+    const div=document.createElement("div");
+    div.className="hero-slide"; div.style.backgroundImage=`url(${src})`;
+    if(i===0) div.classList.add("active");
     hero.appendChild(div);
   });
-
-  // dots + slideshow control
-  const dots = document.getElementById("heroDots");
-  dots.innerHTML = "";
-  slides.forEach((_, i) => {
-    const d = document.createElement("span");
-    d.addEventListener("click", () => showSlide(i));
-    dots.appendChild(d);
+  const dots=document.getElementById("heroDots");
+  dots.innerHTML="";
+  slides.forEach((_,i)=>{
+    const d=document.createElement("span");
+    d.addEventListener("click",()=>showSlide(i)); dots.appendChild(d);
   });
-
-  const slideEls = document.querySelectorAll(".hero-slide");
-  const dotEls = dots.querySelectorAll("span");
-
-  function showSlide(n) {
-    const idx = (n + slideEls.length) % slideEls.length;
-    slideEls.forEach((s, i) => s.classList.toggle("active", i === idx));
-    dotEls.forEach((d, i) => d.classList.toggle("active", i === idx));
-    current = idx;
+  let index=0; const dotEls=dots.querySelectorAll("span");
+  function showSlide(n){
+    const all=document.querySelectorAll(".hero-slide");
+    all.forEach(s=>s.classList.remove("active"));
+    dotEls.forEach(d=>d.classList.remove("active"));
+    index=(n+all.length)%all.length;
+    all[index].classList.add("active");
+    dotEls[index].classList.add("active");
   }
+  setInterval(()=>showSlide(index+1),5000); showSlide(0);
 
-  let current = 0;
-  showSlide(0);
-  setInterval(() => showSlide(current + 1), 5000);
-
-  // side banners
-  if (banners.left) document.getElementById("leftBanner").innerHTML = `<img src="${banners.left}" alt="Left Banner">`;
-  if (banners.right) document.getElementById("rightBanner").innerHTML = `<img src="${banners.right}" alt="Right Banner">`;
+  if(banners.left) document.getElementById("leftBanner").innerHTML=`<img src="${banners.left}" alt="Left Banner">`;
+  if(banners.right) document.getElementById("rightBanner").innerHTML=`<img src="${banners.right}" alt="Right Banner">`;
 }
 
-/* ===== Load cars and render urgent ones ===== */
+/* ===== Load Cars ===== */
 async function loadCars() {
-  let cars = [];
+  let cars=[];
   try {
-    const res = await fetch("cars.json");
-    if (res.ok) cars = await res.json();
-  } catch (err) {
-    cars = JSON.parse(localStorage.getItem("cars")) || [];
-  }
+    const res=await fetch("cars.json");
+    if(res.ok) cars=await res.json();
+  } catch { cars=JSON.parse(localStorage.getItem("cars"))||[]; }
 
-  const urgentCars = cars.filter(c => c.category === "urgent");
-  const grid = document.getElementById("carGrid");
-  grid.innerHTML = "";
-  urgentCars.forEach((c, i) => {
-    const card = document.createElement("div");
-    card.className = "car-card";
-    card.innerHTML = `
+  const urgentCars=cars.filter(c=>c.category==="urgent");
+  const grid=document.getElementById("carGrid");
+  grid.innerHTML="";
+  urgentCars.forEach((c,i)=>{
+    const card=document.createElement("div");
+    card.className="car-card";
+    card.innerHTML=`
       <div style="position:relative;">
-        ${c.ribbon ? `<div class="ribbon">${c.ribbon}</div>` : ""}
-        <img src="${(c.images && c.images[0]) || c.image || 'images/default.jpg'}" alt="${c.name}">
+        ${c.ribbon?`<div class='ribbon'>${c.ribbon}</div>`:""}
+        <img src="${c.images?.[0]||'images/default.jpg'}" alt="${c.name}" onload="this.classList.add('loaded')">
       </div>
       <div class="car-info">
         <h3>${c.name}</h3>
         <p>${c.model}</p>
-        <p>${c.specs || ''}</p>
-        <p>${c.price || ''}${c.negotiable ? " (Negotiable)" : ""}</p>
+        <p>${c.specs}</p>
+        <p>${c.price}${c.negotiable?" (Negotiable)":""}</p>
         <button class="details-btn" onclick="showDetails(${i})">Details</button>
-      </div>
-    `;
+      </div>`;
     grid.appendChild(card);
   });
 
-  // attach to global to be used by modal
-  window.carList = urgentCars;
+  window.carList=urgentCars;
 }
 
-/* ===== Modal & WhatsApp functions ===== */
-function showDetails(i) {
-  const c = window.carList[i];
-  if (!c) return;
-  const modal = document.getElementById("carModal");
-  const imgs = document.getElementById("modalImages");
-  const det = document.getElementById("modalDetails");
-
-  imgs.innerHTML = (c.images && c.images.length)
-    ? c.images.map(img => `<img src="${img}" alt="">`).join("")
-    : `<img src="${c.image || 'images/default.jpg'}" alt="">`;
-
-  det.innerHTML = `
+/* ===== Modal ===== */
+function showDetails(i){
+  const c=window.carList[i];
+  const modal=document.getElementById("carModal");
+  const imgs=document.getElementById("modalImages");
+  const det=document.getElementById("modalDetails");
+  imgs.innerHTML=c.images.map(img=>`<img src="${img}" onload="this.classList.add('loaded')}">`).join("");
+  det.innerHTML=`
     <h2>${c.name}</h2>
-    <p><strong>Model:</strong> ${c.model || '-'}</p>
-    <p><strong>Specs:</strong> ${c.specs || '-'}</p>
-    <p><strong>Color:</strong> ${c.color || '-'}</p>
-    <p><strong>Mileage:</strong> ${c.mileage || '-'}</p>
-    <p><strong>Milkiya:</strong> ${c.milkiya || '-'}</p>
-    <p><strong>Accident:</strong> ${c.accident || '-'}</p>
-    <p><strong>Price:</strong> ${c.price || '-'}</p>
-    <button class="buy-btn" onclick="toggleWhatsAppForm()">I Want To Buy</button>
+    <p><strong>Model:</strong> ${c.model}</p>
+    <p><strong>Specs:</strong> ${c.specs}</p>
+    <p><strong>Color:</strong> ${c.color}</p>
+    <p><strong>Mileage:</strong> ${c.mileage}</p>
+    <p><strong>Mulkia:</strong> ${c.milkiya}</p>
+    <p><strong>Accident:</strong> ${c.accident}</p>
+    <p><strong>Price:</strong> ${c.price}${c.negotiable?" (Negotiable)":""}</p>
+    <button class="buy-btn" onclick="showWhatsAppForm('${c.name}')">I Want To Buy</button>
     <div class="whatsapp-form" id="whatsappForm">
       <h3>I Want To Buy This</h3>
       <input type="text" id="buyerName" placeholder="Your Name">
       <input type="text" id="buyerContact" placeholder="Your Contact Number">
       <textarea id="buyerMessage" placeholder="Your Message"></textarea>
-      <button onclick="sendWhatsApp('${c.name.replace(/'/g,"\\'")}')">Send on WhatsApp</button>
-    </div>
-  `;
-  modal.style.display = "flex";
-  modal.setAttribute('aria-hidden', 'false');
+      <button onclick="sendWhatsApp('${c.name}')">Send on WhatsApp</button>
+    </div>`;
+  modal.style.display="flex";
+}
+function closeModal(){ document.getElementById("carModal").style.display="none"; }
+function showWhatsAppForm(){ document.getElementById("whatsappForm").style.display="block"; }
+
+function sendWhatsApp(carName){
+  const name=document.getElementById("buyerName").value;
+  const contact=document.getElementById("buyerContact").value;
+  const msg=document.getElementById("buyerMessage").value;
+  const number=localStorage.getItem("whatsappNumber")||"";
+  const text=`I want to buy *${carName}*%0AName: ${name}%0AContact: ${contact}%0AMessage: ${msg}`;
+  if(!number){ alert("Admin WhatsApp number not set."); return; }
+  window.open(`https://wa.me/${number}?text=${text}`,"_blank");
 }
 
-function closeModal() {
-  const modal = document.getElementById("carModal");
-  modal.style.display = "none";
-  modal.setAttribute('aria-hidden', 'true');
-  const wf = document.getElementById("whatsappForm");
-  if (wf) wf.style.display = "none";
-}
+/* ===== Init ===== */
+window.onload=()=>{ loadBanners(); loadCars(); };
 
-function toggleWhatsAppForm() {
-  const wf = document.getElementById("whatsappForm");
-  if (wf) wf.style.display = wf.style.display === "block" ? "none" : "block";
-}
-
-function sendWhatsApp(carName) {
-  const name = document.getElementById("buyerName").value || "";
-  const contact = document.getElementById("buyerContact").value || "";
-  const msg = document.getElementById("buyerMessage").value || "";
-  const number = localStorage.getItem("whatsappNumber") || "";
-  const text = `I want to buy *${carName}*%0AName: ${encodeURIComponent(name)}%0AContact: ${encodeURIComponent(contact)}%0AMessage: ${encodeURIComponent(msg)}`;
-  if (!number) { alert("Admin WhatsApp number not set."); return; }
-  window.open(`https://wa.me/${number}?text=${text}`, "_blank");
-}
-
-/* ===== Menu behavior: consistent + auto-hide on navigation ===== */
-function initMenuBehavior() {
+/* ===== Mobile Menu ===== */
+document.addEventListener("DOMContentLoaded", () => {
   const menuToggle = document.getElementById("menuToggle");
-  const nav = document.getElementById("navbar");
-  const navList = nav.querySelector("ul");
+  const navList = document.querySelector("nav ul");
 
-  // Toggle menu
-  menuToggle.addEventListener("click", function(e) {
-    e.stopPropagation();
-    navList.classList.toggle("active");
-    // update aria
-    const isOpen = navList.classList.contains("active");
-    menuToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
-  });
-
-  // Close when clicking outside
-  document.addEventListener("click", function(e) {
-    if (!nav.contains(e.target) && !menuToggle.contains(e.target)) {
-      navList.classList.remove("active");
-      menuToggle.setAttribute("aria-expanded", "false");
-    }
-  });
-
-  // Hide menu when a link is clicked (auto-hide on page change)
-  nav.querySelectorAll("a").forEach(link => {
-    link.addEventListener("click", () => {
-      navList.classList.remove("active");
-      menuToggle.setAttribute("aria-expanded", "false");
+  if (menuToggle && navList) {
+    menuToggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      navList.classList.toggle("active");
     });
-  });
 
-  // Always hide menu on pageshow/load (handles navigation back/forward)
-  window.addEventListener("pageshow", () => {
-    navList.classList.remove("active");
-    menuToggle.setAttribute("aria-expanded", "false");
-  });
-  window.addEventListener("load", () => {
-    navList.classList.remove("active");
-    menuToggle.setAttribute("aria-expanded", "false");
-  });
-}
+    document.addEventListener("click", (event) => {
+      if (!navList.contains(event.target) && !menuToggle.contains(event.target)) {
+        navList.classList.remove("active");
+      }
+    });
 
-/* ===== Init everything ===== */
-window.addEventListener("load", function() {
-  loadBanners();
-  loadCars();
-  initMenuBehavior();
-});
-
-/* Close modal when pressing ESC */
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") closeModal();
+    navList.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        navList.classList.remove("active");
+      });
+    });
+  }
 });
 </script>
 </body>
