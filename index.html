@@ -189,6 +189,46 @@
     footer .logo { font-size: 1.2rem; font-weight: 700; }
     footer .logo span { color: var(--red); }
     footer p { margin-top: 10px; font-size: 0.9rem; color: var(--text-muted); }
+	
+	/* ✅ Mobile Responsive Navbar */
+.menu-toggle {
+  display: none;
+  background: none;
+  color: #fff;
+  border: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  nav ul {
+    flex-direction: column;
+    background: rgba(0,0,0,0.95);
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 200px;
+    padding: 15px 0;
+    border-radius: 0 0 12px 12px;
+    display: none;
+  }
+
+  nav ul.active {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  /* Hide regular menu items initially */
+  nav ul li {
+    display: block;
+    text-align: center;
+    margin: 6px 0;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -428,24 +468,34 @@
   }
 });
 
-<!-- ✅ Mobile Menu Toggle -->
-document.addEventListener("DOMContentLoaded", () => {
-  const menuToggle = document.getElementById("menuToggle");
-  const navbar = document.getElementById("navbar");
+  // ✅ Mobile Menu Toggle (Fixed)
+  document.addEventListener("DOMContentLoaded", () => {
+    const menuToggle = document.getElementById("menuToggle");
+    const navList = document.querySelector("nav ul");
 
-  if (menuToggle && navbar) {
-    menuToggle.addEventListener("click", (e) => {
-      e.stopPropagation();
-      navbar.classList.toggle("active");
-    });
+    if (menuToggle && navList) {
+      // Toggle open/close
+      menuToggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        navList.classList.toggle("active");
+      });
 
-    document.addEventListener("click", (event) => {
-      if (!navbar.contains(event.target) && !menuToggle.contains(event.target)) {
-        navbar.classList.remove("active");
-      }
-    });
-  }
-});
+      // Close menu when clicking outside
+      document.addEventListener("click", (event) => {
+        if (!navList.contains(event.target) && !menuToggle.contains(event.target)) {
+          navList.classList.remove("active");
+        }
+      });
+
+      // Close menu when a link is clicked
+      navList.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", () => {
+          navList.classList.remove("active");
+        });
+      });
+    }
+  });
+
 
   </script>
 </body>
