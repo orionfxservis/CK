@@ -83,11 +83,30 @@
     }
 
     /* Hero Section */
-    .hero { margin-top:70px; height:70vh; position:relative; overflow:hidden; }
-    .hero-slide { position:absolute; inset:0; background-size:cover; background-position:center; opacity:0; transition:opacity 1s ease-in-out; }
-    .hero-slide.active { opacity:1; }
+    .hero {
+      position: fixed;
+      top: 60px;
+      left: 0;
+      right: 0;
+      height: 70vh;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+    .hero-slide.active { opacity: 1; }
     .hero::after { content:""; position:absolute; inset:0; background:rgba(0,0,0,0.5); z-index:1; }
-    .hero-content { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; z-index:2; color:#fff; }
+    .hero-content {
+      position:absolute; inset:0; display:flex; flex-direction:column;
+      justify-content:center; align-items:center; text-align:center;
+      z-index:2; color:#fff;
+    }
     .hero-content h1 { font-size:2.5rem; margin-bottom:10px; }
     .dots { position:absolute; bottom:20px; width:100%; text-align:center; z-index:3; }
     .dots span { display:inline-block; width:12px; height:12px; margin:0 4px; border-radius:50%; background:#fff; opacity:0.5; cursor:pointer; }
@@ -100,8 +119,15 @@
 
     /* Car Table */
     .car-table-container {
-      margin: 40px auto; padding: 20px; width: 95%; max-width: 1100px;
-      background: var(--bg-card); border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+      position: relative;
+      z-index: 5;
+      margin-top: calc(70vh + 20px);
+      padding: 20px;
+      width: 95%;
+      max-width: 1100px;
+      background: rgba(26,26,26,0.9);
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
       overflow-x: auto;
     }
     table { width: 100%; border-collapse: collapse; color: #fff; }
@@ -308,11 +334,54 @@ document.addEventListener("DOMContentLoaded", () => {
         navList.classList.remove("active");
       }
     });
-    navList.querySelectorAll("a").forEach(link=>{
-      link.addEventListener("click",()=>navList.classList.remove("active"));
-    });
+    navList.querySelectorAll("a").forEach(link=>{ link.addEventListener("click",()=>navList.classList.remove("active")); });
   }
 });
+
+async function loadHeroSlides() {
+  let savedBanners = {};
+  try {
+    const res = await fetch('../data/banners.json');
+    if (res.ok) savedBanners = await res.json();
+  } catch {
+    savedBanners = JSON.parse(localStorage.getItem("banners")) || {};
+  }
+
+  const heroContainer = document.getElementById("heroSlides");
+  heroContainer.innerHTML = "";
+
+  const heroImages = ["hero1","hero2","hero3","hero4"]
+    .map(id => savedBanners[id])
+    .filter(Boolean);
+
+  const fallback = [
+    "../images/BG/bg3.jpg",
+    "../images/BG/car02.jpg",
+    "../images/BG/car03.jpg"
+  ];
+
+  const slides = heroImages.length ? heroImages : fallback;
+
+  slides.forEach((src, i) => {
+    const div = document.createElement("div");
+    div.className = "hero-slide";
+    div.style.backgroundImage = `url(${src})`;
+    if (i === 0) div.classList.add("active");
+    heroContainer.appendChild(div);
+  });
+
+  let index = 0;
+  function showSlide(n) {
+    const allSlides = document.querySelectorAll(".hero-slide");
+    allSlides.forEach(s => s.classList.remove("active"));
+    index = (n + allSlides.length) % allSlides.length;
+    allSlides[index].classList.add("active");
+  }
+  setInterval(() => showSlide(index + 1), 5000);
+  showSlide(0);
+}
+
+document.addEventListener("DOMContentLoaded", loadHeroSlides);
 </script>
 </body>
 </html>
