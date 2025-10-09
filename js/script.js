@@ -13,11 +13,20 @@ function initMenu() {
   const navLinks = document.querySelector("nav ul");
 
   if (menuToggle && navLinks) {
-    menuToggle.addEventListener("click", () => {
+    // Toggle menu open/close
+    menuToggle.addEventListener("click", e => {
+      e.stopPropagation();
       navLinks.classList.toggle("active");
     });
 
-    // Auto-hide menu on page link click
+    // Auto-hide menu on outside click
+    document.addEventListener("click", e => {
+      if (!navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
+        navLinks.classList.remove("active");
+      }
+    });
+
+    // Auto-hide menu on link click
     navLinks.querySelectorAll("a").forEach(link => {
       link.addEventListener("click", () => {
         navLinks.classList.remove("active");
@@ -27,17 +36,21 @@ function initMenu() {
 }
 
 // -----------------------------
-// ✅ Hero Slideshow Loader (from banners.json)
+// ✅ Hero Slideshow Loader (from data/banners.json)
 // -----------------------------
 function initHeroSlideshow() {
   const heroContainer = document.querySelector(".hero-slideshow");
   if (!heroContainer) return;
 
-  const basePath =
-    window.location.pathname.includes("/pages/") ? "../" : "./";
+  // Auto-detect base path depending on whether page is in /pages/
+  const basePath = window.location.pathname.includes("/pages/") ? "../" : "./";
+  const bannerPath = `${basePath}data/banners.json`;
 
-  fetch(`${basePath}data/banners.json`)
-    .then(response => response.json())
+  fetch(bannerPath)
+    .then(res => {
+      if (!res.ok) throw new Error(`Failed to load ${bannerPath}`);
+      return res.json();
+    })
     .then(images => {
       if (!Array.isArray(images) || images.length === 0) return;
 
@@ -49,5 +62,12 @@ function initHeroSlideshow() {
         heroContainer.style.backgroundImage = `url(${basePath}${images[index].image})`;
       }, 4000);
     })
-    .catch(err => console.error("Slideshow load failed:", err));
+    .catch(err => {
+      console.error("Slideshow load failed:", err);
+      // Fallback background if banners.json or image fails
+      heroContainer.style.background = `linear-gradient(
+        rgba(0, 0, 0, 0.4),
+        rgba(0, 0, 0, 0.4)
+      ), url(${basePath}images/BG/default.jpg) center/cover no-repeat`;
+    });
 }
