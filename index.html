@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>ClickWorx - Luxury Car Sales</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClickWorx - Find Your Perfect Car</title>
+  <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -178,25 +179,35 @@
 </head>
 <body>
 
-  <!-- ✅ Header -->
-  <header>
-    <div class="brand">
-      <img src="images/Logo/Logo.png" alt="Logo" />
-      <a href="index.html" class="logo">CLICK<span>WORX</span></a>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <a href="index.html" class="Logo">CLICK<span>WORX</span></a>
+      <nav class="navbar">
+        <ul>
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="pages/urgent.html">Urgent Sale</a></li>
+          <li><a href="pages/more.html">More Cars</a></li>
+          <li><a href="pages/search.html">Search</a></li>
+          <li><a href="pages/about.html">About Us</a></li>
+          <li><a href="pages/contact.html">Contact Us</a></li>
+          <li><a href="pages/admin.html">Admin</a></li>
+        </ul>
+        <div class="menu-toggle">&#9776;</div>
+      </nav>
     </div>
-    <nav>
-      <ul>
-        <li><a href="index.html" class="active">Home</a></li>
-        <li><a href="pages/urgent.html">Urgent Sale</a></li>
-        <li><a href="pages/more.html">More Cars</a></li>
-        <li><a href="pages/search.html">Search</a></li>
-        <li><a href="pages/about.html">About Us</a></li>
-        <li><a href="pages/contact.html">Contact Us</a></li>
-        <li><a href="pages/admin.html" class="admin-link">Admin</a></li>
-      </ul>
-    </nav>
-    <button class="menu-toggle" id="menuToggle">☰</button>
   </header>
+  
+  <!-- Hero Slideshow -->
+  <section id="home" class="hero hero-slideshow">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Find Your Perfect Car</h1>
+      <p>Explore hundreds of verified listings</p>
+    </div>
+  </section>
+
+  <script src="js/script.js"></script>
 
   <!-- ✅ Hero -->
   <section id="home" class="hero">
@@ -228,7 +239,7 @@
 
     async function loadData() {
       try {
-        const bannerRes = await fetch('banners.json');
+        const bannerRes = await fetch('data/banners.json');
         if (bannerRes.ok) {
           const savedBanners = await bannerRes.json();
           renderBanners(savedBanners);
@@ -265,7 +276,7 @@
     async function loadHeroSlides() {
       let savedBanners = {};
       try {
-        const res = await fetch('banners.json');
+        const res = await fetch('data/banners.json');
         if (res.ok) savedBanners = await res.json();
       } catch {
         savedBanners = JSON.parse(localStorage.getItem("banners")) || {};
@@ -338,13 +349,11 @@
           });
         });
       }
-    });
 
-    document.addEventListener("DOMContentLoaded", () => {
-  loadBanners();
-  loadCars();
-});
+      // Load data and hero after DOM is ready
+      loadData();
+      loadHeroSlides();
+    });
   </script>
 </body>
 </html>
-
