@@ -2,112 +2,410 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <title>ClickWorx - Search Cars</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Search Cars | CLICKWORX</title>
-  <link rel="stylesheet" href="../css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --red: #e50914;
+      --red-dark: #b00610;
+      --bg-dark: #0d0d0d;
+      --bg-card: #1a1a1a;
+      --text-light: #fff;
+      --text-muted: #aaa;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-light);
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0,0,0,0.95);
+      padding: 8px 20px;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 60px;
+      z-index: 1000;
+      border-bottom: 2px solid var(--red-dark);
+      border-radius: 0 0 12px 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    .brand { display:flex; align-items:center; gap:10px; }
+    .brand img { height: 32px; border-radius:8px; }
+    .logo { font-size:1.5rem; font-weight:700; color:#fff; text-decoration:none; }
+    .logo span { color:var(--red); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 16px;
+    }
+    nav ul li a {
+      text-decoration: none;
+      color: #fff;
+      font-weight: 600;
+      font-size: 13px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      transition: 0.3s;
+    }
+    nav ul li a:hover, nav ul li a.active {
+      color: var(--red);
+      box-shadow: 0 2px 6px rgba(229,9,20,0.6);
+      background: rgba(255,255,255,0.05);
+    }
+    nav ul li a.admin-link {
+      background: var(--red); color:#fff !important; padding:5px 12px; border-radius:6px;
+    }
+
+    .menu-toggle { display:none; font-size:22px; color:#fff; background:none; border:none; cursor:pointer; }
+    @media (max-width:768px) {
+      .menu-toggle { display:block; }
+      nav ul { flex-direction: column; position: absolute; top:60px; right:0; width:200px; display:none; background:var(--bg-dark); padding:15px; border-left:2px solid var(--red-dark); border-bottom:2px solid var(--red-dark); border-radius:0 0 12px 12px; }
+      nav ul.active { display:flex; }
+      nav ul li { margin: 10px 0; }
+    }
+
+    /* Hero */
+    .hero { margin-top:70px; height:70vh; position:relative; overflow:hidden; }
+    .hero-slide { position:absolute; inset:0; background-size:cover; background-position:center; opacity:0; transition:opacity 1s ease-in-out; }
+    .hero-slide.active { opacity:1; }
+    .hero::after { content:""; position:absolute; inset:0; background:rgba(0,0,0,0.5); z-index:1; }
+    .hero-content { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; z-index:2; color:#fff; }
+    .hero-content h1 { font-size:2.5rem; margin-bottom:10px; }
+    .dots { position:absolute; bottom:20px; width:100%; text-align:center; z-index:3; }
+    .dots span { display:inline-block; width:12px; height:12px; margin:0 4px; border-radius:50%; background:#fff; opacity:0.5; cursor:pointer; }
+    .dots span.active { opacity:1; background:#e50914; }
+
+    /* Side banners */
+    .side-banner { position:fixed; top:50%; transform:translateY(-50%); width:130px; z-index:50; }
+    .side-banner.left { left:0; } .side-banner.right { right:0; }
+    .side-banner img { width:100%; border-radius:10px; box-shadow:0 0 8px rgba(0,0,0,0.5); }
+
+    /* Search panel */
+    .search-panel {
+      max-width: 1100px;
+      margin: -100px auto 20px;
+      position: relative;
+      z-index: 5;
+      background: rgba(17,17,17,0.95);
+      border: 1px solid var(--red-dark);
+      padding: 18px;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+    }
+    .search-row { display:flex; gap:12px; flex-wrap:wrap; align-items:center; justify-content:space-between; }
+    .search-row .field { flex:1 1 150px; min-width:120px; }
+    .search-row input[type="text"], .search-row input[type="number"] {
+      width:100%; padding:8px 10px; border-radius:6px; border:1px solid #333; background:#0d0d0d; color:#fff;
+    }
+    .search-row .btn-search {
+      background:var(--red); color:#fff; border:none; padding:10px 18px; border-radius:8px; cursor:pointer; font-weight:700;
+    }
+
+    /* Car list (vertical cards) */
+    .car-grid {
+      position:relative; z-index:5; display:flex; flex-direction:column; gap:20px; padding:40px 60px; margin-top:-40px;
+    }
+    .car-card { background:#1a1a1a; border:1px solid var(--red); border-radius:12px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.6); transition:transform .2s; }
+    .car-card:hover { transform:translateY(-4px); }
+    .car-row { display:grid; grid-template-columns:150px 1fr 100px; gap:20px; align-items:center; padding:12px; }
+    .car-image img { width:100%; height:100px; object-fit:cover; border-radius:8px; }
+    .car-details div { margin-bottom:6px; color:#ccc; font-size:0.95rem; }
+    .car-details h3 { margin:0 0 6px 0; color:var(--red); }
+    .details-btn { background:var(--red); color:#fff; padding:8px 14px; border:none; border-radius:12px; cursor:pointer; font-weight:700; }
+    .no-results { text-align:center; color:#fff; padding:30px; background:rgba(0,0,0,0.5); border-radius:10px; border:1px solid rgba(255,255,255,0.03); }
+
+    /* Modal */
+    .modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; z-index:9999; overflow:auto; }
+    .modal-content { background:#111; color:#fff; padding:20px; border-radius:12px; border:1px solid var(--red); max-width:900px; width:90%; display:flex; flex-wrap:wrap; gap:20px; position:relative; }
+    .modal-close { position:absolute; top:10px; right:15px; font-size:22px; color:#fff; cursor:pointer; background:none; border:none; }
+    .modal-images { flex:1; min-width:300px; max-height:500px; overflow-y:auto; }
+    .modal-images img { width:100%; margin-bottom:10px; border-radius:8px; }
+    .modal-details { flex:1; min-width:300px; }
+    .buy-btn { display:inline-block; margin-top:15px; padding:10px 18px; background:#e50914; border:none; border-radius:15px; color:#fff; cursor:pointer; }
+    .whatsapp-form { display:none; margin-top:15px; background:#1a1a1a; padding:12px; border-radius:8px; }
+    .whatsapp-form input, .whatsapp-form textarea { width:100%; margin-bottom:8px; padding:8px; border:none; border-radius:6px; outline:none; }
+    .whatsapp-form button { background:#e50914; color:#fff; border:none; padding:8px 14px; border-radius:6px; cursor:pointer; width:100%; }
+  </style>
 </head>
 <body>
 
-  <!-- Header -->
-  <header class="header">
-    <div class="brand">
-      <img src="../images/Logo/Logo.png" alt="Logo">
-      <a href="../index.html" class="logo">CLICK<span>WORX</span></a>
-    </div>
-    <nav>
-      <div class="menu-toggle">☰</div>
-      <ul id="navMenu">
-        <li><a href="../index.html">Home</a></li>
-        <li><a href="urgent.html">Urgent Sale</a></li>
-        <li><a href="more.html">More Cars</a></li>
-        <li><a href="search.html" class="active">Search</a></li>
-        <li><a href="about.html">About Us</a></li>
-        <li><a href="contact.html">Contact Us</a></li>
-        <li><a href="admin.html" class="admin-link">Admin</a></li>
-      </ul>
-    </nav>
-  </header>
+<header>
+  <div class="brand">
+    <img src="../images/Logo/Logo.png" alt="Logo">
+    <a href="../index.html" class="logo">CLICK<span>WORX</span></a>
+  </div>
 
-  <!-- Hero Section (same layout as other pages) -->
-  <section class="hero-section" id="hero-slideshow">
-    <div class="hero-images">
-      <img src="../images/car1.jpg" class="active" alt="Car 1">
-      <img src="../images/car2.jpg" alt="Car 2">
-      <img src="../images/car3.jpg" alt="Car 3">
-    </div>
-    <div class="hero-content">
-      <h1>Search Your Dream Car</h1>
-      <p>Find the perfect car matching your needs and budget</p>
-    </div>
-  </section>
+  <nav id="navbar">
+    <ul>
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="urgent.html">Urgent Sale</a></li>
+      <li><a href="more.html">More Cars</a></li>
+      <li><a href="search.html" class="active">Search</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Contact Us</a></li>
+      <li><a href="admin.html" class="admin-link">Admin</a></li>
+    </ul>
+  </nav>
 
-  <!-- Main Content -->
-  <main>
-    <div class="container">
-      <div class="search-section">
-        <input type="text" id="searchInput" placeholder="Search by brand, model, or city...">
-        <button id="searchBtn" class="btn">Search</button>
+  <button class="menu-toggle" id="menuToggle">☰</button>
+</header>
+
+<section class="hero">
+  <div id="heroSlides"></div>
+  <div class="hero-content">
+    <h1>Search Cars</h1>
+    <p>Find cars by exact match — enter values and click Search</p>
+  </div>
+  <div class="dots" id="heroDots"></div>
+</section>
+
+<div class="side-banner left" id="leftBanner"></div>
+<div class="side-banner right" id="rightBanner"></div>
+
+<!-- Search Panel (exact-match, manual) -->
+<section class="search-panel" aria-label="Search cars">
+  <div class="search-row">
+    <div class="field"><input id="qName" type="text" placeholder="Car Name (exact)"></div>
+    <div class="field"><input id="qModel" type="text" placeholder="Model (exact)"></div>
+    <div class="field"><input id="qSpecs" type="text" placeholder="Specs (exact)"></div>
+    <div class="field"><input id="qColor" type="text" placeholder="Color (exact)"></div>
+    <div class="field"><input id="qLocation" type="text" placeholder="Location (exact)"></div>
+    <div class="field"><input id="qPrice" type="text" placeholder="Price (exact)"></div>
+    <div><button id="searchBtn" class="btn-search details-btn">Search</button></div>
+  </div>
+</section>
+
+<section class="car-grid" id="carGrid" aria-live="polite"></section>
+
+<div class="modal" id="carModal" role="dialog" aria-modal="true">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <div class="modal-images" id="modalImages"></div>
+    <div class="modal-details" id="modalDetails"></div>
+  </div>
+</div>
+
+<script src="../js/script.js"></script>
+<script>
+/* ===== Load Banners & Slideshow (same logic as urgent) ===== */
+async function loadBanners() {
+  let banners = {};
+  try {
+    const res = await fetch("banners.json");
+    if (res.ok) banners = await res.json();
+  } catch { banners = JSON.parse(localStorage.getItem("banners")) || {}; }
+
+  const hero = document.getElementById("heroSlides");
+  hero.innerHTML = "";
+  const imgs = ["hero1","hero2","hero3","hero4"].map(id => banners[id]).filter(Boolean);
+  const fallback = ["images/BG/bg1.jpg","images/BG/car02.jpg","images/BG/car03.jpg"];
+  const slides = imgs.length ? imgs : fallback;
+
+  slides.forEach((src, i) => {
+    const div = document.createElement("div");
+    div.className = "hero-slide";
+    div.style.backgroundImage = `url(${src})`;
+    if (i === 0) div.classList.add("active");
+    hero.appendChild(div);
+  });
+
+  // dots
+  const dots = document.getElementById("heroDots");
+  dots.innerHTML = "";
+  slides.forEach((_, i) => {
+    const d = document.createElement("span");
+    d.addEventListener("click", () => showSlide(i));
+    dots.appendChild(d);
+  });
+
+  let index = 0;
+  const dotEls = dots.querySelectorAll("span");
+  function showSlide(n) {
+    const all = document.querySelectorAll(".hero-slide");
+    all.forEach(s => s.classList.remove("active"));
+    dotEls.forEach(d => d.classList.remove("active"));
+    index = (n + all.length) % all.length;
+    all[index].classList.add("active");
+    if (dotEls[index]) dotEls[index].classList.add("active");
+  }
+  setInterval(() => showSlide(index + 1), 5000);
+  showSlide(0);
+
+  if (banners.left) document.getElementById("leftBanner").innerHTML = `<img src="${banners.left}" alt="Left Banner">`;
+  if (banners.right) document.getElementById("rightBanner").innerHTML = `<img src="${banners.right}" alt="Right Banner">`;
+}
+
+/* ===== Search & Rendering =====
+   - Manual search (click Search button)
+   - Exact matches only (case-insensitive)
+   - If no result -> show message and do NOT display images
+*/
+async function fetchCarsData() {
+  try {
+    const res = await fetch("cars.json");
+    if (!res.ok) throw new Error("Failed to load cars.json");
+    return await res.json();
+  } catch (e) {
+    return JSON.parse(localStorage.getItem("cars")) || [];
+  }
+}
+
+function exactMatch(a, b) {
+  if (a === undefined || a === null) return false;
+  if (b === undefined || b === null) return false;
+  return String(a).trim().toLowerCase() === String(b).trim().toLowerCase();
+}
+
+document.getElementById("searchBtn").addEventListener("click", async () => {
+  const name = document.getElementById("qName").value.trim();
+  const model = document.getElementById("qModel").value.trim();
+  const specs = document.getElementById("qSpecs").value.trim();
+  const color = document.getElementById("qColor").value.trim();
+  const location = document.getElementById("qLocation").value.trim();
+  const price = document.getElementById("qPrice").value.trim();
+
+  const allCars = await fetchCarsData();
+  // filter by exact match on any provided field: all provided fields must match
+  const filtered = allCars.filter(car => {
+    if (name && !exactMatch(car.name || car.brand || car.title || car.name, name)) return false;
+    if (model && !exactMatch(car.model, model)) return false;
+    if (specs && !exactMatch(car.specs, specs)) return false;
+    if (color && !exactMatch(car.color, color)) return false;
+    if (location && !exactMatch(car.location || car.city, location)) return false;
+    if (price && !exactMatch(car.price, price)) return false;
+    return true;
+  });
+
+  renderResults(filtered);
+});
+
+function renderResults(list) {
+  const grid = document.getElementById("carGrid");
+  grid.innerHTML = "";
+
+  if (!list || list.length === 0) {
+    const msg = document.createElement("div");
+    msg.className = "no-results";
+    msg.textContent = "Sorry, Can't Find Car As Per Your Requirement";
+    grid.appendChild(msg);
+    return;
+  }
+
+  list.forEach((c, i) => {
+    const card = document.createElement("div");
+    card.className = "car-card";
+    card.innerHTML = `
+      <div class="car-row">
+        <div class="car-image">
+          <img src="${c.images?.[0] || 'images/default.jpg'}" alt="${c.name || c.brand || ''}">
+        </div>
+        <div class="car-details">
+          <h3>${c.name || c.brand || '-'}</h3>
+          <div><strong>Model:</strong> ${c.model || '-'}</div>
+          <div><strong>Specs:</strong> ${c.specs || '-'}</div>
+          <div><strong>Color:</strong> ${c.color || '-'}</div>
+          <div><strong>Location:</strong> ${c.location || c.city || '-'}</div>
+          <div><strong>Price:</strong> ${c.price || '-'}</div>
+        </div>
+        <div class="car-action">
+          <button class="details-btn" onclick="showDetailsByRef(${i})">Details</button>
+        </div>
       </div>
+    `;
+    grid.appendChild(card);
+  });
 
-      <div id="searchResults" class="car-list"></div>
+  // store currently rendered list for detail modal access
+  window.searchResults = list;
+}
+
+/* ===== Modal (reuse from urgent.html behavior) ===== */
+function showDetailsByRef(idx) {
+  const c = (window.searchResults || [])[idx];
+  if (!c) return;
+  showDetailsGeneric(c);
+}
+
+function showDetailsGeneric(c) {
+  const modal = document.getElementById("carModal");
+  const imgs = document.getElementById("modalImages");
+  const det = document.getElementById("modalDetails");
+
+  imgs.innerHTML = (c.images || []).map(img => `<img src="${img}">`).join("") || `<img src="images/default.jpg">`;
+
+  det.innerHTML = `
+    <h2>${c.name || c.brand || '-'}</h2>
+    <p><strong>Model:</strong> ${c.model || '-'}</p>
+    <p><strong>Specs:</strong> ${c.specs || '-'}</p>
+    <p><strong>Color:</strong> ${c.color || '-'}</p>
+    <p><strong>Mileage:</strong> ${c.mileage || '-'}</p>
+    <p><strong>Location:</strong> ${c.location || c.city || '-'}</p>
+    <p><strong>Mulkia:</strong> ${c.milkiya || '-'}</p>
+    <p><strong>Accident:</strong> ${c.accident || '-'}</p>
+    <p><strong>Price:</strong> ${c.price || '-'}</p>
+    <button class="buy-btn" onclick="showWhatsAppForm()">I Want To Buy</button>
+    <div class="whatsapp-form" id="whatsappForm">
+      <h3>I Want To Buy This</h3>
+      <input type="text" id="buyerName" placeholder="Your Name">
+      <input type="text" id="buyerContact" placeholder="Your Contact Number">
+      <textarea id="buyerMessage" placeholder="Your Message"></textarea>
+      <button onclick="sendWhatsAppModal('${(c.name || c.brand || '').replace(/'/g, "\\'")}')">Send on WhatsApp</button>
     </div>
-  </main>
+  `;
+  modal.style.display = "flex";
+}
 
-  <!-- Footer (same as other pages) -->
-  <footer class="footer">
-    <p>&copy; 2025 CLICKWORX. All rights reserved.</p>
-  </footer>
+function closeModal() { document.getElementById("carModal").style.display = "none"; }
+function showWhatsAppForm() { document.getElementById("whatsappForm").style.display = "block"; }
+function sendWhatsAppModal(carName) {
+  const name = document.getElementById("buyerName").value;
+  const contact = document.getElementById("buyerContact").value;
+  const msg = document.getElementById("buyerMessage").value;
+  const number = localStorage.getItem("whatsappNumber") || "";
+  const text = `I want to buy *${carName}*%0AName: ${name}%0AContact: ${contact}%0AMessage: ${msg}`;
+  if (!number) { alert("Admin WhatsApp number not set."); return; }
+  window.open(`https://wa.me/${number}?text=${text}`, "_blank");
+}
 
-  <!-- Scripts -->
-  <script src="../js/script.js"></script>
-  <script>
-    // --- Hero Slideshow ---
-    const slides = document.querySelectorAll('#hero-slideshow .hero-images img');
-    let current = 0;
-    setInterval(() => {
-      slides[current].classList.remove('active');
-      current = (current + 1) % slides.length;
-      slides[current].classList.add('active');
-    }, 4000);
+/* ===== Init ===== */
+window.onload = () => {
+  loadBanners();
+  // optional: show all cars initially — comment out if you prefer empty start
+  // fetchCarsData().then(list => renderResults(list));
+};
 
-    // --- Search Logic ---
-    document.getElementById('searchBtn').addEventListener('click', () => {
-      const query = document.getElementById('searchInput').value.toLowerCase();
-      const container = document.getElementById('searchResults');
-      container.innerHTML = '';
+/* ===== Mobile menu toggle behavior (same as urgent) ===== */
+document.addEventListener("DOMContentLoaded", () => {
+  const menuToggle = document.getElementById("menuToggle");
+  const navList = document.querySelector("nav ul");
 
-      fetch('../data/cars.json')
-        .then(res => res.json())
-        .then(data => {
-          const found = data.filter(car =>
-            car.brand.toLowerCase().includes(query) ||
-            car.model.toLowerCase().includes(query) ||
-            car.city.toLowerCase().includes(query)
-          );
-
-          if (found.length === 0) {
-            container.innerHTML = `<p class="no-results">No results found.</p>`;
-            return;
-          }
-
-          found.forEach(car => {
-            const card = document.createElement('div');
-            card.className = 'car-card';
-            card.innerHTML = `
-              <img src="../${car.image}" alt="${car.brand} ${car.model}">
-              <div class="car-info">
-                <h3>${car.brand} ${car.model}</h3>
-                <p>City: ${car.city}</p>
-                <p>Price: ${car.price}</p>
-              </div>
-            `;
-            container.appendChild(card);
-          });
-        })
-        .catch(() => {
-          container.innerHTML = `<p class="no-results">Error loading data.</p>`;
-        });
+  if (menuToggle && navList) {
+    menuToggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      navList.classList.toggle("active");
     });
-  </script>
+
+    document.addEventListener("click", (event) => {
+      if (!navList.contains(event.target) && !menuToggle.contains(event.target)) {
+        navList.classList.remove("active");
+      }
+    });
+
+    navList.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => navList.classList.remove("active"));
+    });
+  }
+});
+</script>
 </body>
 </html>
