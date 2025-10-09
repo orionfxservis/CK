@@ -1,10 +1,18 @@
-/clickworx
-  ├── index.html
-  ├── search.html
-  ├── about.html
-  ├── contact.html
-  ├── admin.html
-  ├── style.css
-  ├── images/
-  ├── cars.json      (exported)
-  └── banners.json   (exported)
+/project-root
+├── index.html
+├── style.css
+├── js/
+│   └── script.js
+├── data/
+│   ├── banners.json
+│   └── cars.json
+├── images/
+│   ├── Logo/Logo.png
+│   └── BG/bg1.jpg (etc.)
+└── pages/
+    ├── urgent.html
+    ├── more.html
+    ├── search.html
+    ├── about.html
+    ├── contact.html
+    └── admin.html

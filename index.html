@@ -90,9 +90,8 @@
       background: var(--red-dark);
       box-shadow: 0 2px 6px rgba(229,9,20,0.6);
     }
-	
 
-    /* ✅ Hero - slideshow */
+    /* ✅ Hero */
     .hero { margin-top:70px; height:90vh; position:relative; overflow:hidden; }
     .hero-slide {
       position:absolute; inset:0;
@@ -106,6 +105,7 @@
       display: flex; flex-direction: column;
       justify-content: center; align-items: center;
       text-align: center; z-index: 2; color: var(--text-light);
+      padding: 0 15px;
     }
     .hero-content h1 { font-size: 3rem; margin-bottom: 10px; }
     .hero-content p { font-size: 1.2rem; color: var(--red); margin-bottom: 20px; }
@@ -113,6 +113,7 @@
       padding: 12px 24px; border: none; border-radius: 30px;
       background: var(--red); color: #fff; font-weight: 600;
       cursor: pointer; transition: 0.3s ease; font-size: 1rem;
+      margin: 5px;
     }
     .btn:hover { background: var(--red-dark); }
     .dots { position:absolute; bottom:20px; width:100%; text-align:center; z-index:3; }
@@ -122,67 +123,20 @@
     }
     .dots span.active { opacity:1; background:var(--red); }
 
-    /* Banner Carousel */
-    .banner-carousel { width: 100%; height: 200px; margin: 40px 0; position: relative; overflow: hidden; }
+    /* ✅ Banner Carousel */
+    .banner-carousel {
+      width: 100%;
+      height: 220px;
+      margin: 40px 0;
+      position: relative;
+      overflow: hidden;
+      border-top: 2px solid var(--red-dark);
+      border-bottom: 2px solid var(--red-dark);
+    }
     .banner-track { display: flex; height: 100%; transition: transform 0.5s ease-in-out; }
-    .banner { flex: 0 0 100%; height: 200px; background: #222 center/cover no-repeat; }
+    .banner { flex: 0 0 100%; height: 220px; background: #222 center/cover no-repeat; }
 
-    /* Sections */
-    .section { padding: 60px 20px; max-width: 100%; margin: auto; }
-    .section h2 {
-      font-size: 2rem; text-align: center; margin-bottom: 40px; position: relative;
-    }
-    .section h2::after {
-      content: ""; width: 60px; height: 3px; background: var(--red);
-      display: block; margin: 10px auto 0;
-    }
-
-    /* Car Grid */
-    .car-grid { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
-    .car-card {
-      background: var(--bg-card); border: 1px solid var(--red); border-radius: 12px; overflow: hidden;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-      width: 220px; position: relative; transition: transform 0.3s ease;
-    }
-    .car-card:hover { transform: translateY(-8px); }
-    .car-card img { width: 100%; height: 150px; object-fit: cover; }
-    .info { padding: 15px; text-align: center; }
-    .info h3 { margin: 0; font-size: 1rem; color: var(--red); }
-    .info p { font-size: 0.9rem; color: var(--text-light); margin: 5px 0; }
-    .info .price { font-weight: bold; color: var(--text-light); }
-
-    /* Ribbon */
-    .ribbon {
-      width: 150px; background: var(--red);
-      color: #fff; font-size: 0.75rem; text-align: center;
-      line-height: 20px; position: absolute; left: -30px; top: 35px;
-      transform: rotate(-45deg); box-shadow: 0 3px 10px rgba(0,0,0,0.5);
-      font-weight: 600; pointer-events: none;
-    }
-
-    /* Modal */
-    .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center; }
-    .modal-content {
-      background: var(--bg-card); border: 1px solid var(--red); padding: 20px; border-radius: 10px;
-      max-width: 900px; width: 90%; max-height: 90vh; display: flex; gap: 20px; overflow: hidden;
-    }
-    .modal-left { flex: 1; overflow-y: auto; }
-    .modal-left img { width: 100%; margin-bottom: 10px; border-radius: 6px; }
-    .modal-right { flex: 1; overflow-y: auto; }
-    .modal-close { position: absolute; top: 20px; right: 20px; font-size: 30px; color: #fff; cursor: pointer; }
-    @media (max-width: 768px) {
-      .modal-content { flex-direction: column; }
-      .modal-left { display: flex; flex-direction: row; overflow-x: auto; gap: 10px; }
-      .modal-left img { width: 80%; flex-shrink: 0; }
-    }
-
-    /* Buy Form */
-    .buy-form { margin-top: 15px; display: none; flex-direction: column; gap: 10px; }
-    .buy-form input, .buy-form textarea {
-      width: 95%; padding: 10px; border: none; border-radius: 5px;
-    }
-
-    /* Footer */
+    /* ✅ Footer */
     footer {
       background: #000; padding: 30px 20px; text-align: center;
       border-top: 2px solid var(--red-dark);
@@ -190,120 +144,86 @@
     footer .logo { font-size: 1.2rem; font-weight: 700; }
     footer .logo span { color: var(--red); }
     footer p { margin-top: 10px; font-size: 0.9rem; color: var(--text-muted); }
-	
-	/* ✅ Mobile Responsive Navbar */
-.menu-toggle {
-  display: none;
-  background: none;
-  color: #fff;
-  border: none;
-  font-size: 1.6rem;
-  cursor: pointer;
-}
 
-@media (max-width: 768px) {
-  nav ul {
-    flex-direction: column;
-    background: rgba(0,0,0,0.95);
-    position: absolute;
-    top: 60px;
-    right: 0;
-    width: 200px;
-    padding: 15px 0;
-    border-radius: 0 0 12px 12px;
-    display: none;
-  }
-
-  nav ul.active {
-    display: flex;
-  }
-
-  .menu-toggle {
-    display: block;
-  }
-
-  /* Hide regular menu items initially */
-  nav ul li {
-    display: block;
-    text-align: center;
-    margin: 6px 0;
-  }
-}
-
+    /* ✅ Mobile Responsive Navbar */
+    .menu-toggle {
+      display: none;
+      background: none;
+      color: #fff;
+      border: none;
+      font-size: 1.6rem;
+      cursor: pointer;
+    }
+    @media (max-width: 768px) {
+      nav ul {
+        flex-direction: column;
+        background: rgba(0,0,0,0.95);
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 200px;
+        padding: 15px 0;
+        border-radius: 0 0 12px 12px;
+        display: none;
+      }
+      nav ul.active { display: flex; }
+      .menu-toggle { display: block; }
+      nav ul li {
+        display: block;
+        text-align: center;
+        margin: 6px 0;
+      }
+    }
   </style>
 </head>
 <body>
 
   <!-- ✅ Header -->
   <header>
-  <div class="brand">
-    <img src="images/Logo/Logo.png" alt="Logo" />
-    <a href="index.html" class="logo">CLICK<span>WORX</span></a>
-  </div>
-  <nav>
-    <ul>
-      <li><a href="index.html" class="active">Home</a></li>
-      <li><a href="urgent.html">Urgent Sale</a></li>
-      <li><a href="more.html">More Cars</a></li>
-      <li><a href="search.html">Search</a></li>
-      <li><a href="about.html">About Us</a></li>
-      <li><a href="contact.html">Contact Us</a></li>
-      <li><a href="admin.html" class="admin-link">Admin</a></li>
-    </ul>
-  </nav>
-  <button class="menu-toggle" id="menuToggle">☰</button>
-</header>
-
-
+    <div class="brand">
+      <img src="images/Logo/Logo.png" alt="Logo" />
+      <a href="index.html" class="logo">CLICK<span>WORX</span></a>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="pages/urgent.html">Urgent Sale</a></li>
+        <li><a href="pages/more.html">More Cars</a></li>
+        <li><a href="pages/search.html">Search</a></li>
+        <li><a href="pages/about.html">About Us</a></li>
+        <li><a href="pages/contact.html">Contact Us</a></li>
+        <li><a href="pages/admin.html" class="admin-link">Admin</a></li>
+      </ul>
+    </nav>
+    <button class="menu-toggle" id="menuToggle">☰</button>
+  </header>
 
   <!-- ✅ Hero -->
   <section id="home" class="hero">
     <div id="heroSlides"></div>
-
     <div class="hero-content">
       <h1>Find Your Dream Car</h1>
       <p>Luxury. Speed. Style.</p>
-      <button class="btn">View Cars</button>
+      <div>
+        <a href="pages/urgent.html" class="btn">Urgent Cars For Sale</a>
+        <a href="pages/more.html" class="btn">More Cars Listing</a>
+      </div>
     </div>
     <div class="dots" id="heroDots"></div>
   </section>
 
-  <!-- Banner Carousel -->
+  <!-- ✅ Banner Carousel -->
   <section class="banner-carousel">
     <div class="banner-track" id="bannerTrack"></div>
   </section>
 
-  
-
-  <!-- Footer -->
+  <!-- ✅ Footer -->
   <footer>
     <div class="logo">CLICK<span>WORX</span></div>
     <p>Luxury, Speed, Style. © 2025 ClickWorx</p>
   </footer>
 
-  <!-- Modal -->
-  <div class="modal" id="carModal">
-    <div class="modal-content">
-      <span class="modal-close" onclick="closeModal()">&times;</span>
-      <div class="modal-left" id="modalImages"></div>
-      <div class="modal-right">
-        <h2 id="modalTitle"></h2>
-        <p id="modalDetails"></p>
-        <p id="modalPrice" style="color:var(--red); font-weight:700;"></p>
-        <button class="btn" onclick="openBuyForm()">I Want To Buy</button>
-        <div class="buy-form" id="buyForm">
-          <input type="text" id="carNameField" readonly>
-          <input type="text" id="customerName" placeholder="Your Name">
-          <input type="text" id="contactNo" placeholder="Contact No">
-          <textarea id="message" placeholder="Message"></textarea>
-          <button class="btn" onclick="sendWhatsApp()">Send via WhatsApp</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <script>
-    let globalCars = [];
     let whatsappNumber = "";
 
     async function loadData() {
@@ -319,27 +239,21 @@
         renderBanners(savedBanners);
         whatsappNumber = savedBanners.whatsapp || localStorage.getItem("+") || "";
       }
-
-      try {
-        const carRes = await fetch('cars.json');
-        if (carRes.ok) {
-          globalCars = await carRes.json();
-        } else {
-          globalCars = JSON.parse(localStorage.getItem("cars")) || [];
-        }
-      } catch {
-        globalCars = JSON.parse(localStorage.getItem("cars")) || [];
-      }
-      renderCars();
     }
 
     function renderBanners(savedBanners) {
       const bannerTrack = document.getElementById('bannerTrack');
       bannerTrack.innerHTML = '';
-      let bannerList = [];
-      if (savedBanners.left) bannerList.push(savedBanners.left);
-      if (savedBanners.right) bannerList.push(savedBanners.right);
-      if (savedBanners.horizontal) bannerList.push(savedBanners.horizontal);
+
+      const bannerList = [];
+      ['horizontal', 'left', 'right'].forEach(key => {
+        if (savedBanners[key]) bannerList.push(savedBanners[key]);
+      });
+
+      if (bannerList.length === 0) {
+        bannerList.push("images/Banners/banner1.jpg", "images/Banners/banner2.jpg");
+      }
+
       bannerList.forEach(src => {
         const bannerDiv = document.createElement('div');
         bannerDiv.className = 'banner';
@@ -348,55 +262,6 @@
       });
     }
 
-    function renderCars() {
-      const carGrid = document.getElementById('carGrid');
-      carGrid.innerHTML = '';
-      globalCars.filter(c => c.category === "urgent").forEach((car, i) => {
-        const card = document.createElement('div');
-        card.className = 'car-card';
-        const mainImg = (car.images && car.images.length) ? car.images[0] : car.image || '';
-        card.innerHTML = `
-          ${car.ribbon ? `<div class="ribbon">${car.ribbon}</div>` : ""}
-
-          <img src="${mainImg}" alt="${car.name}">
-          <div class="info">
-            <h3>${car.name} - ${car.model}</h3>
-            <p class="price">${car.price}</p>
-            <button class="btn" onclick="openModal(${i})">Details</button>
-          </div>`;
-        carGrid.appendChild(card);
-      });
-    }
-
-    function openModal(index) {
-      const car = globalCars[index];
-      document.getElementById('modalTitle').textContent = car.name + " - " + car.model;
-      document.getElementById('modalDetails').textContent = car.details || "";
-      document.getElementById('modalPrice').textContent = car.price;
-      const imgs = (car.images && car.images.length) ? car.images : (car.image ? [car.image] : []);
-      document.getElementById('modalImages').innerHTML = imgs.map(img => `<img src="${img}" alt="${car.name}">`).join('');
-      document.getElementById('carNameField').value = car.name;
-      document.getElementById('carModal').style.display = 'flex';
-    }
-    function closeModal() {
-      document.getElementById('carModal').style.display = 'none';
-      document.getElementById('buyForm').style.display = 'none';
-    }
-    function openBuyForm() { document.getElementById('buyForm').style.display = 'flex'; }
-    function sendWhatsApp() {
-      const carName = document.getElementById('carNameField').value;
-      const name = document.getElementById('customerName').value;
-      const contact = document.getElementById('contactNo').value;
-      const msg = document.getElementById('message').value;
-      const text = `I Want To Buy: ${carName}%0AName: ${name}%0AContact: ${contact}%0AMessage: ${msg}`;
-      if (!whatsappNumber) {
-        alert("WhatsApp number not set in admin panel.");
-        return;
-      }
-      window.open(`https://wa.me/${whatsappNumber}?text=${text}`, '_blank');
-    }
-
-    /* ---------- Hero Slideshow Loader ---------- */
     async function loadHeroSlides() {
       let savedBanners = {};
       try {
@@ -453,54 +318,29 @@
       setInterval(()=> showSlide((index+1)%slides.length),5000);
     }
 
-    window.onload = () => { loadData(); loadHeroSlides(); };
-	
-	document.addEventListener('DOMContentLoaded', () => {
-	const menuToggle = document.getElementById('menuToggle');
-	const navbar = document.getElementById('navbar');
+    document.addEventListener("DOMContentLoaded", () => {
+      const menuToggle = document.getElementById("menuToggle");
+      const navList = document.querySelector("nav ul");
 
-	if (menuToggle && navbar) {
-    menuToggle.addEventListener('click', () => {
-      navbar.classList.toggle('active');
-    });
-  }
-});
-
-
-document.addEventListener("DOMContentLoaded", () => {
-  const menuToggle = document.getElementById("menuToggle");
-  const navList = document.querySelector("nav ul");
-
-  if (menuToggle && navList) {
-    // ✅ Toggle menu open/close
-    menuToggle.addEventListener("click", (e) => {
-      e.stopPropagation();
-      navList.classList.toggle("active");
-    });
-
-    // ✅ Close menu when clicking anywhere outside it
-    document.addEventListener("click", (event) => {
-      if (!navList.contains(event.target) && !menuToggle.contains(event.target)) {
-        navList.classList.remove("active");
+      if (menuToggle && navList) {
+        menuToggle.addEventListener("click", (e) => {
+          e.stopPropagation();
+          navList.classList.toggle("active");
+        });
+        document.addEventListener("click", (event) => {
+          if (!navList.contains(event.target) && !menuToggle.contains(event.target)) {
+            navList.classList.remove("active");
+          }
+        });
+        navList.querySelectorAll("a").forEach(link => {
+          link.addEventListener("click", () => {
+            navList.classList.remove("active");
+          });
+        });
       }
     });
 
-    // ✅ Close menu when a link is clicked (auto-hide on page change)
-    navList.querySelectorAll("a").forEach(link => {
-      link.addEventListener("click", () => {
-        navList.classList.remove("active");
-      });
-    });
-
-    // ✅ Always hide menu on page load (if it was open before)
-    window.addEventListener("pageshow", () => {
-      navList.classList.remove("active");
-    });
-  }
-});
-
-
-
+    window.onload = () => { loadData(); loadHeroSlides(); };
   </script>
 </body>
 </html>

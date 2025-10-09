@@ -1,250 +1,30 @@
-/* -------- Global Theme -------- */
-:root {
-  --red: #e50914;
-  --red-dark: #b00610;
-  --bg-dark: #0d0d0d;
-  --text-light: #fff;
-  --text-muted: #ccc;
-  --nav-height: 70px;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  background: #111;
-  color: var(--text-light);
-  line-height: 1.6;
-}
-
-/* -------- Header & Navbar -------- */
-/* ✅ Header */
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(0,0,0,0.95);
-      padding: 8px 20px;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 60px;
-      z-index: 1000;
-      border-bottom: 2px solid var(--red-dark);
-      border-radius: 0 0 12px 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .brand img {
-      height: 32px; width: auto; border-radius: 8px;
-    }
-    .logo {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #fff;
-      text-decoration: none;
-    }
-    .logo span { color: var(--red); }
-
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 16px;
-      margin: 0;
-      padding: 0;
-    }
-    nav ul li { display: inline; }
-    nav ul li a {
-      text-decoration: none;
-      color: #fff;
-      font-weight: 600;
-      font-size: 13px;
-      padding: 4px 8px;
-      border-radius: 4px;
-      transition: color 0.3s, box-shadow 0.3s, background 0.3s;
-    }
-    nav ul li a:hover,
-    nav ul li a.active {
-      color: var(--red);
-      box-shadow: 0 2px 6px rgba(229,9,20,0.6);
-      background: rgba(255,255,255,0.05);
-    }
-    nav ul li a.admin-link {
-      background: var(--red);
-      color: #fff !important;
-      padding: 5px 12px;
-      border-radius: 6px;
-      font-weight: 600;
-    }
-    nav ul li a.admin-link:hover {
-      background: var(--red-dark);
-      box-shadow: 0 2px 6px rgba(229,9,20,0.6);
-    }
-
-/* -------- Slideshow (shared for all pages) -------- */
-.slideshow {
-  position: relative;
-  width: 100%;
-  height: 300px;
-  overflow: hidden;
-}
-
-.slideshow img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: brightness(40%); /* dim images so text is readable */
-}
-
-.slideshow-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  color: #fff;
-  max-width: 90%;
-}
-
-.slideshow-text h1 {
-  font-size: 32px;
-  margin-bottom: 10px;
-}
-
-.slideshow-text p {
-  font-size: 18px;
-}
-
-/* -------- Page Content -------- */
-.content {
-  max-width: 1000px;
-  margin: 40px auto;
-  padding: 0 20px;
-}
-
-/* -------- Contact Form -------- */
-.contact-card {
-  background: rgba(20, 20, 20, 0.85);
-  color: #fff;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-}
-
-.contact-card h2 {
-  margin-top: 0;
-  margin-bottom: 10px;
-  color: var(--red);
-}
-
-.contact-card input,
-.contact-card textarea {
-  width: 100%;
-  margin: 10px 0;
-  padding: 10px;
-  border: none;
-  border-radius: 6px;
-  outline: none;
-}
-
-.contact-card button {
-  background: var(--red);
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background 0.3s;
-}
-.contact-card button:hover {
-  background: var(--red-dark);
-}
-
-/* -------- Responsive -------- */
-@media (max-width: 768px) {
-  nav ul {
-    flex-direction: column;
-    background: var(--bg-dark);
-    position: absolute;
-    top: var(--nav-height);
-    right: 0;
-    width: 200px;
-    display: none;
-    padding: 15px;
-  }
-  nav ul.active {
-    display: flex;
-  }
-  nav ul li {
-    margin: 10px 0;
-  }
-  .menu-toggle {
-    display: block;
-    cursor: pointer;
-    font-size: 22px;
-    color: var(--text-light);
-  }
-}
-@media (min-width: 769px) {
-  .menu-toggle {
-    display: none;
-  }
-}
-
-.section input[type="text"],
-.section select,
-.section textarea {
-  margin-top: 3px;
-  margin-bottom: 6px;
-  padding: 5px 6px;
-}
-.section .inline > div {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.menu-toggle {
-  display: none;
-  background: none;
-  color: #fff;
-  border: none;
-  font-size: 1.6rem;
-  cursor: pointer;
+/* ✅ Hero Slideshow */
+.hero-slideshow {
   position: fixed;
-  top: 14px;
-  right: 18px;
-  z-index: 2000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+  transition: background-image 1s ease-in-out;
 }
 
-@media (max-width: 768px) {
-  .menu-toggle {
-    display: block;
-  }
+/* ✅ Ensure all content shows above slideshow */
+header, main, footer, .search-panel, .content {
+  position: relative;
+  z-index: 2;
+}
 
-  nav ul {
-    flex-direction: column;
-    background: rgba(0,0,0,0.95);
-    position: fixed;
-    top: 60px;
-    right: 0;
-    width: 200px;
-    padding: 15px 0;
-    border-radius: 0 0 12px 12px;
-    display: none;
-  }
-
-  nav ul.active {
-    display: flex;
-  }
+/* Optional: overlay effect for better readability */
+.hero-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
 }

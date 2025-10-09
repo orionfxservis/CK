@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Cars | CLICKWORX</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="brand">
+      <img src="../images/Logo/Logo.png" alt="Logo">
+      <a href="../index.html" class="logo">CLICK<span>WORX</span></a>
+    </div>
+    <nav>
+      <div class="menu-toggle">☰</div>
+      <ul id="navMenu">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="urgent.html">Urgent Sale</a></li>
+        <li><a href="more.html">More Cars</a></li>
+        <li><a href="search.html" class="active">Search</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="admin.html" class="admin-link">Admin</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero Section (same layout as other pages) -->
+  <section class="hero-section" id="hero-slideshow">
+    <div class="hero-images">
+      <img src="../images/car1.jpg" class="active" alt="Car 1">
+      <img src="../images/car2.jpg" alt="Car 2">
+      <img src="../images/car3.jpg" alt="Car 3">
+    </div>
+    <div class="hero-content">
+      <h1>Search Your Dream Car</h1>
+      <p>Find the perfect car matching your needs and budget</p>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main>
+    <div class="container">
+      <div class="search-section">
+        <input type="text" id="searchInput" placeholder="Search by brand, model, or city...">
+        <button id="searchBtn" class="btn">Search</button>
+      </div>
+
+      <div id="searchResults" class="car-list"></div>
+    </div>
+  </main>
+
+  <!-- Footer (same as other pages) -->
+  <footer class="footer">
+    <p>&copy; 2025 CLICKWORX. All rights reserved.</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/script.js"></script>
+  <script>
+    // --- Hero Slideshow ---
+    const slides = document.querySelectorAll('#hero-slideshow .hero-images img');
+    let current = 0;
+    setInterval(() => {
+      slides[current].classList.remove('active');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('active');
+    }, 4000);
+
+    // --- Search Logic ---
+    document.getElementById('searchBtn').addEventListener('click', () => {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const container = document.getElementById('searchResults');
+      container.innerHTML = '';
+
+      fetch('../data/cars.json')
+        .then(res => res.json())
+        .then(data => {
+          const found = data.filter(car =>
+            car.brand.toLowerCase().includes(query) ||
+            car.model.toLowerCase().includes(query) ||
+            car.city.toLowerCase().includes(query)
+          );
+
+          if (found.length === 0) {
+            container.innerHTML = `<p class="no-results">No results found.</p>`;
+            return;
+          }
+
+          found.forEach(car => {
+            const card = document.createElement('div');
+            card.className = 'car-card';
+            card.innerHTML = `
+              <img src="../${car.image}" alt="${car.brand} ${car.model}">
+              <div class="car-info">
+                <h3>${car.brand} ${car.model}</h3>
+                <p>City: ${car.city}</p>
+                <p>Price: ${car.price}</p>
+              </div>
+            `;
+            container.appendChild(card);
+          });
+        })
+        .catch(() => {
+          container.innerHTML = `<p class="no-results">Error loading data.</p>`;
+        });
+    });
+  </script>
+</body>
+</html>
