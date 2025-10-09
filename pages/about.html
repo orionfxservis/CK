@@ -2,52 +2,169 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>About Us - ClickWorx</title>
+  <title>ClickWorx - About Us</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    /* Hero Slideshow */
-    .hero { margin-top:70px; height:70vh; position:relative; overflow:hidden; }
+    :root {
+      --red: #e50914;
+      --red-dark: #b00610;
+      --bg-dark: #0d0d0d;
+      --text-light: #fff;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-light);
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0,0,0,0.95);
+      padding: 8px 20px;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 60px;
+      z-index: 1000;
+      border-bottom: 2px solid var(--red-dark);
+      border-radius: 0 0 12px 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    .brand { display:flex; align-items:center; gap:10px; }
+    .brand img { height: 32px; border-radius:8px; }
+    .logo { font-size:1.5rem; font-weight:700; color:#fff; text-decoration:none; }
+    .logo span { color:var(--red); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 16px;
+    }
+    nav ul li a {
+      text-decoration: none;
+      color: #fff;
+      font-weight: 600;
+      font-size: 13px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      transition: 0.3s;
+    }
+    nav ul li a:hover, nav ul li a.active {
+      color: var(--red);
+      box-shadow: 0 2px 6px rgba(229,9,20,0.6);
+      background: rgba(255,255,255,0.05);
+    }
+    nav ul li a.admin-link {
+      background: var(--red); color:#fff !important; padding:5px 12px; border-radius:6px;
+    }
+
+    .menu-toggle { display:none; font-size:22px; color:#fff; background:none; border:none; cursor:pointer; }
+    @media (max-width:768px) {
+      .menu-toggle { display:block; }
+      nav ul { flex-direction: column; position: absolute; top:60px; right:0; width:200px; display:none; background:var(--bg-dark); padding:15px; border-left:2px solid var(--red-dark); border-bottom:2px solid var(--red-dark); border-radius:0 0 12px 12px; }
+      nav ul.active { display:flex; }
+      nav ul li { margin: 10px 0; }
+    }
+
+    /* Hero */
+    .hero {
+      margin-top:70px;
+      height:100vh;
+      position:fixed;
+      inset:0;
+      z-index:0;
+      overflow:hidden;
+    }
     .hero-slide {
-      position:absolute; inset:0;
-      background-size:cover; background-position:center;
-      opacity:0; transition:opacity 1s ease-in-out;
+      position:absolute;
+      inset:0;
+      background-size:cover;
+      background-position:center;
+      opacity:0;
+      transition:opacity 1s ease-in-out;
     }
     .hero-slide.active { opacity:1; }
     .hero::after {
-      content:""; position:absolute; inset:0;
-      background:rgba(0,0,0,0.55); /* overlay */
+      content:"";
+      position:absolute;
+      inset:0;
+      background:rgba(0,0,0,0.6);
       z-index:1;
     }
     .hero-content {
-      position:absolute; inset:0;
-      display:flex; flex-direction:column;
-      justify-content:center; align-items:center;
-      text-align:center; z-index:2; color:#fff;
+      position:absolute;
+      inset:0;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      z-index:2;
+      color:#fff;
     }
     .hero-content h1 { font-size:2.5rem; margin-bottom:10px; }
-    .hero-content p { font-size:1.2rem; color:#f5f5f5; }
     .dots {
-      position:absolute; bottom:20px; width:100%; text-align:center; z-index:3;
+      position:absolute;
+      bottom:20px;
+      width:100%;
+      text-align:center;
+      z-index:3;
     }
     .dots span {
-      display:inline-block; width:12px; height:12px; margin:0 4px;
-      border-radius:50%; background:#fff; opacity:0.5; cursor:pointer;
+      display:inline-block;
+      width:12px; height:12px;
+      margin:0 4px;
+      border-radius:50%;
+      background:#fff;
+      opacity:0.5;
+      cursor:pointer;
     }
     .dots span.active { opacity:1; background:#e50914; }
-    .content { padding:40px 20px; max-width:1000px; margin:auto; color:#fff; }
+
+    /* About Section */
+    .about-section {
+      position:relative;
+      z-index:5;
+      max-width:900px;
+      margin: 120vh auto 60px;
+      background: rgba(0,0,0,0.8);
+      border: 1px solid var(--red-dark);
+      border-radius: 12px;
+      padding: 40px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+      text-align:center;
+    }
+    .about-section h2 {
+      font-size:2rem;
+      color:var(--red);
+      margin-bottom:20px;
+    }
+    .about-section p {
+      color:#ccc;
+      font-size:1rem;
+      line-height:1.8;
+    }
+
   </style>
 </head>
 <body>
-  <header>
+
+<header>
   <div class="brand">
-    <img src="images/Logo/Logo.png" alt="Logo" />
-    <a href="index.html" class="logo">CLICK<span>WORX</span></a>
+    <img src="../images/Logo/Logo.png" alt="Logo">
+    <a href="../index.html" class="logo">CLICK<span>WORX</span></a>
   </div>
-  <nav>
+
+  <nav id="navbar">
     <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="urgent.html#">Urgent Sale</a></li>
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="urgent.html">Urgent Sale</a></li>
       <li><a href="more.html">More Cars</a></li>
       <li><a href="search.html">Search</a></li>
       <li><a href="about.html" class="active">About Us</a></li>
@@ -55,122 +172,91 @@
       <li><a href="admin.html" class="admin-link">Admin</a></li>
     </ul>
   </nav>
+
   <button class="menu-toggle" id="menuToggle">☰</button>
 </header>
 
-
-  <!-- Hero Slideshow -->
-  <section class="hero">
-    <div id="heroSlides"></div>
-    <div class="hero-content">
-      <h1>About ClickWorx</h1>
-      <p>Luxury, Speed & Style – Redefining Car Sales Online</p>
-    </div>
-    <div class="dots" id="heroDots"></div>
-  </section>
-
-  <!-- SEO Optimized About Section -->
-  <div class="content">
-    <h2>Who We Are</h2>
-    <p>
-      At <strong>ClickWorx</strong>, we specialize in connecting passionate car enthusiasts and everyday drivers with 
-      their dream vehicles. From <em>luxury cars</em> and <em>sports models</em> to reliable everyday rides, 
-      we focus on delivering a seamless car buying experience that combines trust, quality, and transparency. 
-      Our platform is designed for buyers looking for <strong>affordable used cars</strong>, 
-      <strong>urgent car sales</strong>, and premium vehicles that reflect true <em>style, speed, and performance</em>. 
-      With a customer-first approach, we aim to make <strong>online car sales in Pakistan</strong> simple, 
-      reliable, and stress-free. Whether you’re searching for your next car or planning to sell, 
-      ClickWorx ensures that your journey is smooth, secure, and rewarding.
-    </p>
+<!-- Hero Slideshow -->
+<section class="hero">
+  <div id="heroSlides"></div>
+  <div class="hero-content">
+    <h1>About ClickWorx</h1>
+    <p>Your Trusted Platform for Buying and Selling Cars</p>
   </div>
+  <div class="dots" id="heroDots"></div>
+</section>
 
-  <script>
-  /* Hero Slideshow Loader */
-  async function loadHeroSlides() {
-    let savedBanners = {};
-    try {
-      const res = await fetch('banners.json');
-      if (res.ok) savedBanners = await res.json();
-    } catch {
-      savedBanners = JSON.parse(localStorage.getItem("banners")) || {};
-    }
+<!-- About Us Content -->
+<section class="about-section">
+  <h2>Who We Are</h2>
+  <p>
+    At <strong>ClickWorx</strong>, we simplify the process of buying and selling cars by combining modern design, real-time data, and a customer-first approach. 
+    We aim to connect buyers and sellers through a trusted digital platform, ensuring transparency, accuracy, and value for everyone.
+  </p>
+  <br>
+  <p>
+    Our services include <strong>car listings, urgent sales, digital marketing, and data insights</strong> for vehicle trends. 
+    Whether you're looking to sell your car quickly or find your dream vehicle, ClickWorx is here to make it happen — fast, easy, and reliable.
+  </p>
+  <br>
+  <p><em>“Your car journey begins here.”</em></p>
+</section>
 
-    const heroContainer = document.getElementById("heroSlides");
-    heroContainer.innerHTML = "";
+<script>
+/* ===== Load 4 Hero Slides (same as urgent.html) ===== */
+const slides = [
+  "../images/BG/bg1.jpg",
+  "../images/BG/car02.jpg",
+  "../images/BG/car03.jpg",
+  "../images/BG/car04.jpg"
+];
+const hero = document.getElementById("heroSlides");
+slides.forEach((src, i) => {
+  const div = document.createElement("div");
+  div.className = "hero-slide";
+  div.style.backgroundImage = `url(${src})`;
+  if (i === 0) div.classList.add("active");
+  hero.appendChild(div);
+});
+const dots = document.getElementById("heroDots");
+slides.forEach((_, i) => {
+  const dot = document.createElement("span");
+  dot.addEventListener("click", () => showSlide(i));
+  dots.appendChild(dot);
+});
+let index = 0;
+const dotEls = dots.querySelectorAll("span");
+function showSlide(n) {
+  const all = document.querySelectorAll(".hero-slide");
+  all.forEach(s => s.classList.remove("active"));
+  dotEls.forEach(d => d.classList.remove("active"));
+  index = (n + all.length) % all.length;
+  all[index].classList.add("active");
+  dotEls[index].classList.add("active");
+}
+setInterval(() => showSlide(index + 1), 5000);
+showSlide(0);
 
-    const heroImages = ["hero1","hero2","hero3","hero4"]
-      .map(id => savedBanners[id])
-      .filter(Boolean);
-
-    const fallback = ["images/BG/car03.jpg","images/BG/car02.jpg","images/BG/bg1.jpg","images/BG/bg3.jpg"];
-    const slides = heroImages.length ? heroImages : fallback;
-
-    slides.forEach((src,i)=>{
-      const div=document.createElement("div");
-      div.className="hero-slide";
-      div.style.backgroundImage=`url(${src})`;
-      if(i===0) div.classList.add("active");
-      heroContainer.appendChild(div);
-    });
-
-    // dots
-    const dotsContainer=document.getElementById("heroDots");
-    dotsContainer.innerHTML="";
-    slides.forEach((_,i)=>{
-      const dot=document.createElement("span");
-      dot.addEventListener("click",()=>showSlide(i));
-      dotsContainer.appendChild(dot);
-    });
-    const dots=dotsContainer.querySelectorAll("span");
-
-    let index=0;
-    function showSlide(n){
-      const allSlides=document.querySelectorAll(".hero-slide");
-      allSlides.forEach(s=>s.classList.remove("active"));
-      dots.forEach(d=>d.classList.remove("active"));
-      index=(n+allSlides.length)%allSlides.length;
-      allSlides[index].classList.add("active");
-      dots[index].classList.add("active");
-    }
-    function nextSlide(){showSlide(index+1);}
-    setInterval(nextSlide,5000);
-    showSlide(0);
-  }
-
-  window.onload = loadHeroSlides;
-  
+/* ===== Burger Menu ===== */
 document.addEventListener("DOMContentLoaded", () => {
   const menuToggle = document.getElementById("menuToggle");
   const navList = document.querySelector("nav ul");
 
-  if (menuToggle && navList) {
-    // ✅ Toggle menu open/close
-    menuToggle.addEventListener("click", (e) => {
-      e.stopPropagation();
-      navList.classList.toggle("active");
-    });
+  menuToggle.addEventListener("click", (e) => {
+    e.stopPropagation();
+    navList.classList.toggle("active");
+  });
 
-    // ✅ Close menu when clicking anywhere outside it
-    document.addEventListener("click", (event) => {
-      if (!navList.contains(event.target) && !menuToggle.contains(event.target)) {
-        navList.classList.remove("active");
-      }
-    });
-
-    // ✅ Close menu when a link is clicked (auto-hide on page change)
-    navList.querySelectorAll("a").forEach(link => {
-      link.addEventListener("click", () => {
-        navList.classList.remove("active");
-      });
-    });
-
-    // ✅ Always hide menu on page load (if it was open before)
-    window.addEventListener("pageshow", () => {
+  document.addEventListener("click", (event) => {
+    if (!navList.contains(event.target) && !menuToggle.contains(event.target)) {
       navList.classList.remove("active");
-    });
-  }
-});
+    }
+  });
 
-  </script>
+  navList.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => navList.classList.remove("active"));
+  });
+});
+</script>
 </body>
 </html>
