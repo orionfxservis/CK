@@ -23,7 +23,7 @@
       scroll-behavior: smooth;
     }
 
-    /* ✅ Header (same as index) */
+    /* Header */
     header {
       display: flex;
       justify-content: space-between;
@@ -40,16 +40,9 @@
       border-radius: 0 0 12px 12px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+    .brand { display: flex; align-items: center; gap: 10px; }
     .brand img { height: 32px; width: auto; border-radius: 8px; }
-    .logo {
-      font-size: 1.5rem; font-weight: 700;
-      color: #fff; text-decoration: none;
-    }
+    .logo { font-size: 1.5rem; font-weight: 700; color: #fff; text-decoration: none; }
     .logo span { color: var(--red); }
 
     nav ul {
@@ -86,7 +79,7 @@
       box-shadow: 0 2px 6px rgba(229,9,20,0.6);
     }
 
-    /* ✅ Mobile Menu */
+    /* Mobile Menu */
     .menu-toggle {
       display: none;
       cursor: pointer;
@@ -210,18 +203,18 @@
 <header>
   <div class="brand">
     <img src="../images/Logo/Logo.png" alt="Logo">
-    <a href="index.html" class="logo">CLICK<span>WORX</span></a>
+    <a href="../index.html" class="logo">CLICK<span>WORX</span></a>
   </div>
 
   <nav id="navbar">
     <ul>
       <li><a href="../index.html">Home</a></li>
-<li><a href="urgent.html" class="active">Urgent Sale</a></li>
-<li><a href="more.html">More Cars</a></li>
-<li><a href="search.html">Search</a></li>
-<li><a href="about.html">About Us</a></li>
-<li><a href="contact.html">Contact Us</a></li>
-<li><a href="admin.html" class="admin-link">Admin</a></li>
+      <li><a href="urgent.html" class="active">Urgent Sale</a></li>
+      <li><a href="more.html">More Cars</a></li>
+      <li><a href="search.html">Search</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Contact Us</a></li>
+      <li><a href="admin.html" class="admin-link">Admin</a></li>
     </ul>
   </nav>
 
@@ -251,18 +244,26 @@
 </div>
 
 <script>
+document.addEventListener("DOMContentLoaded", () => {
+  loadBanners();
+  loadCars();
+  initMenu();
+});
+
 /* ===== Load Banners ===== */
 async function loadBanners() {
   let banners = {};
   try {
-    const res = await fetch("banners.json");
+    const res = await fetch("../data/banners.json");
     if (res.ok) banners = await res.json();
-  } catch { banners = JSON.parse(localStorage.getItem("banners")) || {}; }
+  } catch {
+    banners = JSON.parse(localStorage.getItem("banners")) || {};
+  }
 
   const hero = document.getElementById("heroSlides");
   hero.innerHTML = "";
   const imgs = ["hero1","hero2","hero3","hero4"].map(id=>banners[id]).filter(Boolean);
-  const fallback = ["images/BG/bg1.jpg","images/BG/car02.jpg","images/BG/car03.jpg"];
+  const fallback = ["../images/BG/bg1.jpg","../images/BG/car02.jpg","../images/BG/car03.jpg"];
   const slides = imgs.length ? imgs : fallback;
   slides.forEach((src,i)=>{
     const div=document.createElement("div");
@@ -295,7 +296,7 @@ async function loadBanners() {
 async function loadCars() {
   let cars=[];
   try {
-    const res=await fetch("cars.json");
+    const res=await fetch("../data/cars.json");
     if(res.ok) cars=await res.json();
   } catch { cars=JSON.parse(localStorage.getItem("cars"))||[]; }
 
@@ -308,7 +309,7 @@ async function loadCars() {
     card.innerHTML=`
       <div style="position:relative;">
         ${c.ribbon?`<div class='ribbon'>${c.ribbon}</div>`:""}
-        <img src="${c.images?.[0]||'images/default.jpg'}" alt="${c.name}" onload="this.classList.add('loaded')">
+        <img src="${c.images?.[0]||'../images/default.jpg'}" alt="${c.name}" onload="this.classList.add('loaded')">
       </div>
       <div class="car-info">
         <h3>${c.name}</h3>
@@ -362,33 +363,24 @@ function sendWhatsApp(carName){
   window.open(`https://wa.me/${number}?text=${text}`,"_blank");
 }
 
-/* ===== Init ===== */
-window.onload=()=>{ loadBanners(); loadCars(); };
-
 /* ===== Mobile Menu ===== */
-document.addEventListener("DOMContentLoaded", () => {
+function initMenu() {
   const menuToggle = document.getElementById("menuToggle");
   const navList = document.querySelector("nav ul");
-
-  if (menuToggle && navList) {
-    menuToggle.addEventListener("click", (e) => {
-      e.stopPropagation();
-      navList.classList.toggle("active");
-    });
-
-    document.addEventListener("click", (event) => {
-      if (!navList.contains(event.target) && !menuToggle.contains(event.target)) {
-        navList.classList.remove("active");
-      }
-    });
-
-    navList.querySelectorAll("a").forEach(link => {
-      link.addEventListener("click", () => {
-        navList.classList.remove("active");
-      });
-    });
-  }
-});
+  if (!menuToggle || !navList) return;
+  menuToggle.addEventListener("click", (e) => {
+    e.stopPropagation();
+    navList.classList.toggle("active");
+  });
+  document.addEventListener("click", (event) => {
+    if (!navList.contains(event.target) && !menuToggle.contains(event.target)) {
+      navList.classList.remove("active");
+    }
+  });
+  navList.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => navList.classList.remove("active"));
+  });
+}
 </script>
 </body>
 </html>

@@ -61,13 +61,28 @@
       background: rgba(255,255,255,0.05);
     }
     nav ul li a.admin-link {
-      background: var(--red); color:#fff !important; padding:5px 12px; border-radius:6px;
+      background: var(--red);
+      color:#fff !important;
+      padding:5px 12px;
+      border-radius:6px;
     }
 
     .menu-toggle { display:none; font-size:22px; color:#fff; background:none; border:none; cursor:pointer; }
     @media (max-width:768px) {
       .menu-toggle { display:block; }
-      nav ul { flex-direction: column; position: absolute; top:60px; right:0; width:200px; display:none; background:var(--bg-dark); padding:15px; border-left:2px solid var(--red-dark); border-bottom:2px solid var(--red-dark); border-radius:0 0 12px 12px; }
+      nav ul {
+        flex-direction: column;
+        position: absolute;
+        top:60px;
+        right:0;
+        width:200px;
+        display:none;
+        background:var(--bg-dark);
+        padding:15px;
+        border-left:2px solid var(--red-dark);
+        border-bottom:2px solid var(--red-dark);
+        border-radius:0 0 12px 12px;
+      }
       nav ul.active { display:flex; }
       nav ul li { margin: 10px 0; }
     }
@@ -203,42 +218,45 @@
 </section>
 
 <script>
-/* ===== Load 4 Hero Slides (same as urgent.html) ===== */
-const slides = [
-  "../images/BG/bg1.jpg",
-  "../images/BG/car02.jpg",
-  "../images/BG/car03.jpg",
-  "../images/BG/car04.jpg"
-];
-const hero = document.getElementById("heroSlides");
-slides.forEach((src, i) => {
-  const div = document.createElement("div");
-  div.className = "hero-slide";
-  div.style.backgroundImage = `url(${src})`;
-  if (i === 0) div.classList.add("active");
-  hero.appendChild(div);
-});
-const dots = document.getElementById("heroDots");
-slides.forEach((_, i) => {
-  const dot = document.createElement("span");
-  dot.addEventListener("click", () => showSlide(i));
-  dots.appendChild(dot);
-});
-let index = 0;
-const dotEls = dots.querySelectorAll("span");
-function showSlide(n) {
-  const all = document.querySelectorAll(".hero-slide");
-  all.forEach(s => s.classList.remove("active"));
-  dotEls.forEach(d => d.classList.remove("active"));
-  index = (n + all.length) % all.length;
-  all[index].classList.add("active");
-  dotEls[index].classList.add("active");
-}
-setInterval(() => showSlide(index + 1), 5000);
-showSlide(0);
-
-/* ===== Burger Menu ===== */
 document.addEventListener("DOMContentLoaded", () => {
+  /* ===== Load Hero Slides ===== */
+  const slides = [
+    "../images/BG/bg1.jpg",
+    "../images/BG/car02.jpg",
+    "../images/BG/car03.jpg",
+    "../images/BG/car04.jpg"
+  ];
+
+  const hero = document.getElementById("heroSlides");
+  slides.forEach((src, i) => {
+    const div = document.createElement("div");
+    div.className = "hero-slide";
+    div.style.backgroundImage = `url(${src})`;
+    if (i === 0) div.classList.add("active");
+    hero.appendChild(div);
+  });
+
+  const dots = document.getElementById("heroDots");
+  slides.forEach((_, i) => {
+    const dot = document.createElement("span");
+    dot.addEventListener("click", () => showSlide(i));
+    dots.appendChild(dot);
+  });
+
+  let index = 0;
+  const dotEls = dots.querySelectorAll("span");
+  function showSlide(n) {
+    const all = document.querySelectorAll(".hero-slide");
+    all.forEach(s => s.classList.remove("active"));
+    dotEls.forEach(d => d.classList.remove("active"));
+    index = (n + all.length) % all.length;
+    all[index].classList.add("active");
+    dotEls[index].classList.add("active");
+  }
+  showSlide(0);
+  setInterval(() => showSlide(index + 1), 5000);
+
+  /* ===== Burger Menu ===== */
   const menuToggle = document.getElementById("menuToggle");
   const navList = document.querySelector("nav ul");
 

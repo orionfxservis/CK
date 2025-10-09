@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Contact Us - ClickWorx</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
@@ -39,7 +39,7 @@
     .content { padding:40px 20px; max-width:1000px; margin:auto; color:#fff; }
     .contact-wrapper { display:grid; grid-template-columns:1fr 1fr; gap:30px; margin-top:30px; }
     .contact-card, .social-card {
-      background:#111; padding:25px; border-radius:12px; border: 1px solid var(--red);
+      background:#111; padding:25px; border-radius:12px; border:1px solid var(--red);
       box-shadow:0 4px 10px rgba(0,0,0,0.4);
     }
     .contact-card form { display:flex; flex-direction:column; gap:12px; }
@@ -72,24 +72,23 @@
 </head>
 <body>
   <header>
-  <div class="brand">
-    <img src="images/Logo/Logo.png" alt="Logo" />
-    <a href="index.html" class="logo">CLICK<span>WORX</span></a>
-  </div>
-  <nav>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="urgent.html">Urgent Sale</a></li>
-      <li><a href="more.html">More Cars</a></li>
-      <li><a href="search.html">Search</a></li>
-      <li><a href="about.html">About Us</a></li>
-      <li><a href="contact.html" class="active">Contact Us</a></li>
-      <li><a href="admin.html" class="admin-link">Admin</a></li>
-    </ul>
-  </nav>
-  <button class="menu-toggle" id="menuToggle">☰</button>
-</header>
-
+    <div class="brand">
+      <img src="../images/Logo/Logo.png" alt="Logo" />
+      <a href="../index.html" class="logo">CLICK<span>WORX</span></a>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="urgent.html">Urgent Sale</a></li>
+        <li><a href="more.html">More Cars</a></li>
+        <li><a href="search.html">Search</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html" class="active">Contact Us</a></li>
+        <li><a href="admin.html" class="admin-link">Admin</a></li>
+      </ul>
+    </nav>
+    <button class="menu-toggle" id="menuToggle">☰</button>
+  </header>
 
   <!-- Hero Slideshow -->
   <section class="hero">
@@ -135,16 +134,14 @@
   </div>
 
   <!-- Footer -->
-  <footer>
-    © 2025 ClickWorx. All rights reserved.
-  </footer>
+  <footer>© 2025 ClickWorx. All rights reserved.</footer>
 
   <script>
-  /* Hero Slideshow Loader */
+  /* ===== Hero Slideshow ===== */
   async function loadHeroSlides() {
     let savedBanners = {};
     try {
-      const res = await fetch('banners.json');
+      const res = await fetch('../data/banners.json');
       if (res.ok) savedBanners = await res.json();
     } catch {
       savedBanners = JSON.parse(localStorage.getItem("banners")) || {};
@@ -157,91 +154,77 @@
       .map(id => savedBanners[id])
       .filter(Boolean);
 
-    const fallback = ["images/BG/bg3.jpg","images/BG/car02.jpg","images/BG/car03.jpg"];
+    const fallback = [
+      "../images/BG/bg3.jpg",
+      "../images/BG/car02.jpg",
+      "../images/BG/car03.jpg"
+    ];
+
     const slides = heroImages.length ? heroImages : fallback;
 
-    slides.forEach((src,i)=>{
-      const div=document.createElement("div");
-      div.className="hero-slide";
-      div.style.backgroundImage=`url(${src})`;
-      if(i===0) div.classList.add("active");
+    slides.forEach((src, i) => {
+      const div = document.createElement("div");
+      div.className = "hero-slide";
+      div.style.backgroundImage = `url(${src})`;
+      if (i === 0) div.classList.add("active");
       heroContainer.appendChild(div);
     });
 
-    // dots
-    const dotsContainer=document.getElementById("heroDots");
-    dotsContainer.innerHTML="";
-    slides.forEach((_,i)=>{
-      const dot=document.createElement("span");
-      dot.addEventListener("click",()=>showSlide(i));
+    // Dots
+    const dotsContainer = document.getElementById("heroDots");
+    dotsContainer.innerHTML = "";
+    slides.forEach((_, i) => {
+      const dot = document.createElement("span");
+      dot.addEventListener("click", () => showSlide(i));
       dotsContainer.appendChild(dot);
     });
-    const dots=dotsContainer.querySelectorAll("span");
+    const dots = dotsContainer.querySelectorAll("span");
 
-    let index=0;
-    function showSlide(n){
-      const allSlides=document.querySelectorAll(".hero-slide");
-      allSlides.forEach(s=>s.classList.remove("active"));
-      dots.forEach(d=>d.classList.remove("active"));
-      index=(n+allSlides.length)%allSlides.length;
+    let index = 0;
+    function showSlide(n) {
+      const allSlides = document.querySelectorAll(".hero-slide");
+      allSlides.forEach(s => s.classList.remove("active"));
+      dots.forEach(d => d.classList.remove("active"));
+      index = (n + allSlides.length) % allSlides.length;
       allSlides[index].classList.add("active");
       dots[index].classList.add("active");
     }
-    function nextSlide(){showSlide(index+1);}
-    setInterval(nextSlide,5000);
+    setInterval(() => showSlide(index + 1), 5000);
     showSlide(0);
   }
 
-  window.onload = loadHeroSlides;
-
-  /* WhatsApp Form Submission */
-  document.getElementById("whatsappForm").addEventListener("submit", function(e){
-    e.preventDefault();
-    const name=document.getElementById("name").value.trim();
-    const contact=document.getElementById("contactNo").value.trim();
-    const message=document.getElementById("message").value.trim();
-
-    // 👉 WhatsApp number from admin panel or fixed
-    const phone="923001234567"; 
-
-    const text=`Name: ${name}%0AContact: ${contact}%0AMessage: ${message}`;
-    const url=`https://wa.me/${phone}?text=${text}`;
-    window.open(url, "_blank");
-  });
-  
- 
-document.addEventListener("DOMContentLoaded", () => {
-  const menuToggle = document.getElementById("menuToggle");
-  const navList = document.querySelector("nav ul");
-
-  if (menuToggle && navList) {
-    // ✅ Toggle menu open/close
-    menuToggle.addEventListener("click", (e) => {
-      e.stopPropagation();
-      navList.classList.toggle("active");
+  /* ===== WhatsApp Form ===== */
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("whatsappForm");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const name = document.getElementById("name").value.trim();
+      const contact = document.getElementById("contactNo").value.trim();
+      const message = document.getElementById("message").value.trim();
+      const phone = "923001234567";
+      const text = `Name: ${name}%0AContact: ${contact}%0AMessage: ${message}`;
+      window.open(`https://wa.me/${phone}?text=${text}`, "_blank");
     });
 
-    // ✅ Close menu when clicking anywhere outside it
-    document.addEventListener("click", (event) => {
-      if (!navList.contains(event.target) && !menuToggle.contains(event.target)) {
-        navList.classList.remove("active");
-      }
-    });
-
-    // ✅ Close menu when a link is clicked (auto-hide on page change)
-    navList.querySelectorAll("a").forEach(link => {
-      link.addEventListener("click", () => {
-        navList.classList.remove("active");
+    /* Mobile Menu */
+    const menuToggle = document.getElementById("menuToggle");
+    const navList = document.querySelector("nav ul");
+    if (menuToggle && navList) {
+      menuToggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        navList.classList.toggle("active");
       });
-    });
+      document.addEventListener("click", (e) => {
+        if (!navList.contains(e.target) && !menuToggle.contains(e.target))
+          navList.classList.remove("active");
+      });
+      navList.querySelectorAll("a").forEach(link =>
+        link.addEventListener("click", () => navList.classList.remove("active"))
+      );
+    }
 
-    // ✅ Always hide menu on page load (if it was open before)
-    window.addEventListener("pageshow", () => {
-      navList.classList.remove("active");
-    });
-  }
-});
-
+    loadHeroSlides();
+  });
   </script>
 </body>
 </html>

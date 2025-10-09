@@ -172,7 +172,7 @@
 <div class="side-banner left" id="leftBanner"></div>
 <div class="side-banner right" id="rightBanner"></div>
 
-<!-- Search Panel (exact-match, manual) -->
+<!-- Search Panel -->
 <section class="search-panel" aria-label="Search cars">
   <div class="search-row">
     <div class="field"><input id="qName" type="text" placeholder="Car Name (exact)"></div>
@@ -197,18 +197,20 @@
 
 <script src="../js/script.js"></script>
 <script>
-/* ===== Load Banners & Slideshow (same logic as urgent) ===== */
+/* ===== Load Banners & Slideshow ===== */
 async function loadBanners() {
   let banners = {};
   try {
-    const res = await fetch("banners.json");
+    const res = await fetch("../data/banners.json");
     if (res.ok) banners = await res.json();
-  } catch { banners = JSON.parse(localStorage.getItem("banners")) || {}; }
+  } catch {
+    banners = JSON.parse(localStorage.getItem("banners")) || {};
+  }
 
   const hero = document.getElementById("heroSlides");
   hero.innerHTML = "";
   const imgs = ["hero1","hero2","hero3","hero4"].map(id => banners[id]).filter(Boolean);
-  const fallback = ["images/BG/bg1.jpg","images/BG/car02.jpg","images/BG/car03.jpg"];
+  const fallback = ["../images/BG/bg1.jpg","../images/BG/car02.jpg","../images/BG/car03.jpg"];
   const slides = imgs.length ? imgs : fallback;
 
   slides.forEach((src, i) => {
@@ -219,7 +221,6 @@ async function loadBanners() {
     hero.appendChild(div);
   });
 
-  // dots
   const dots = document.getElementById("heroDots");
   dots.innerHTML = "";
   slides.forEach((_, i) => {
@@ -245,14 +246,10 @@ async function loadBanners() {
   if (banners.right) document.getElementById("rightBanner").innerHTML = `<img src="${banners.right}" alt="Right Banner">`;
 }
 
-/* ===== Search & Rendering =====
-   - Manual search (click Search button)
-   - Exact matches only (case-insensitive)
-   - If no result -> show message and do NOT display images
-*/
+/* ===== Search & Rendering ===== */
 async function fetchCarsData() {
   try {
-    const res = await fetch("cars.json");
+    const res = await fetch("../data/cars.json");
     if (!res.ok) throw new Error("Failed to load cars.json");
     return await res.json();
   } catch (e) {
@@ -261,88 +258,55 @@ async function fetchCarsData() {
 }
 
 function exactMatch(a, b) {
-  if (a === undefined || a === null) return false;
-  if (b === undefined || b === null) return false;
-  return String(a).trim().toLowerCase() === String(b).trim().toLowerCase();
+  return String(a || "").trim().toLowerCase() === String(b || "").trim().toLowerCase();
 }
 
 document.getElementById("searchBtn").addEventListener("click", async () => {
-  const name = document.getElementById("qName").value.trim();
-  const model = document.getElementById("qModel").value.trim();
-  const specs = document.getElementById("qSpecs").value.trim();
-  const color = document.getElementById("qColor").value.trim();
-  const location = document.getElementById("qLocation").value.trim();
-  const price = document.getElementById("qPrice").value.trim();
+  const name = qName.value.trim(), model = qModel.value.trim(),
+        specs = qSpecs.value.trim(), color = qColor.value.trim(),
+        location = qLocation.value.trim(), price = qPrice.value.trim();
 
   const allCars = await fetchCarsData();
-  // filter by exact match on any provided field: all provided fields must match
-  const filtered = allCars.filter(car => {
-    if (name && !exactMatch(car.name || car.brand || car.title || car.name, name)) return false;
-    if (model && !exactMatch(car.model, model)) return false;
-    if (specs && !exactMatch(car.specs, specs)) return false;
-    if (color && !exactMatch(car.color, color)) return false;
-    if (location && !exactMatch(car.location || car.city, location)) return false;
-    if (price && !exactMatch(car.price, price)) return false;
-    return true;
-  });
-
+  const filtered = allCars.filter(c =>
+    (!name || exactMatch(c.name || c.brand, name)) &&
+    (!model || exactMatch(c.model, model)) &&
+    (!specs || exactMatch(c.specs, specs)) &&
+    (!color || exactMatch(c.color, color)) &&
+    (!location || exactMatch(c.location || c.city, location)) &&
+    (!price || exactMatch(c.price, price))
+  );
   renderResults(filtered);
 });
 
 function renderResults(list) {
-  const grid = document.getElementById("carGrid");
+  const grid = carGrid;
   grid.innerHTML = "";
-
-  if (!list || list.length === 0) {
-    const msg = document.createElement("div");
-    msg.className = "no-results";
-    msg.textContent = "Sorry, Can't Find Car As Per Your Requirement";
-    grid.appendChild(msg);
-    return;
-  }
-
-  list.forEach((c, i) => {
-    const card = document.createElement("div");
-    card.className = "car-card";
-    card.innerHTML = `
-      <div class="car-row">
-        <div class="car-image">
-          <img src="${c.images?.[0] || 'images/default.jpg'}" alt="${c.name || c.brand || ''}">
+  if (!list.length) return grid.innerHTML = `<div class="no-results">Sorry, Can't Find Car As Per Your Requirement</div>`;
+  list.forEach((c,i) => {
+    grid.innerHTML += `
+      <div class="car-card">
+        <div class="car-row">
+          <div class="car-image"><img src="${c.images?.[0] || '../images/default.jpg'}" alt="${c.name || c.brand || ''}"></div>
+          <div class="car-details">
+            <h3>${c.name || c.brand || '-'}</h3>
+            <div><strong>Model:</strong> ${c.model || '-'}</div>
+            <div><strong>Specs:</strong> ${c.specs || '-'}</div>
+            <div><strong>Color:</strong> ${c.color || '-'}</div>
+            <div><strong>Location:</strong> ${c.location || c.city || '-'}</div>
+            <div><strong>Price:</strong> ${c.price || '-'}</div>
+          </div>
+          <div class="car-action"><button class="details-btn" onclick="showDetailsByRef(${i})">Details</button></div>
         </div>
-        <div class="car-details">
-          <h3>${c.name || c.brand || '-'}</h3>
-          <div><strong>Model:</strong> ${c.model || '-'}</div>
-          <div><strong>Specs:</strong> ${c.specs || '-'}</div>
-          <div><strong>Color:</strong> ${c.color || '-'}</div>
-          <div><strong>Location:</strong> ${c.location || c.city || '-'}</div>
-          <div><strong>Price:</strong> ${c.price || '-'}</div>
-        </div>
-        <div class="car-action">
-          <button class="details-btn" onclick="showDetailsByRef(${i})">Details</button>
-        </div>
-      </div>
-    `;
-    grid.appendChild(card);
+      </div>`;
   });
-
-  // store currently rendered list for detail modal access
   window.searchResults = list;
 }
 
-/* ===== Modal (reuse from urgent.html behavior) ===== */
-function showDetailsByRef(idx) {
-  const c = (window.searchResults || [])[idx];
-  if (!c) return;
-  showDetailsGeneric(c);
-}
-
-function showDetailsGeneric(c) {
-  const modal = document.getElementById("carModal");
-  const imgs = document.getElementById("modalImages");
-  const det = document.getElementById("modalDetails");
-
-  imgs.innerHTML = (c.images || []).map(img => `<img src="${img}">`).join("") || `<img src="images/default.jpg">`;
-
+/* ===== Modal ===== */
+function showDetailsByRef(i) {
+  const c = (window.searchResults || [])[i]; if (!c) return;
+  const modal = carModal, imgs = modalImages, det = modalDetails;
+  imgs.innerHTML = (c.images || []).map(img => `<img src="${img}">`).join("") || `<img src="../images/default.jpg">`;
   det.innerHTML = `
     <h2>${c.name || c.brand || '-'}</h2>
     <p><strong>Model:</strong> ${c.model || '-'}</p>
@@ -359,52 +323,29 @@ function showDetailsGeneric(c) {
       <input type="text" id="buyerName" placeholder="Your Name">
       <input type="text" id="buyerContact" placeholder="Your Contact Number">
       <textarea id="buyerMessage" placeholder="Your Message"></textarea>
-      <button onclick="sendWhatsAppModal('${(c.name || c.brand || '').replace(/'/g, "\\'")}')">Send on WhatsApp</button>
-    </div>
-  `;
+      <button onclick="sendWhatsAppModal('${(c.name || c.brand || '').replace(/'/g,"\\'")}')">Send on WhatsApp</button>
+    </div>`;
   modal.style.display = "flex";
 }
-
-function closeModal() { document.getElementById("carModal").style.display = "none"; }
-function showWhatsAppForm() { document.getElementById("whatsappForm").style.display = "block"; }
-function sendWhatsAppModal(carName) {
-  const name = document.getElementById("buyerName").value;
-  const contact = document.getElementById("buyerContact").value;
-  const msg = document.getElementById("buyerMessage").value;
-  const number = localStorage.getItem("whatsappNumber") || "";
-  const text = `I want to buy *${carName}*%0AName: ${name}%0AContact: ${contact}%0AMessage: ${msg}`;
-  if (!number) { alert("Admin WhatsApp number not set."); return; }
-  window.open(`https://wa.me/${number}?text=${text}`, "_blank");
+function closeModal(){carModal.style.display="none";}
+function showWhatsAppForm(){whatsappForm.style.display="block";}
+function sendWhatsAppModal(car){
+  const n=buyerName.value,c=buyerContact.value,m=buyerMessage.value;
+  const num=localStorage.getItem("whatsappNumber")||"";
+  if(!num)return alert("Admin WhatsApp number not set.");
+  const t=`I want to buy *${car}*%0AName: ${n}%0AContact: ${c}%0AMessage: ${m}`;
+  window.open(`https://wa.me/${num}?text=${t}`,"_blank");
 }
 
 /* ===== Init ===== */
-window.onload = () => {
-  loadBanners();
-  // optional: show all cars initially — comment out if you prefer empty start
-  // fetchCarsData().then(list => renderResults(list));
-};
+window.onload = loadBanners;
 
-/* ===== Mobile menu toggle behavior (same as urgent) ===== */
-document.addEventListener("DOMContentLoaded", () => {
-  const menuToggle = document.getElementById("menuToggle");
-  const navList = document.querySelector("nav ul");
-
-  if (menuToggle && navList) {
-    menuToggle.addEventListener("click", (e) => {
-      e.stopPropagation();
-      navList.classList.toggle("active");
-    });
-
-    document.addEventListener("click", (event) => {
-      if (!navList.contains(event.target) && !menuToggle.contains(event.target)) {
-        navList.classList.remove("active");
-      }
-    });
-
-    navList.querySelectorAll("a").forEach(link => {
-      link.addEventListener("click", () => navList.classList.remove("active"));
-    });
-  }
+/* ===== Mobile Menu ===== */
+document.addEventListener("DOMContentLoaded",()=>{
+  const t=menuToggle,n=document.querySelector("nav ul");
+  t.addEventListener("click",e=>{e.stopPropagation();n.classList.toggle("active");});
+  document.addEventListener("click",e=>{if(!n.contains(e.target)&&!t.contains(e.target))n.classList.remove("active");});
+  n.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>n.classList.remove("active")));
 });
 </script>
 </body>

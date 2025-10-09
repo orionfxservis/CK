@@ -23,6 +23,7 @@
       scroll-behavior: smooth;
     }
 
+    /* Header */
     header {
       display: flex;
       justify-content: space-between;
@@ -39,71 +40,40 @@
       border-radius: 0 0 12px 12px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+    .brand { display: flex; align-items: center; gap: 10px; }
     .brand img { height: 32px; width: auto; border-radius: 8px; }
-    .logo {
-      font-size: 1.5rem; font-weight: 700;
-      color: #fff; text-decoration: none;
-    }
+    .logo { font-size: 1.5rem; font-weight: 700; color: #fff; text-decoration: none; }
     .logo span { color: var(--red); }
 
     nav ul {
-      list-style: none;
-      display: flex;
-      gap: 16px;
-      margin: 0;
-      padding: 0;
+      list-style: none; display: flex; gap: 16px; margin: 0; padding: 0;
     }
     nav ul li a {
-      text-decoration: none;
-      color: #fff;
-      font-weight: 600;
-      font-size: 13px;
-      padding: 4px 8px;
-      border-radius: 4px;
+      text-decoration: none; color: #fff; font-weight: 600;
+      font-size: 13px; padding: 4px 8px; border-radius: 4px;
       transition: color 0.3s, box-shadow 0.3s, background 0.3s;
     }
-    nav ul li a:hover,
-    nav ul li a.active {
+    nav ul li a:hover, nav ul li a.active {
       color: var(--red);
       box-shadow: 0 2px 6px rgba(229,9,20,0.6);
       background: rgba(255,255,255,0.05);
     }
     nav ul li a.admin-link {
-      background: var(--red);
-      color: #fff !important;
-      padding: 5px 12px;
-      border-radius: 6px;
-      font-weight: 600;
+      background: var(--red); color: #fff !important;
+      padding: 5px 12px; border-radius: 6px; font-weight: 600;
     }
     nav ul li a.admin-link:hover {
       background: var(--red-dark);
       box-shadow: 0 2px 6px rgba(229,9,20,0.6);
     }
 
-    .menu-toggle {
-      display: none;
-      cursor: pointer;
-      font-size: 22px;
-      color: var(--text-light);
-      background: none;
-      border: none;
-    }
+    .menu-toggle { display: none; cursor: pointer; font-size: 22px; color: var(--text-light); background: none; border: none; }
     @media (max-width: 768px) {
       .menu-toggle { display: block; }
       nav ul {
-        flex-direction: column;
-        background: var(--bg-dark);
-        position: absolute;
-        top: 60px;
-        right: 0;
-        width: 200px;
-        display: none;
-        padding: 15px;
+        flex-direction: column; background: var(--bg-dark);
+        position: absolute; top: 60px; right: 0; width: 200px;
+        display: none; padding: 15px;
         border-left: 2px solid var(--red-dark);
         border-bottom: 2px solid var(--red-dark);
         border-radius: 0 0 12px 12px;
@@ -112,11 +82,9 @@
       nav ul li { margin: 10px 0; }
     }
 
+    /* Hero Section */
     .hero { margin-top:70px; height:70vh; position:relative; overflow:hidden; }
-    .hero-slide {
-      position:absolute; inset:0; background-size:cover; background-position:center;
-      opacity:0; transition:opacity 1s ease-in-out;
-    }
+    .hero-slide { position:absolute; inset:0; background-size:cover; background-position:center; opacity:0; transition:opacity 1s ease-in-out; }
     .hero-slide.active { opacity:1; }
     .hero::after { content:""; position:absolute; inset:0; background:rgba(0,0,0,0.5); z-index:1; }
     .hero-content { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; z-index:2; color:#fff; }
@@ -125,103 +93,35 @@
     .dots span { display:inline-block; width:12px; height:12px; margin:0 4px; border-radius:50%; background:#fff; opacity:0.5; cursor:pointer; }
     .dots span.active { opacity:1; background:#e50914; }
 
-    .side-banner {
-      position:fixed; top:50%; transform:translateY(-50%);
-      width:130px; z-index:50;
-    }
+    .side-banner { position:fixed; top:50%; transform:translateY(-50%); width:130px; z-index:50; }
     .side-banner.left { left:0; }
     .side-banner.right { right:0; }
     .side-banner img { width:100%; border-radius:10px; box-shadow:0 0 8px rgba(0,0,0,0.5); }
 
-    /* ==== CAR TABLE ==== */
+    /* Car Table */
     .car-table-container {
-      margin: 40px auto;
-      padding: 20px;
-      width: 95%;
-      max-width: 1100px;
-      background: var(--bg-card);
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+      margin: 40px auto; padding: 20px; width: 95%; max-width: 1100px;
+      background: var(--bg-card); border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.4);
       overflow-x: auto;
     }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      color: #fff;
-    }
-    thead {
-      background: var(--red-dark);
-    }
-    th, td {
-      padding: 10px;
-      text-align: center;
-      border-bottom: 1px solid #333;
-      font-size: 14px;
-    }
-    th {
-      color: #fff;
-      font-weight: 600;
-    }
+    table { width: 100%; border-collapse: collapse; color: #fff; }
+    thead { background: var(--red-dark); position: sticky; top: 60px; z-index: 20; }
+    th, td { padding: 10px; text-align: center; border-bottom: 1px solid #333; font-size: 14px; }
+    th { color: #fff; font-weight: 600; }
     tr:hover { background: rgba(255,255,255,0.05); }
+    td img { width: 70px; border-radius: 6px; margin-right: 8px; vertical-align: middle; }
 
-    .details-btn {
-      padding: 6px 10px;
-      background: var(--red);
-      border: none;
-      border-radius: 6px;
-      color: #fff;
-      cursor: pointer;
-    }
-    .details-btn:hover { background: var(--red-dark); }
-
-    @media (max-width: 768px) {
-      table, thead, tbody, th, td, tr { display: block; }
-      thead { display: none; }
-      tr { margin-bottom: 15px; background: #1a1a1a; border-radius: 10px; padding: 10px; }
-      td { text-align: left; padding: 8px 10px; border: none; }
-      td::before {
-        content: attr(data-label);
-        font-weight: 600;
-        color: var(--red);
-        display: block;
-        margin-bottom: 4px;
-      }
-    }
-
-    /* ===== Modal ===== */
-    .modal {
-      display:none; position:fixed; inset:0; background:rgba(0,0,0,0.9); 
-      justify-content:center; align-items:center; z-index:9999; overflow:auto;
-    }
-    .modal-content {
-      background:#111; color:#fff; padding:20px; border-radius:12px; border: 1px solid var(--red);
-      max-width:900px; width:90%; display:flex; flex-wrap:wrap; gap:20px;
-      position:relative;
-    }
-    .modal-close {
-      position:absolute; top:10px; right:15px; font-size:22px; color:#fff;
-      cursor:pointer; background:none; border:none;
-    }
+    /* Modal */
+    .modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; z-index:9999; overflow:auto; }
+    .modal-content { background:#111; color:#fff; padding:20px; border-radius:12px; border:1px solid var(--red); max-width:900px; width:90%; display:flex; flex-wrap:wrap; gap:20px; position:relative; }
+    .modal-close { position:absolute; top:10px; right:15px; font-size:22px; color:#fff; cursor:pointer; background:none; border:none; }
     .modal-images { flex:1; min-width:300px; max-height:500px; overflow-y:auto; }
     .modal-images img { width:100%; margin-bottom:10px; border-radius:8px; }
     .modal-details { flex:1; min-width:300px; }
-    .buy-btn {
-      display:inline-block; margin-top:15px; padding:10px 18px;
-      background:#e50914; border:none; border-radius:15px; color:#fff; cursor:pointer;
-    }
-
-    .whatsapp-form {
-      display:none; margin-top:15px; background:#1a1a1a;
-      padding:12px; border-radius:8px;
-    }
-    .whatsapp-form input, .whatsapp-form textarea {
-      width:100%; margin-bottom:8px; padding:8px;
-      border:none; border-radius:6px; outline:none;
-    }
-    .whatsapp-form button {
-      background:#e50914; color:#fff; border:none;
-      padding:8px 14px; border-radius:6px; cursor:pointer; width:100%;
-    }
+    .buy-btn { display:inline-block; margin-top:15px; padding:10px 18px; background:#e50914; border:none; border-radius:15px; color:#fff; cursor:pointer; }
+    .whatsapp-form { display:none; margin-top:15px; background:#1a1a1a; padding:12px; border-radius:8px; }
+    .whatsapp-form input, .whatsapp-form textarea { width:100%; margin-bottom:8px; padding:8px; border:none; border-radius:6px; outline:none; }
+    .whatsapp-form button { background:#e50914; color:#fff; border:none; padding:8px 14px; border-radius:6px; cursor:pointer; width:100%; }
   </style>
 </head>
 <body>
@@ -229,9 +129,8 @@
 <header>
   <div class="brand">
     <img src="../images/Logo/Logo.png" alt="Logo">
-    <a href="index.html" class="logo">CLICK<span>WORX</span></a>
+    <a href="../index.html" class="logo">CLICK<span>WORX</span></a>
   </div>
-
   <nav id="navbar">
     <ul>
       <li><a href="../index.html">Home</a></li>
@@ -243,7 +142,6 @@
       <li><a href="admin.html" class="admin-link">Admin</a></li>
     </ul>
   </nav>
-
   <button class="menu-toggle" id="menuToggle">☰</button>
 </header>
 
@@ -263,6 +161,7 @@
   <table id="carTable">
     <thead>
       <tr>
+        <th>Image</th>
         <th>Car Name</th>
         <th>Model</th>
         <th>Specs</th>
@@ -289,14 +188,14 @@
 async function loadBanners() {
   let banners = {};
   try {
-    const res = await fetch("banners.json");
+    const res = await fetch("../data/banners.json");
     if (res.ok) banners = await res.json();
   } catch { banners = JSON.parse(localStorage.getItem("banners")) || {}; }
 
   const hero = document.getElementById("heroSlides");
   hero.innerHTML = "";
   const imgs = ["hero1","hero2","hero3","hero4"].map(id=>banners[id]).filter(Boolean);
-  const fallback = ["images/BG/bg1.jpg","images/BG/car02.jpg","images/BG/car03.jpg"];
+  const fallback = ["../images/BG/bg1.jpg","../images/BG/car02.jpg","../images/BG/car03.jpg"];
   const slides = imgs.length ? imgs : fallback;
   slides.forEach((src,i)=>{
     const div=document.createElement("div");
@@ -304,13 +203,17 @@ async function loadBanners() {
     if(i===0) div.classList.add("active");
     hero.appendChild(div);
   });
+
   const dots=document.getElementById("heroDots");
   dots.innerHTML="";
   slides.forEach((_,i)=>{
     const d=document.createElement("span");
-    d.addEventListener("click",()=>showSlide(i)); dots.appendChild(d);
+    d.addEventListener("click",()=>showSlide(i));
+    dots.appendChild(d);
   });
-  let index=0; const dotEls=dots.querySelectorAll("span");
+
+  let index=0;
+  const dotEls=dots.querySelectorAll("span");
   function showSlide(n){
     const all=document.querySelectorAll(".hero-slide");
     all.forEach(s=>s.classList.remove("active"));
@@ -328,16 +231,17 @@ async function loadBanners() {
 async function loadCars() {
   let cars=[];
   try {
-    const res=await fetch("cars.json");
+    const res=await fetch("../data/cars.json");
     if(res.ok) cars=await res.json();
   } catch { cars=JSON.parse(localStorage.getItem("cars"))||[]; }
 
-  const moreCars=cars.filter(c=>c.category!=="urgent");
   const tbody=document.querySelector("#carTable tbody");
   tbody.innerHTML="";
-  moreCars.forEach((c,i)=>{
+  cars.forEach((c,i)=>{
+    const imgTag = c.images && c.images.length ? `<img src="${c.images[0]}" alt="${c.name}">` : `<img src="../images/no-image.jpg" alt="No image">`;
     const tr=document.createElement("tr");
     tr.innerHTML=`
+      <td data-label="Image">${imgTag}</td>
       <td data-label="Car Name">${c.name}</td>
       <td data-label="Model">${c.model}</td>
       <td data-label="Specs">${c.specs}</td>
@@ -348,7 +252,7 @@ async function loadCars() {
       <td data-label="Details"><button class="details-btn" onclick="showDetails(${i})">Details</button></td>`;
     tbody.appendChild(tr);
   });
-  window.carList=moreCars;
+  window.carList=cars;
 }
 
 function showDetails(i){
@@ -356,7 +260,7 @@ function showDetails(i){
   const modal=document.getElementById("carModal");
   const imgs=document.getElementById("modalImages");
   const det=document.getElementById("modalDetails");
-  imgs.innerHTML=c.images.map(img=>`<img src="${img}" onload="this.classList.add('loaded')}">`).join("");
+  imgs.innerHTML=c.images.map(img=>`<img src="${img}" loading="lazy">`).join("");
   det.innerHTML=`
     <h2>${c.name}</h2>
     <p><strong>Model:</strong> ${c.model}</p>
@@ -364,10 +268,8 @@ function showDetails(i){
     <p><strong>Color:</strong> ${c.color}</p>
     <p><strong>Mileage:</strong> ${c.mileage}</p>
     <p><strong>Location:</strong> ${c.location||'-'}</p>
-    <p><strong>Mulkia:</strong> ${c.milkiya}</p>
-    <p><strong>Accident:</strong> ${c.accident}</p>
     <p><strong>Price:</strong> ${c.price}${c.negotiable?" (Negotiable)":""}</p>
-    <button class="buy-btn" onclick="showWhatsAppForm('${c.name}')">I Want To Buy</button>
+    <button class="buy-btn" onclick="showWhatsAppForm()">I Want To Buy</button>
     <div class="whatsapp-form" id="whatsappForm">
       <h3>I Want To Buy This</h3>
       <input type="text" id="buyerName" placeholder="Your Name">
@@ -390,25 +292,24 @@ function sendWhatsApp(carName){
   window.open(`https://wa.me/${number}?text=${text}`,"_blank");
 }
 
-window.onload=()=>{ loadBanners(); loadCars(); };
-
 document.addEventListener("DOMContentLoaded", () => {
-  const menuToggle = document.getElementById("menuToggle");
-  const navList = document.querySelector("nav ul");
-  if (menuToggle && navList) {
-    menuToggle.addEventListener("click", (e) => {
+  loadBanners();
+  loadCars();
+
+  const menuToggle=document.getElementById("menuToggle");
+  const navList=document.querySelector("nav ul");
+  if(menuToggle&&navList){
+    menuToggle.addEventListener("click",(e)=>{
       e.stopPropagation();
       navList.classList.toggle("active");
     });
-    document.addEventListener("click", (event) => {
-      if (!navList.contains(event.target) && !menuToggle.contains(event.target)) {
+    document.addEventListener("click",(event)=>{
+      if(!navList.contains(event.target)&&!menuToggle.contains(event.target)){
         navList.classList.remove("active");
       }
     });
-    navList.querySelectorAll("a").forEach(link => {
-      link.addEventListener("click", () => {
-        navList.classList.remove("active");
-      });
+    navList.querySelectorAll("a").forEach(link=>{
+      link.addEventListener("click",()=>navList.classList.remove("active"));
     });
   }
 });
