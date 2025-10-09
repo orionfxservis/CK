@@ -340,7 +340,11 @@
       }
     });
 
-    window.onload = () => { loadData(); loadHeroSlides(); };
+    document.addEventListener("DOMContentLoaded", () => {
+  loadBanners();
+  loadCars();
+});
   </script>
 </body>
 </html>
+
