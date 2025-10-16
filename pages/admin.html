@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Admin Panel - ClickWorx</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../style.css">
   <style>
     :root {
       --red: #e50914;
@@ -17,51 +18,12 @@
       font-family: Arial, sans-serif;
       background: var(--bg-dark);
       color: var(--text-light);
-      padding: 15px;
+      padding: 0;
       margin: 0;
     }
-
-    /* Header */
-    .header {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      background: rgba(0,0,0,0.9);
-      z-index: 9999;
-      padding: 10px 20px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-    }
-    .header .container {
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .logo { font-size: 20px; font-weight: bold; color: #fff; }
-    .navbar ul {
-      display: flex; gap: 20px; margin: 0; padding: 0; list-style: none;
-    }
-    .navbar ul li a {
-      color: #fff; text-decoration: none; font-size: 15px;
-      transition: 0.3s;
-    }
-    .navbar ul li a:hover,
-    .navbar ul li a.active {
-      color: var(--highlight);
-      border-bottom: 2px solid var(--highlight);
-      padding-bottom: 3px;
-    }
-    .menu-toggle { display: none; font-size: 24px; color: #fff; cursor: pointer; }
-    @media (max-width:768px){
-      .navbar ul { 
-        display: none; flex-direction: column; background: #111; 
-        position: absolute; top: 60px; right: 0; width: 200px; padding: 10px;
-      }
-      .navbar ul.show { display: flex; }
-      .menu-toggle { display: block; }
-    }
     .page-offset { margin-top: 80px; }
-
-    /* Admin panel */
     h1 { text-align: center; color: var(--red); margin-bottom: 20px; }
-    .flex-row { display: flex; gap: 15px; flex-wrap: wrap; }
+    .flex-row { display: flex; gap: 15px; flex-wrap: wrap; padding: 15px; }
     .section {
       background: var(--bg-card);
       padding: 15px;
@@ -78,20 +40,18 @@
       border-radius: 6px; border: none; outline: none;
     }
     textarea { min-height: 70px; resize: vertical; }
-    .inline { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+    .inline { display: flex; align-items: center; gap: 10px; margin-top: 8px; flex-wrap: wrap; }
     button {
       margin-top: 10px; padding: 6px 12px;
       background: var(--red); border: none; border-radius: 6px;
       color: #fff; cursor: pointer; font-size: 14px;
     }
     button:hover { background: var(--red-dark); }
-    .preview { margin-top: 8px; max-width: 100%; border-radius: 6px; }
+    .preview { margin-top: 8px; max-width: 80%; border-radius: 6px; }
     table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; }
     th, td { padding: 6px; border: 1px solid #333; text-align: left; }
     th { background: #222; }
     td img { max-width: 60px; border-radius: 4px; }
-
-    /* Login Overlay */
     #loginOverlay {
       position: fixed; inset: 0; background: rgba(0,0,0,0.9);
       display: flex; align-items: center; justify-content: center;
@@ -107,6 +67,7 @@
     }
     #loginBox h2 { margin-bottom: 15px; }
     #carImagePreview img { max-width: 120px; margin: 5px; border-radius: 4px; }
+    .export-buttons { display: flex; flex-wrap: wrap; gap: 10px; }
   </style>
 </head>
 <body>
@@ -114,22 +75,28 @@
   <!-- Header -->
   <header class="header">
     <div class="container">
-      <a href="index.html" class="Logo">CLICK<span>WORX</span></a>
+      <a href="../index.html" class="logo">CLICK<span>WORX</span></a>
       <nav class="navbar" id="navbar">
         <ul>
           <li><a href="../index.html">Home</a></li>
-        <li><a href="urgent.html">Urgent Sale</a></li>
-        <li><a href="more.html">More Cars</a></li>
-        <li><a href="search.html" class="active">Search</a></li>
-        <li><a href="about.html">About Us</a></li>
-        <li><a href="contact.html">Contact Us</a></li>
-        <li><a href="admin.html" class="admin-link">Admin</a></li>
+          <li><a href="urgent.html">Urgent Sale</a></li>
+          <li><a href="more.html">More Cars</a></li>
+          <li><a href="search.html">Search</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="admin.html" class="active">Admin</a></li>
         </ul>
         <div class="menu-toggle" id="menu-toggle">&#9776;</div>
       </nav>
     </div>
   </header>
   <div class="page-offset"></div>
+
+  <!-- Hero Slideshow (visual only in admin) -->
+  <section class="hero-section">
+    <div class="hero-slider" id="heroSlider"></div>
+    <div class="overlay"></div>
+  </section>
 
   <!-- Login -->
   <div id="loginOverlay">
@@ -147,14 +114,12 @@
   <h1>Admin Panel</h1>
 
   <div class="flex-row">
+
     <!-- Car Management -->
     <div class="section">
       <h2>Add / Manage Cars</h2>
       <label>Category</label>
-      <select id="carCategory">
-        <option value="urgent">Urgent Sale</option>
-        <option value="more">More Cars</option>
-      </select>
+      <select id="carCategory"><option value="urgent">Urgent Sale</option><option value="more">More Cars</option></select>
       <label>Car Name</label><input type="text" id="carName">
       <label>Model</label><input type="text" id="carModel">
       <label>Specs</label><input type="text" id="carSpecs">
@@ -162,61 +127,62 @@
       <label>Mileage</label><input type="text" id="carMileage">
       <label>Mulkia</label><input type="text" id="carMilkiya">
       <label>Accident History</label><input type="text" id="carAccident">
-      <label>Price</label>
+      <label>Location</label><input type="text" id="carLocation" placeholder="City or Area">
+      <label>Price & Negotiable</label>
       <div class="inline">
-        <input type="text" id="carPrice" placeholder="e.g. $25,000">
+        <input type="text" id="carPrice" placeholder="e.g. $25,000" style="width:60%;">
         <label><input type="checkbox" id="carNegotiable"> Negotiable</label>
       </div>
-      <label>Ribbon</label>
-      <input type="text" id="carRibbon" placeholder="e.g. Hot Deal, Limited">
-      <label>Details</label>
-      <textarea id="carDetails"></textarea>
-      <label>Upload Car Images (Multiple)</label>
-      <input type="file" id="carImages" accept="image/*" multiple>
+      <label>Ribbon</label><input type="text" id="carRibbon">
+      <label>Details</label><textarea id="carDetails"></textarea>
+      <label>Car Image URLs (comma separated)</label><textarea id="carImageUrls"></textarea>
       <div id="carImagePreview"></div>
-      <button id="addCarBtn" onclick="addCar()">Add Car</button>
+      <div class="inline">
+        <button onclick="addCar()">Add Car</button>
+        <button onclick="syncCars()">Sync Cars</button>
+        <button onclick="resetForm()">Reset</button>
+      </div>
     </div>
 
     <!-- Banner Management -->
     <div class="section">
-      <h2>Manage Banners</h2>
+      <h2>Manage Banners (left, right, horizontal)</h2>
       <label>Left Banner</label>
-      <input type="file" id="leftBanner" accept="image/*">
-      <img id="leftPreview" class="preview" style="display:none;" />
+      <input type="file" id="leftBanner" accept="image/*" onchange="previewBanner('leftBanner','left')">
+      <img id="left" class="preview" style="display:none;">
       <label>Right Banner</label>
-      <input type="file" id="rightBanner" accept="image/*">
-      <img id="rightPreview" class="preview" style="display:none;" />
+      <input type="file" id="rightBanner" accept="image/*" onchange="previewBanner('rightBanner','right')">
+      <img id="right" class="preview" style="display:none;">
       <label>Horizontal Banner</label>
-      <input type="file" id="horizontalBanner" accept="image/*">
-      <img id="horizontalPreview" class="preview" style="display:none;" />
-      <button onclick="saveBanners()">Save Banners</button>
-      <table id="bannerTable">
-        <thead>
-          <tr><th>Type</th><th>Preview</th><th>Actions</th></tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+      <input type="file" id="horizontalBanner" accept="image/*" onchange="previewBanner('horizontalBanner','horizontal')">
+      <img id="horizontal" class="preview" style="display:none;">
+      <div style="margin-top:10px">
+        <button onclick="saveAllBannersAndHero()">Save Banners & Hero</button>
+      </div>
+      <table id="bannerTable"><thead><tr><th>Type</th><th>Preview</th></tr></thead><tbody></tbody></table>
     </div>
 
-    <!-- Hero Images -->
+    <!-- Hero Slideshow -->
     <div class="section">
-      <h2>Hero Slideshow</h2>
-      <label>Hero Image 1</label><input type="file" id="hero1" accept="image/*">
-      <label>Hero Image 2</label><input type="file" id="hero2" accept="image/*">
-      <label>Hero Image 3</label><input type="file" id="hero3" accept="image/*">
-      <label>Hero Image 4</label><input type="file" id="hero4" accept="image/*">
-      <button onclick="saveHero()">Save Hero Images</button>
-      <table id="heroTable">
-        <thead><tr><th>Image</th><th>Preview</th></tr></thead>
-        <tbody></tbody>
-      </table>
+      <h2>Hero Slideshow (uses same banners.json keys hero1..hero4)</h2>
+      <label>Hero Image 1</label><input type="file" id="hero1" accept="image/*" onchange="previewHero('hero1','hero1Preview')">
+      <img id="hero1Preview" class="preview" style="display:none;">
+      <label>Hero Image 2</label><input type="file" id="hero2" accept="image/*" onchange="previewHero('hero2','hero2Preview')">
+      <img id="hero2Preview" class="preview" style="display:none;">
+      <label>Hero Image 3</label><input type="file" id="hero3" accept="image/*" onchange="previewHero('hero3','hero3Preview')">
+      <img id="hero3Preview" class="preview" style="display:none;">
+      <label>Hero Image 4</label><input type="file" id="hero4" accept="image/*" onchange="previewHero('hero4','hero4Preview')">
+      <img id="hero4Preview" class="preview" style="display:none;">
+      <div style="margin-top:10px">
+        <button onclick="saveAllBannersAndHero()">Save Hero & Banners</button>
+      </div>
+      <table id="heroTable"><thead><tr><th>#</th><th>Preview</th></tr></thead><tbody></tbody></table>
     </div>
 
     <!-- WhatsApp -->
     <div class="section">
       <h2>WhatsApp Settings</h2>
-      <label>WhatsApp Number</label>
-      <input type="text" id="whatsappNumber" placeholder="923001234567">
+      <label>WhatsApp Number</label><input type="text" id="whatsappNumber" placeholder="923001234567">
       <button onclick="saveWhatsApp()">Save Number</button>
     </div>
 
@@ -230,306 +196,153 @@
     </div>
   </div>
 
-  <!-- Cars List -->
-  <div class="section">
+  <div class="section" style="margin:15px;">
     <h2>Cars List</h2>
-    <table id="carTable">
-      <thead>
-        <tr>
-          <th>Images</th><th>Name</th><th>Model</th><th>Specs</th><th>Price</th><th>Actions</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+    <table id="carTable"><thead><tr><th>Images</th><th>Name</th><th>Model</th><th>Specs</th><th>Price</th><th>Actions</th></tr></thead><tbody></tbody></table>
   </div>
 
 <script>
-/* --- Navbar Toggle --- */
-document.getElementById("menu-toggle").addEventListener("click", () => {
-  document.querySelector(".navbar ul").classList.toggle("show");
-});
+document.getElementById("menu-toggle").addEventListener("click",()=>{document.querySelector(".navbar ul").classList.toggle("show");});
 
-/* --- Login --- */
 let cars = JSON.parse(localStorage.getItem("cars")) || [];
-let banners = JSON.parse(localStorage.getItem("banners")) || {};
+// BANNERS object uses keys expected by other pages:
+// left, right, horizontal, hero1, hero2, hero3, hero4
+let banners = JSON.parse(localStorage.getItem("banners")) || {
+  left: "", right: "", horizontal: "", hero1: "", hero2: "", hero3: "", hero4: ""
+};
 let storedPassword = localStorage.getItem("adminPassword") || "admin123";
 
-function checkLogin() {
-  const pass = document.getElementById("loginPassword").value;
-  if (pass === storedPassword) {
-    document.getElementById("loginOverlay").style.display = "none";
-  } else {
-    alert("Wrong password!");
-  }
+/* --- Auth --- */
+function checkLogin(){
+  const p = document.getElementById("loginPassword").value;
+  if (p === storedPassword) document.getElementById("loginOverlay").style.display="none";
+  else alert("Wrong password!");
 }
-function setPassword() {
-  const newPass = document.getElementById("newPassword").value;
-  if (newPass.trim() !== "") {
-    localStorage.setItem("adminPassword", newPass);
-    storedPassword = newPass;
+function setPassword(){
+  const np = document.getElementById("newPassword").value;
+  if (np.trim() !== "") {
+    localStorage.setItem("adminPassword", np);
+    storedPassword = np;
     alert("Password updated!");
-  } else {
-    alert("Password cannot be empty.");
-  }
+  } else alert("Password cannot be empty.");
 }
 
-/* ---- Car functions ---- */
-function previewCarImages(files) {
-  carImagePreview.innerHTML = "";
-  for (let f of files) {
-    const img = document.createElement("img");
-    img.src = URL.createObjectURL(f);
-    carImagePreview.appendChild(img);
-  }
+/* Cars */
+let editIndex=-1;
+function addCar(){
+ const car={category:carCategory.value,name:carName.value,model:carModel.value,specs:carSpecs.value,
+ color:carColor.value,mileage:carMileage.value,milkiya:carMilkiya.value,accident:carAccident.value,
+ location:carLocation.value,price:carPrice.value,negotiable:carNegotiable.checked,ribbon:carRibbon.value,
+ details:carDetails.value,images:carImageUrls.value.split(",").map(u=>u.trim()).filter(u=>u)};
+ if(editIndex>=0){cars[editIndex]=car;editIndex=-1;alert("Car updated!");}
+ else{cars.unshift(car);alert("Car added!");}
+ localStorage.setItem("cars",JSON.stringify(cars));renderCarTable();resetForm();
 }
-carImages.addEventListener("change", () => previewCarImages(carImages.files));
-
-function addCar() {
-  const readerPromises = [];
-  const car = {
-    category: carCategory.value,
-    name: carName.value,
-    model: carModel.value,
-    specs: carSpecs.value,
-    color: carColor.value,
-    mileage: carMileage.value,
-    milkiya: carMilkiya.value,
-    accident: carAccident.value,
-    price: carPrice.value,
-    negotiable: carNegotiable.checked,
-    ribbon: carRibbon.value,
-    details: carDetails.value,
-    images: []
-  };
-  for (let f of carImages.files) {
-    readerPromises.push(new Promise(resolve => {
-      const reader = new FileReader();
-      reader.onload = e => {
-        car.images.push(e.target.result);
-        resolve();
-      };
-      reader.readAsDataURL(f);
-    }));
-  }
-  Promise.all(readerPromises).then(()=>{
-    cars.unshift(car);
-    localStorage.setItem("cars", JSON.stringify(cars));
-    renderCarTable();
-    document.getElementById("carName").value = "";
-    document.getElementById("carModel").value = "";
-    document.getElementById("carSpecs").value = "";
-    document.getElementById("carColor").value = "";
-    document.getElementById("carMileage").value = "";
-    document.getElementById("carMilkiya").value = "";
-    document.getElementById("carAccident").value = "";
-    document.getElementById("carPrice").value = "";
-    document.getElementById("carNegotiable").checked = false;
-    document.getElementById("carRibbon").value = "";
-    document.getElementById("carDetails").value = "";
-    carImages.value = "";
-    carImagePreview.innerHTML = "";
-  });
+function editCar(i){if(confirm("Edit this car?")){const c=cars[i];editIndex=i;
+ carCategory.value=c.category;carName.value=c.name;carModel.value=c.model;carSpecs.value=c.specs;
+ carColor.value=c.color;carMileage.value=c.mileage;carMilkiya.value=c.milkiya;
+ carAccident.value=c.accident;carLocation.value=c.location||"";
+ carPrice.value=c.price;carNegotiable.checked=c.negotiable;
+ carRibbon.value=c.ribbon;carDetails.value=c.details;carImageUrls.value=c.images.join(", ");window.scrollTo(0,0);}
 }
-
-function renderCarTable() {
-  const tbody = document.querySelector("#carTable tbody");
-  tbody.innerHTML = "";
-  cars.forEach((c,i)=>{
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${c.images.map(img=>`<img src="${img}">`).join(" ")}</td>
-      <td>${c.name}</td>
-      <td>${c.model}</td>
-      <td>${c.specs}</td>
-      <td>${c.price}</td>
-      <td>
-        <button onclick="editCar(${i})">Edit</button>
-        <button onclick="deleteCar(${i})">Delete</button>
-      </td>
-    `;
-    tbody.appendChild(tr);
-  });
+function confirmDelete(i){if(confirm("Delete this car?")){cars.splice(i,1);localStorage.setItem("cars",JSON.stringify(cars));renderCarTable();}}
+function renderCarTable(){const tbody=document.querySelector("#carTable tbody");tbody.innerHTML="";
+ cars.forEach((c,i)=>{const tr=document.createElement("tr");tr.innerHTML=`<td>${c.images.map(img=>`<img src="${img}">`).join(" ")}</td><td>${c.name}</td><td>${c.model}</td><td>${c.specs}</td><td>${c.location}</td><td>${c.price}</td><td><button onclick="editCar(${i})">Edit</button> <button onclick="confirmDelete(${i})">Delete</button></td>`;tbody.appendChild(tr);});
 }
-function deleteCar(i) {
-  cars.splice(i,1);
-  localStorage.setItem("cars", JSON.stringify(cars));
-  renderCarTable();
-}
-function editCar(i) {
-  const c = cars[i];
-  carCategory.value = c.category;
-  carName.value = c.name;
-  carModel.value = c.model;
-  carSpecs.value = c.specs;
-  carColor.value = c.color;
-  carMileage.value = c.mileage;
-  carMilkiya.value = c.milkiya;
-  carAccident.value = c.accident;
-  carPrice.value = c.price;
-  carNegotiable.checked = c.negotiable;
-  carRibbon.value = c.ribbon;
-  carDetails.value = c.details;
-  carImagePreview.innerHTML = c.images.map(img=>`<img src="${img}">`).join(" ");
-  carImages.value = "";
+function resetForm(){document.querySelectorAll("#carName,#carModel,#carSpecs,#carColor,#carMileage,#carMilkiya,#carAccident,#carLocation,#carPrice,#carRibbon,#carDetails,#carImageUrls").forEach(e=>e.value="");carNegotiable.checked=false;}
+function syncCars(){const blob=new Blob([JSON.stringify(cars,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="cars.json";a.click();URL.revokeObjectURL(a.href);alert("cars.json downloaded. Upload to /data/");}
 
-  document.getElementById("addCarBtn").style.display = "none";
-  let saveBtn = document.getElementById("saveEditBtn");
-  if (!saveBtn) {
-    saveBtn = document.createElement("button");
-    saveBtn.id = "saveEditBtn";
-    saveBtn.textContent = "Save Changes";
-    carImagePreview.after(saveBtn);
-  }
-  saveBtn.onclick = () => {
-    c.category = carCategory.value;
-    c.name = carName.value;
-    c.model = carModel.value;
-    c.specs = carSpecs.value;
-    c.color = carColor.value;
-    c.mileage = carMileage.value;
-    c.milkiya = carMilkiya.value;
-    c.accident = carAccident.value;
-    c.price = carPrice.value;
-    c.negotiable = carNegotiable.checked;
-    c.ribbon = carRibbon.value;
-    c.details = carDetails.value;
-    if (carImages.files.length > 0) {
-      const readerPromises = [];
-      c.images = [];
-      for (let f of carImages.files) {
-        readerPromises.push(new Promise(resolve => {
-          const reader = new FileReader();
-          reader.onload = e => {
-            c.images.push(e.target.result);
-            resolve();
-          };
-          reader.readAsDataURL(f);
-        }));
-      }
-      Promise.all(readerPromises).then(()=>{
-        localStorage.setItem("cars", JSON.stringify(cars));
-        renderCarTable();
-      });
-    } else {
-      localStorage.setItem("cars", JSON.stringify(cars));
-      renderCarTable();
-    }
-    saveBtn.remove();
-    document.getElementById("addCarBtn").style.display = "inline-block";
-    carImagePreview.innerHTML = "";
-    carImages.value = "";
-  };
-}
-
-/* ---- Banner functions ---- */
-function saveBanners() {
-  const bannerTypes = ["left","right","horizontal"];
-  const readerPromises = [];
-
-  bannerTypes.forEach(type=>{
-    const file = document.getElementById(type+"Banner").files[0];
-    if (file) {
-      readerPromises.push(new Promise(resolve=>{
-        const reader = new FileReader();
-        reader.onload = e => {
-          banners[type] = e.target.result; // save base64
-          resolve();
-        };
-        reader.readAsDataURL(file);
-      }));
-    }
-  });
-
-  Promise.all(readerPromises).then(()=>{
+/* --- Banner & Hero Preview helpers --- */
+function previewBanner(inputId, key) {
+  const f = document.getElementById(inputId).files[0];
+  if (!f) return;
+  const r = new FileReader();
+  r.onload = e => {
+    banners[key] = e.target.result; // inline base64
+    document.getElementById(key).src = e.target.result;
+    document.getElementById(key).style.display = "block";
     localStorage.setItem("banners", JSON.stringify(banners));
     renderBannerTable();
-  });
+  };
+  r.readAsDataURL(f);
 }
-function renderBannerTable() {
-  const tbody = document.querySelector("#bannerTable tbody");
-  tbody.innerHTML = "";
-  ["left","right","horizontal"].forEach(type=>{
-    if (banners[type]) {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `<td>${type}</td><td><img src="${banners[type]}"></td>
-      <td><button onclick="removeBanner('${type}')">Delete</button></td>`;
-      tbody.appendChild(tr);
-    }
-  });
-}
-function removeBanner(type) {
-  delete banners[type];
-  localStorage.setItem("banners", JSON.stringify(banners));
-  renderBannerTable();
-}
-
-/* ---- Hero functions ---- */
-function saveHero() {
-  const heroTypes = ["hero1","hero2","hero3","hero4"];
-  const readerPromises = [];
-
-  heroTypes.forEach(id=>{
-    const file = document.getElementById(id).files[0];
-    if (file) {
-      readerPromises.push(new Promise(resolve=>{
-        const reader = new FileReader();
-        reader.onload = e => {
-          banners[id] = e.target.result;
-          resolve();
-        };
-        reader.readAsDataURL(file);
-      }));
-    }
-  });
-
-  Promise.all(readerPromises).then(()=>{
+function previewHero(inputId, previewId) {
+  const f = document.getElementById(inputId).files[0];
+  if (!f) return;
+  const r = new FileReader();
+  r.onload = e => {
+    // preview element id is previewId (like hero1Preview), but we also store under banners.hero1
+    const heroKey = inputId; // hero1, hero2...
+    banners[heroKey] = e.target.result;
+    document.getElementById(previewId).src = e.target.result;
+    document.getElementById(previewId).style.display = "block";
     localStorage.setItem("banners", JSON.stringify(banners));
     renderHeroTable();
-  });
+  };
+  r.readAsDataURL(f);
 }
-function renderHeroTable() {
-  const tbody = document.querySelector("#heroTable tbody");
+
+/* --- Save everything (banners + hero) into single banners.json --- */
+function saveAllBannersAndHero(){
+  // If user selected files, they already triggered previewBanner/previewHero which updated banners and localStorage.
+  // We just ensure current banners object is saved and exported as banners.json
+  localStorage.setItem("banners", JSON.stringify(banners));
+  renderBannerTable();
+  renderHeroTable();
+
+  // Export banners.json
+  const data = JSON.stringify(banners, null, 2);
+  const blob = new Blob([data], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "banners.json";
+  a.click();
+  URL.revokeObjectURL(a.href);
+
+  alert("✅ banners.json downloaded. Upload to /data/banners.json on GitHub Pages.");
+}
+
+/* Render tables from banners object */
+function renderBannerTable(){
+  const tbody = document.querySelector("#bannerTable tbody");
   tbody.innerHTML = "";
-  ["hero1","hero2","hero3","hero4"].forEach(id=>{
-    if (banners[id]) {
+  const list = [["left","Left"],["right","Right"],["horizontal","Horizontal"]];
+  list.forEach(([k,label])=>{
+    if (banners[k]) {
       const tr = document.createElement("tr");
-      tr.innerHTML = `<td>${id}</td><td><img src="${banners[id]}"></td>`;
+      tr.innerHTML = `<td>${label}</td><td><img src="${banners[k]}" class="preview"></td>`;
       tbody.appendChild(tr);
     }
   });
 }
-
-/* ---- WhatsApp ---- */
-function saveWhatsApp() {
-  const num = document.getElementById("whatsappNumber").value.trim();
-  if(num){
-    localStorage.setItem("whatsappNumber", num);
-    alert("WhatsApp number saved!");
-  }
+function renderHeroTable(){
+  const tbody = document.querySelector("#heroTable tbody");
+  tbody.innerHTML = "";
+  ["hero1","hero2","hero3","hero4"].forEach((k, idx)=>{
+    if (banners[k]) {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td>${idx+1}</td><td><img src="${banners[k]}" class="preview"></td>`;
+      tbody.appendChild(tr);
+      // also set preview img in hero preview area if present
+      const pid = k + "Preview";
+      const el = document.getElementById(pid);
+      if (el) { el.src = banners[k]; el.style.display = "block"; }
+    }
+  });
 }
 
-/* ---- Export ---- */
-function exportCars() {
-  const data = JSON.stringify(cars,null,2);
-  const blob = new Blob([data], {type:"application/json"});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url; a.download = "cars.json"; a.click();
-}
-function exportBanners() {
-  const data = JSON.stringify(banners,null,2);
-  const blob = new Blob([data], {type:"application/json"});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url; a.download = "banners.json"; a.click();
-}
+/* WhatsApp */
+function saveWhatsApp(){ localStorage.setItem("whatsappNumber", whatsappNumber.value); alert("WhatsApp number saved!"); }
 
-/* ---- Init ---- */
+/* Exports */
+function exportCars(){ const blob = new Blob([JSON.stringify(cars,null,2)], { type:"application/json" }); const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "cars.json"; a.click(); URL.revokeObjectURL(a.href); }
+function exportBanners(){ const blob = new Blob([JSON.stringify(banners,null,2)], { type:"application/json" }); const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "banners.json"; a.click(); URL.revokeObjectURL(a.href); }
+
+/* Init */
 renderCarTable();
 renderBannerTable();
 renderHeroTable();
-document.getElementById("whatsappNumber").value = localStorage.getItem("whatsappNumber")||"";
+document.getElementById("whatsappNumber").value = localStorage.getItem("whatsappNumber") || "";
 </script>
 </body>
 </html>
-

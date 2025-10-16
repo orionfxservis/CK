@@ -296,7 +296,7 @@ async function loadBanners() {
 async function loadCars() {
   let cars=[];
   try {
-    const res=await fetch("../data/cars.json");
+    const res=await fetch("../data/cars.json?" + new Date().getTime());
     if(res.ok) cars=await res.json();
   } catch { cars=JSON.parse(localStorage.getItem("cars"))||[]; }
 
@@ -315,6 +315,7 @@ async function loadCars() {
         <h3>${c.name}</h3>
         <p>${c.model}</p>
         <p>${c.specs}</p>
+		<p>${c.location}</p>
         <p>${c.price}${c.negotiable?" (Negotiable)":""}</p>
         <button class="details-btn" onclick="showDetails(${i})">Details</button>
       </div>`;
@@ -339,6 +340,7 @@ function showDetails(i){
     <p><strong>Mileage:</strong> ${c.mileage}</p>
     <p><strong>Mulkia:</strong> ${c.milkiya}</p>
     <p><strong>Accident:</strong> ${c.accident}</p>
+	<p><strong>location:</strong> ${c.location}</p>
     <p><strong>Price:</strong> ${c.price}${c.negotiable?" (Negotiable)":""}</p>
     <button class="buy-btn" onclick="showWhatsAppForm('${c.name}')">I Want To Buy</button>
     <div class="whatsapp-form" id="whatsappForm">
