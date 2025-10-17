@@ -1,12 +1,21 @@
 /* ==========================================================
-   ✅ GLOBAL PATH FIX — Works in / and /pages/
+   ✅ GLOBAL PATH FIX — Works for / and /pages/
 ========================================================== */
 function getBasePath() {
-  return window.location.pathname.includes("/pages/") ? "../" : "./";
+  const path = window.location.pathname;
+  if (path.includes("/pages/")) return "../";
+  return "./";
+}
+
+/* ✅ Normalize Image Paths */
+function fixImagePath(url) {
+  if (!url) return "";
+  // Remove accidental /pages/ in URLs
+  return url.replace("/pages/", "/");
 }
 
 /* ==========================================================
-   ✅ MOBILE MENU TOGGLE
+   ✅ MOBILE MENU
 ========================================================== */
 document.addEventListener("DOMContentLoaded", () => {
   const menuToggle = document.querySelector(".menu-toggle");
@@ -18,18 +27,16 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Auto-hide mobile menu on navigation
+  // Hide on navigation
   document.querySelectorAll("nav a").forEach(link => {
     link.addEventListener("click", () => {
-      if (nav.classList.contains("active")) {
-        nav.classList.remove("active");
-      }
+      if (nav.classList.contains("active")) nav.classList.remove("active");
     });
   });
 });
 
 /* ==========================================================
-   ✅ HERO SLIDESHOW — Controlled by /data/banners.json
+   ✅ HERO SLIDESHOW — from /data/banners.json
 ========================================================== */
 async function loadHeroSlideshow() {
   const basePath = getBasePath();
@@ -37,12 +44,12 @@ async function loadHeroSlideshow() {
   if (!slideshow) return;
 
   try {
-    const response = await fetch(`${basePath}data/banners.json`);
-    const banners = await response.json();
+    const res = await fetch(`${basePath}data/banners.json`);
+    const banners = await res.json();
 
     slideshow.innerHTML = banners.map((b, i) => `
       <div class="slide ${i === 0 ? "active" : ""}" 
-           style="background-image: url('${basePath}${b.image}')">
+           style="background-image:url('${fixImagePath(basePath + b.image)}')">
         <div class="slide-caption">
           <h2>${b.title || ""}</h2>
           <p>${b.subtitle || ""}</p>
@@ -52,20 +59,19 @@ async function loadHeroSlideshow() {
 
     let index = 0;
     const slides = document.querySelectorAll(".slide");
-
     setInterval(() => {
       slides[index].classList.remove("active");
       index = (index + 1) % slides.length;
       slides[index].classList.add("active");
     }, 5000);
 
-  } catch (error) {
-    console.error("❌ Error loading slideshow:", error);
+  } catch (err) {
+    console.error("❌ Slideshow error:", err);
   }
 }
 
 /* ==========================================================
-   ✅ FETCH & DISPLAY CARS — from /data/cars.json
+   ✅ LOAD CARS — from /data/cars.json
 ========================================================== */
 async function loadCars() {
   const basePath = getBasePath();
@@ -73,15 +79,15 @@ async function loadCars() {
   if (!carContainer) return;
 
   try {
-    const response = await fetch(`${basePath}data/cars.json`);
-    const cars = await response.json();
+    const res = await fetch(`${basePath}data/cars.json`);
+    const cars = await res.json();
 
     carContainer.innerHTML = cars.map(car => `
       <div class="car-card">
-        <img src="${basePath}${car.images?.[0] || 'images/default.jpg'}" alt="${car.name}">
+        <img src="${fixImagePath(basePath + (car.images?.[0] || "images/default.jpg"))}" alt="${car.name}">
         <div class="car-info">
           <h3>${car.name}</h3>
-          <p>${car.price ? `Price: ${car.price}` : "Contact for Price"}</p>
+          <p>${car.price ? "Price: " + car.price : "Contact for Price"}</p>
           <button class="buy-btn" data-name="${car.name}">Buy Now</button>
           <button class="whatsapp-btn" data-name="${car.name}">WhatsApp</button>
         </div>
@@ -90,13 +96,13 @@ async function loadCars() {
 
     setupPopups();
 
-  } catch (error) {
-    console.error("❌ Error loading cars:", error);
+  } catch (err) {
+    console.error("❌ Cars load error:", err);
   }
 }
 
 /* ==========================================================
-   ✅ POPUP MODALS for Buy & WhatsApp
+   ✅ POPUP WINDOWS
 ========================================================== */
 function setupPopups() {
   const buyBtns = document.querySelectorAll(".buy-btn");
@@ -104,38 +110,31 @@ function setupPopups() {
 
   buyBtns.forEach(btn => {
     btn.addEventListener("click", () => {
-      const carName = btn.dataset.name;
-      showPopup(`Interested in buying: ${carName}`);
+      showPopup(`Interested in buying: ${btn.dataset.name}`);
     });
   });
 
   whatsappBtns.forEach(btn => {
     btn.addEventListener("click", () => {
-      const carName = btn.dataset.name;
-      showPopup(`Message on WhatsApp about: ${carName}`);
+      showPopup(`Send WhatsApp about: ${btn.dataset.name}`);
     });
   });
 }
 
-function showPopup(message) {
-  // Remove existing popup if open
-  const existing = document.querySelector(".popup");
-  if (existing) existing.remove();
+function showPopup(msg) {
+  const old = document.querySelector(".popup");
+  if (old) old.remove();
 
   const popup = document.createElement("div");
   popup.className = "popup";
   popup.innerHTML = `
     <div class="popup-content">
-      <p>${message}</p>
+      <p>${msg}</p>
       <button class="close-popup">Close</button>
     </div>
   `;
-
   document.body.appendChild(popup);
-
-  document.querySelector(".close-popup").addEventListener("click", () => {
-    popup.remove();
-  });
+  document.querySelector(".close-popup").addEventListener("click", () => popup.remove());
 }
 
 /* ==========================================================
