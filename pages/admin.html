@@ -198,27 +198,38 @@
 
   <div class="section" style="margin:15px;">
     <h2>Cars List</h2>
-    <table id="carTable"><thead><tr><th>Images</th><th>Name</th><th>Model</th><th>Specs</th><th>Price</th><th>Actions</th></tr></thead><tbody></tbody></table>
+    <table id="carTable"><thead><tr><th>Images</th><th>Name</th><th>Model</th><th>Specs</th><th>Location</th><th>Price</th><th>Actions</th></tr></thead><tbody></tbody></table>
   </div>
 
 <script>
-document.getElementById("menu-toggle").addEventListener("click",()=>{document.querySelector(".navbar ul").classList.toggle("show");});
+/* ==========================================================
+   ✅ NAVIGATION
+========================================================== */
+document.getElementById("menu-toggle").addEventListener("click", () => {
+  document.querySelector(".navbar ul").classList.toggle("show");
+});
 
+/* ==========================================================
+   ✅ GLOBAL STORAGE
+========================================================== */
 let cars = JSON.parse(localStorage.getItem("cars")) || [];
-// BANNERS object uses keys expected by other pages:
-// left, right, horizontal, hero1, hero2, hero3, hero4
 let banners = JSON.parse(localStorage.getItem("banners")) || {
-  left: "", right: "", horizontal: "", hero1: "", hero2: "", hero3: "", hero4: ""
+  left: "", right: "", horizontal: "",
+  hero1: "", hero2: "", hero3: "", hero4: ""
 };
 let storedPassword = localStorage.getItem("adminPassword") || "admin123";
 
-/* --- Auth --- */
-function checkLogin(){
+/* ==========================================================
+   ✅ AUTHENTICATION
+========================================================== */
+function checkLogin() {
   const p = document.getElementById("loginPassword").value;
-  if (p === storedPassword) document.getElementById("loginOverlay").style.display="none";
-  else alert("Wrong password!");
+  if (p === storedPassword) {
+    document.getElementById("loginOverlay").style.display = "none";
+  } else alert("Wrong password!");
 }
-function setPassword(){
+
+function setPassword() {
   const np = document.getElementById("newPassword").value;
   if (np.trim() !== "") {
     localStorage.setItem("adminPassword", np);
@@ -227,38 +238,176 @@ function setPassword(){
   } else alert("Password cannot be empty.");
 }
 
-/* Cars */
-let editIndex=-1;
-function addCar(){
- const car={category:carCategory.value,name:carName.value,model:carModel.value,specs:carSpecs.value,
- color:carColor.value,mileage:carMileage.value,milkiya:carMilkiya.value,accident:carAccident.value,
- location:carLocation.value,price:carPrice.value,negotiable:carNegotiable.checked,ribbon:carRibbon.value,
- details:carDetails.value,images:carImageUrls.value.split(",").map(u=>u.trim()).filter(u=>u)};
- if(editIndex>=0){cars[editIndex]=car;editIndex=-1;alert("Car updated!");}
- else{cars.unshift(car);alert("Car added!");}
- localStorage.setItem("cars",JSON.stringify(cars));renderCarTable();resetForm();
-}
-function editCar(i){if(confirm("Edit this car?")){const c=cars[i];editIndex=i;
- carCategory.value=c.category;carName.value=c.name;carModel.value=c.model;carSpecs.value=c.specs;
- carColor.value=c.color;carMileage.value=c.mileage;carMilkiya.value=c.milkiya;
- carAccident.value=c.accident;carLocation.value=c.location||"";
- carPrice.value=c.price;carNegotiable.checked=c.negotiable;
- carRibbon.value=c.ribbon;carDetails.value=c.details;carImageUrls.value=c.images.join(", ");window.scrollTo(0,0);}
-}
-function confirmDelete(i){if(confirm("Delete this car?")){cars.splice(i,1);localStorage.setItem("cars",JSON.stringify(cars));renderCarTable();}}
-function renderCarTable(){const tbody=document.querySelector("#carTable tbody");tbody.innerHTML="";
- cars.forEach((c,i)=>{const tr=document.createElement("tr");tr.innerHTML=`<td>${c.images.map(img=>`<img src="${img}">`).join(" ")}</td><td>${c.name}</td><td>${c.model}</td><td>${c.specs}</td><td>${c.location}</td><td>${c.price}</td><td><button onclick="editCar(${i})">Edit</button> <button onclick="confirmDelete(${i})">Delete</button></td>`;tbody.appendChild(tr);});
-}
-function resetForm(){document.querySelectorAll("#carName,#carModel,#carSpecs,#carColor,#carMileage,#carMilkiya,#carAccident,#carLocation,#carPrice,#carRibbon,#carDetails,#carImageUrls").forEach(e=>e.value="");carNegotiable.checked=false;}
-function syncCars(){const blob=new Blob([JSON.stringify(cars,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="cars.json";a.click();URL.revokeObjectURL(a.href);alert("cars.json downloaded. Upload to /data/");}
+/* ==========================================================
+   ✅ UNIVERSAL IMAGE PATH NORMALIZER
+========================================================== */
+function cleanImagePath(url) {
+  if (!url) return "";
 
-/* --- Banner & Hero Preview helpers --- */
+  // Step 1: remove local drive or blob URLs
+  url = url.replace(/^file:\/\/\/[A-Z]:/i, "");  // remove D:/ or C:/ paths
+  url = url.replace(/^blob:.*/, "");             // remove blob URLs
+  url = url.replace(/\\/g, "/");                 // backslashes to forward slashes
+
+  // Step 2: remove everything before 'images/'
+  const idx = url.indexOf("images/");
+  if (idx !== -1) {
+    url = url.substring(idx);
+  }
+
+  // Step 3: ensure the path starts correctly for GitHub Pages
+  const baseURL = "https://orionfxservis.github.io/CK/";
+  if (!url.startsWith("images/")) {
+    url = "images/" + url.replace(/^\/?images\//, "");
+  }
+
+  return baseURL + url;
+}
+
+
+/* ==========================================================
+   ✅ CAR MANAGEMENT
+========================================================== */
+let editIndex = -1;
+
+function addCar() {
+  const car = {
+    category: carCategory.value,
+    name: carName.value.trim(),
+    model: carModel.value.trim(),
+    specs: carSpecs.value.trim(),
+    color: carColor.value.trim(),
+    mileage: carMileage.value.trim(),
+    milkiya: carMilkiya.value.trim(),
+    accident: carAccident.value.trim(),
+    location: carLocation.value.trim(),
+    price: carPrice.value.trim(),
+    negotiable: carNegotiable.checked,
+    ribbon: carRibbon.value.trim(),
+    details: carDetails.value.trim(),
+    images: carImageUrls.value
+      .split(",")
+      .map(u => cleanImagePath(u))
+      .filter(Boolean)
+  };
+
+  if (editIndex >= 0) {
+    cars[editIndex] = car;
+    editIndex = -1;
+    alert("Car updated!");
+  } else {
+    cars.unshift(car);
+    alert("Car added!");
+  }
+
+  localStorage.setItem("cars", JSON.stringify(cars));
+  renderCarTable();
+  resetForm();
+}
+
+function editCar(i) {
+  if (!confirm("Edit this car?")) return;
+  const c = cars[i];
+  editIndex = i;
+  carCategory.value = c.category;
+  carName.value = c.name;
+  carModel.value = c.model;
+  carSpecs.value = c.specs;
+  carColor.value = c.color;
+  carMileage.value = c.mileage;
+  carMilkiya.value = c.milkiya;
+  carAccident.value = c.accident;
+  carLocation.value = c.location || "";
+  carPrice.value = c.price;
+  carNegotiable.checked = c.negotiable;
+  carRibbon.value = c.ribbon;
+  carDetails.value = c.details;
+  carImageUrls.value = c.images.join(", ");
+  window.scrollTo(0, 0);
+}
+
+function confirmDelete(i) {
+  if (confirm("Delete this car?")) {
+    cars.splice(i, 1);
+    localStorage.setItem("cars", JSON.stringify(cars));
+    renderCarTable();
+  }
+}
+
+function renderCarTable() {
+  const tbody = document.querySelector("#carTable tbody");
+  tbody.innerHTML = "";
+  cars.forEach((c, i) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${c.images.map(img => `<img src="${cleanImagePath(img)}">`).join(" ")}</td>
+      <td>${c.name}</td>
+      <td>${c.model}</td>
+      <td>${c.specs}</td>
+      <td>${c.location || ""}</td>
+      <td>${c.price}</td>
+      <td>
+        <button onclick="editCar(${i})">Edit</button>
+        <button onclick="confirmDelete(${i})">Delete</button>
+      </td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+function resetForm() {
+  document.querySelectorAll("#carName,#carModel,#carSpecs,#carColor,#carMileage,#carMilkiya,#carAccident,#carLocation,#carPrice,#carRibbon,#carDetails,#carImageUrls").forEach(e => e.value = "");
+  carNegotiable.checked = false;
+}
+
+function exportCars() {
+  // Clean image paths before export
+  cars.forEach(car => {
+    if (Array.isArray(car.images)) {
+      car.images = car.images.map(cleanImagePath);
+    }
+  });
+
+  const blob = new Blob([JSON.stringify(cars, null, 2)], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "cars.json";
+  a.click();
+  URL.revokeObjectURL(a.href);
+  alert("✅ cars.json downloaded. Upload it to /data/ on GitHub Pages.");
+}
+
+
+function cleanCarImagePath(path) {
+  if (!path) return "";
+
+  // Fix Windows "file:///" or drive letters (local testing)
+  path = path.replace(/^file:\/\/\/[A-Z]:/i, "");
+  path = path.replace(/\\/g, "/");
+
+  // Remove accidental /pages/ or leading slashes
+  path = path.replace(/\/pages\//g, "/");
+  path = path.replace(/^\/+/, "");
+
+  // Make sure it starts from 'images/'
+  const imgIndex = path.indexOf("images/");
+  if (imgIndex !== -1) {
+    path = path.substring(imgIndex);
+  }
+
+  // Return final normalized path
+  return path.trim();
+}
+
+
+/* ==========================================================
+   ✅ BANNERS & HERO IMAGES
+========================================================== */
 function previewBanner(inputId, key) {
   const f = document.getElementById(inputId).files[0];
   if (!f) return;
   const r = new FileReader();
   r.onload = e => {
-    banners[key] = e.target.result; // inline base64
+    banners[key] = e.target.result;
     document.getElementById(key).src = e.target.result;
     document.getElementById(key).style.display = "block";
     localStorage.setItem("banners", JSON.stringify(banners));
@@ -266,12 +415,12 @@ function previewBanner(inputId, key) {
   };
   r.readAsDataURL(f);
 }
+
 function previewHero(inputId, previewId) {
   const f = document.getElementById(inputId).files[0];
   if (!f) return;
   const r = new FileReader();
   r.onload = e => {
-    // preview element id is previewId (like hero1Preview), but we also store under banners.hero1
     const heroKey = inputId; // hero1, hero2...
     banners[heroKey] = e.target.result;
     document.getElementById(previewId).src = e.target.result;
@@ -282,15 +431,11 @@ function previewHero(inputId, previewId) {
   r.readAsDataURL(f);
 }
 
-/* --- Save everything (banners + hero) into single banners.json --- */
-function saveAllBannersAndHero(){
-  // If user selected files, they already triggered previewBanner/previewHero which updated banners and localStorage.
-  // We just ensure current banners object is saved and exported as banners.json
+function saveAllBannersAndHero() {
   localStorage.setItem("banners", JSON.stringify(banners));
   renderBannerTable();
   renderHeroTable();
 
-  // Export banners.json
   const data = JSON.stringify(banners, null, 2);
   const blob = new Blob([data], { type: "application/json" });
   const a = document.createElement("a");
@@ -299,15 +444,14 @@ function saveAllBannersAndHero(){
   a.click();
   URL.revokeObjectURL(a.href);
 
-  alert("✅ banners.json downloaded. Upload to /data/banners.json on GitHub Pages.");
+  alert("✅ banners.json downloaded. Upload to /data/banners.json.");
 }
 
-/* Render tables from banners object */
-function renderBannerTable(){
+function renderBannerTable() {
   const tbody = document.querySelector("#bannerTable tbody");
   tbody.innerHTML = "";
-  const list = [["left","Left"],["right","Right"],["horizontal","Horizontal"]];
-  list.forEach(([k,label])=>{
+  const list = [["left", "Left"], ["right", "Right"], ["horizontal", "Horizontal"]];
+  list.forEach(([k, label]) => {
     if (banners[k]) {
       const tr = document.createElement("tr");
       tr.innerHTML = `<td>${label}</td><td><img src="${banners[k]}" class="preview"></td>`;
@@ -315,15 +459,15 @@ function renderBannerTable(){
     }
   });
 }
-function renderHeroTable(){
+
+function renderHeroTable() {
   const tbody = document.querySelector("#heroTable tbody");
   tbody.innerHTML = "";
-  ["hero1","hero2","hero3","hero4"].forEach((k, idx)=>{
+  ["hero1", "hero2", "hero3", "hero4"].forEach((k, idx) => {
     if (banners[k]) {
       const tr = document.createElement("tr");
-      tr.innerHTML = `<td>${idx+1}</td><td><img src="${banners[k]}" class="preview"></td>`;
+      tr.innerHTML = `<td>${idx + 1}</td><td><img src="${banners[k]}" class="preview"></td>`;
       tbody.appendChild(tr);
-      // also set preview img in hero preview area if present
       const pid = k + "Preview";
       const el = document.getElementById(pid);
       if (el) { el.src = banners[k]; el.style.display = "block"; }
@@ -331,14 +475,17 @@ function renderHeroTable(){
   });
 }
 
-/* WhatsApp */
-function saveWhatsApp(){ localStorage.setItem("whatsappNumber", whatsappNumber.value); alert("WhatsApp number saved!"); }
+/* ==========================================================
+   ✅ WHATSAPP
+========================================================== */
+function saveWhatsApp() {
+  localStorage.setItem("whatsappNumber", whatsappNumber.value);
+  alert("WhatsApp number saved!");
+}
 
-/* Exports */
-function exportCars(){ const blob = new Blob([JSON.stringify(cars,null,2)], { type:"application/json" }); const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "cars.json"; a.click(); URL.revokeObjectURL(a.href); }
-function exportBanners(){ const blob = new Blob([JSON.stringify(banners,null,2)], { type:"application/json" }); const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "banners.json"; a.click(); URL.revokeObjectURL(a.href); }
-
-/* Init */
+/* ==========================================================
+   ✅ INIT
+========================================================== */
 renderCarTable();
 renderBannerTable();
 renderHeroTable();
