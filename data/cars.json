@@ -1,6 +1,28 @@
 [
   {
     "category": "urgent",
+    "name": "Ford Mustang (V6)",
+    "model": "2014",
+    "specs": "GCC",
+    "color": "Grey",
+    "mileage": "170000 km",
+    "milkiya": "Available",
+    "accident": "No",
+    "location": "Dubai",
+    "price": "30000",
+    "negotiable": true,
+    "ribbon": "Personal Used Car",
+    "details": "Personal Used Car for Urgent Sale -\nFord Mustang (V6) -\nmodel: 2014 -\nSpecs: GCC -\nMileage: 170K kms -\nTransmission: Manual -\nRecently done oil change and Battery -\nNo Mechanical Fault -\nJust Buy & Drive -\nDo the inspection & then finalise -\nLocation: Discovery Gardens, Dubai -\nDemand: 30k (Negotiable) -\n🔥⭐️Interested Buyers kindly DM plz ✨💥",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/ford-mustang-v6-2014/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/ford-mustang-v6-2014/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/ford-mustang-v6-2014/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/ford-mustang-v6-2014/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/ford-mustang-v6-2014/05.jpg"
+    ]
+  },
+  {
+    "category": "urgent",
     "name": "Hyundai Sonata Sports",
     "model": "2017",
     "specs": "Korean",
