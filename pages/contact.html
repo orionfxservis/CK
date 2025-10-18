@@ -16,6 +16,8 @@
       --bg-dark: #0d0d0d;
       --text-light: #fff;
       --text-muted: #ccc;
+      --green: #28a745;
+      --green-dark: #218838;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -25,7 +27,7 @@
       overflow-x: hidden;
     }
 
-    /* Header */
+    /* ===== HEADER ===== */
     header {
       display: flex;
       justify-content: space-between;
@@ -36,36 +38,23 @@
       background: rgba(0,0,0,0.9);
       padding: 8px 20px;
       border-bottom: 2px solid var(--red-dark);
-	  border-radius: 0 0 12px 12px;
+      border-radius: 0 0 12px 12px;
       z-index: 1000;
     }
     .brand { display: flex; align-items: center; gap: 8px; }
     .brand img { height: 32px; border-radius: 8px; }
-    .logo {
-      font-size: 1.5rem;
-      color: #fff;
-      font-weight: 700;
-      text-decoration: none;
-    }
+    .logo { font-size: 1.5rem; color: #fff; font-weight: 700; text-decoration: none; }
     .logo span { color: var(--red); }
 
     nav ul {
-      display: flex;
-      list-style: none;
-      gap: 16px;
+      display: flex; list-style: none; gap: 16px;
     }
     nav ul li a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 13px;
-      padding: 6px 10px;
-      border-radius: 6px;
-      transition: 0.3s;
+      color: #fff; text-decoration: none; font-weight: 600; font-size: 13px;
+      padding: 6px 10px; border-radius: 6px; transition: 0.3s;
     }
     nav ul li a:hover, nav ul li a.active {
-      color: var(--red);
-      background: rgba(255,255,255,0.1);
+      color: var(--red); background: rgba(255,255,255,0.1);
     }
     .menu-toggle { display: none; color: #fff; background: none; border: none; font-size: 24px; cursor: pointer; }
 
@@ -81,7 +70,7 @@
       nav ul li{margin:10px 0;}
     }
 
-    /* Hero */
+    /* ===== HERO SECTION ===== */
     .hero {
       position: relative;
       height: 100vh;
@@ -117,18 +106,19 @@
       padding: 0 20px;
       gap: 25px;
     }
-    .hero-content h1 {
-      font-size: 2.5rem;
-      margin-bottom: 12px;
-    }
-    .hero-content p {
-      font-size: 1.1rem;
-      color: var(--text-muted);
-      margin-bottom: 10px;
+
+    /* ===== CONTACT + REQUIREMENT FORMS ===== */
+    .contact-container {
+      display: flex;
+      gap: 25px;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-start;
+      width: 100%;
+      max-width: 900px;
     }
 
-    /* Glass Form */
-    .contact-form {
+    .contact-form, .requirement-box {
       background: rgba(17,17,17,0.55);
       backdrop-filter: blur(10px);
       padding: 25px;
@@ -139,7 +129,16 @@
       box-shadow: 0 0 15px rgba(0,0,0,0.5);
       position: relative;
     }
-    .contact-form input, .contact-form textarea {
+
+    .contact-form h2, .requirement-box h2 {
+      color: var(--red);
+      font-size: 1.4rem;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .contact-form input, .contact-form textarea,
+    .requirement-box input, .requirement-box textarea {
       width: 100%;
       background: rgba(0,0,0,0.6);
       border: none;
@@ -149,7 +148,12 @@
       margin-bottom: 12px;
       font-size: 0.95rem;
     }
-    .contact-form textarea { resize: none; height: 100px; }
+
+    .contact-form textarea, .requirement-box textarea {
+      resize: none;
+      height: 100px;
+    }
+
     .contact-form button {
       width: 100%;
       background: var(--red);
@@ -161,51 +165,56 @@
       cursor: pointer;
       transition: 0.3s;
     }
+
     .contact-form button:hover { background: var(--red-dark); }
 
-    /* Social Box */
-    .social-box {
-      background: rgba(17,17,17,0.55);
-      backdrop-filter: blur(10px);
-      border-radius: 15px;
-      padding: 18px 25px;
-      border: 1px solid rgba(255,255,255,0.1);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 15px;
-      flex-wrap: wrap;
-      max-width: 420px;
-      width: 90%;
-      box-shadow: 0 0 10px rgba(0,0,0,0.4);
-    }
-    .social-box a {
+    .requirement-box button {
+      width: 100%;
+      background: var(--green); /* ✅ green button */
       color: #fff;
-      font-size: 1.5rem;
-      transition: all 0.3s ease;
-    }
-    .social-box a:hover {
-      color: var(--red);
-      transform: scale(1.2);
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
     }
 
+    .requirement-box button:hover { background: var(--green-dark); }
+
+    /* ===== SOCIAL ICONS ===== */
+    .social-box {
+      margin-top: 15px;
+      background: rgba(0,0,0,0.4);
+      padding: 10px 0;
+      border-radius: 10px;
+      text-align: center;
+    }
+    .social-box a {
+      color: #777; /* ✅ gray icons */
+      margin: 0 8px;
+      font-size: 18px;
+      transition: color 0.3s;
+    }
+    .social-box a:hover {
+      color: #444; /* darker gray hover */
+    }
+
+    /* ===== DOTS (BEHIND FORMS) ===== */
     .dots {
       position: absolute;
-      bottom: 20px;
+      bottom: 30px;
       width: 100%;
       text-align: center;
-      z-index: 3;
+      z-index: 0; /* behind forms */
     }
-    .dots span {
-      display: inline-block;
-      width: 12px; height: 12px;
-      border-radius: 50%;
-      background: #fff;
-      opacity: 0.5;
-      margin: 0 4px;
-      cursor: pointer;
+
+    @media(max-width:768px){
+      .contact-container {
+        flex-direction: column;
+        align-items: center;
+      }
     }
-    .dots span.active { opacity: 1; background: var(--red); }
 
     footer {
       background: #000;
@@ -236,33 +245,49 @@
       <li><a href="admin.html" class="admin-link">Admin</a></li>
     </ul>
   </nav>
-
   <button class="menu-toggle" id="menuToggle">☰</button>
 </header>
 
 <section class="hero">
   <div id="heroSlides"></div>
+
   <div class="hero-content">
-    <h1>Contact Us</h1>
-    <p>We’re here to assist you – anytime, anywhere.</p>
+    <div class="contact-container">
+      
+      <!-- ✅ Contact Form -->
+      <form id="contactForm" class="contact-form">
+        <h2>Contact Us</h2>
+        <input type="text" id="name" placeholder="Your Name" required>
+        <input type="tel" id="phone" placeholder="Phone Number" required>
+        <textarea id="message" placeholder="Message..." required></textarea>
+        <button type="submit">Send on WhatsApp</button>
 
-    <!-- Contact Form -->
-    <form id="contactForm" class="contact-form">
-      <input type="text" id="name" placeholder="Your Name" required>
-      <input type="tel" id="phone" placeholder="Phone Number" required>
-      <textarea id="message" placeholder="Message..." required></textarea>
-      <button type="submit">Send on WhatsApp</button>
-    </form>
+        <!-- ✅ Social Icons (only one set) -->
+        <div class="social-box">
+          <a href="https://wa.me/923001234567" target="_blank"><i class="fab fa-whatsapp"></i></a>
+          <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+          <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+          <a href="https://tiktok.com" target="_blank"><i class="fab fa-tiktok"></i></a>
+        </div>
+      </form>
 
-    <!-- Social Icons -->
-    <div class="social-box">
-      <a href="https://wa.me/923001234567" target="_blank"><i class="fab fa-whatsapp"></i></a>
-      <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
-      <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
-      <a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
-      <a href="https://tiktok.com" target="_blank"><i class="fab fa-tiktok"></i></a>
+      <!-- ✅ Urgent Requirement Form -->
+      <form id="requirementForm" class="requirement-box">
+        <h2>Urgent Requirement</h2>
+        <input type="text" id="carName" placeholder="Car Name" required>
+        <input type="text" id="model" placeholder="Model" required>
+        <input type="text" id="specs" placeholder="Specs" required>
+        <input type="text" id="color" placeholder="Color" required>
+        <input type="text" id="estate" placeholder="Estate" required>
+        <input type="text" id="budget" placeholder="Budget" required>
+        <input type="text" id="contactPerson" placeholder="Contact Person Name" required>
+        <input type="tel" id="contactNumber" placeholder="Contact No" required>
+        <button type="submit">Send Requirement</button>
+      </form>
     </div>
   </div>
+
   <div class="dots" id="heroDots"></div>
 </section>
 
@@ -294,7 +319,8 @@ async function loadHeroSlides() {
   const fallback = [
     "../images/BG/bg3.jpg",
     "../images/BG/car02.jpg",
-    "../images/BG/car03.jpg"
+    "../images/BG/car03.jpg",
+    "../images/BG/car04.jpg"
   ];
 
   const slides = heroImages.length ? heroImages : fallback;
@@ -329,15 +355,35 @@ async function loadHeroSlides() {
   showSlide(0);
 }
 
-/* ===== WhatsApp Send ===== */
+/* ===== Contact Form (WhatsApp) ===== */
 document.getElementById("contactForm").addEventListener("submit", e => {
   e.preventDefault();
   const name = document.getElementById("name").value.trim();
   const phone = document.getElementById("phone").value.trim();
   const msg = document.getElementById("message").value.trim();
-  const text = `Name: ${name}%0APhone: ${phone}%0AMessage: ${msg}`;
-  const whatsapp = "923001234567"; // 🔧 Replace with your WhatsApp number
-  alert("Opening WhatsApp…");
+  const text = `Contact Inquiry%0A----------------%0AName: ${name}%0APhone: ${phone}%0AMessage: ${msg}`;
+  const whatsapp = "+923330360487";
+  window.open(`https://wa.me/${whatsapp}?text=${text}`, "_blank");
+});
+
+/* ===== Requirement Form (WhatsApp) ===== */
+document.getElementById("requirementForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const carName = document.getElementById("carName").value.trim();
+  const model = document.getElementById("model").value.trim();
+  const specs = document.getElementById("specs").value.trim();
+  const color = document.getElementById("color").value.trim();
+  const estate = document.getElementById("estate").value.trim();
+  const budget = document.getElementById("budget").value.trim();
+  const contactPerson = document.getElementById("contactPerson").value.trim();
+  const contactNumber = document.getElementById("contactNumber").value.trim();
+
+  const text =
+    `Urgent Requirement%0A--------------------%0A` +
+    `Car Name: ${carName}%0AModel: ${model}%0ASpecs: ${specs}%0AColor: ${color}%0A` +
+    `Estate: ${estate}%0ABudget: ${budget}%0AContact Person: ${contactPerson}%0AContact No: ${contactNumber}`;
+
+  const whatsapp = "+923330360487";
   window.open(`https://wa.me/${whatsapp}?text=${text}`, "_blank");
 });
 
