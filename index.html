@@ -122,6 +122,93 @@
       border-radius:50%; background:#fff; opacity:0.5; cursor:pointer;
     }
     .dots span.active { opacity:1; background:var(--red); }
+	
+	/* ✅ Hero Buttons Layout */
+.hero-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* On mobile and tablet: show first two in one row, third centered below */
+@media (max-width: 768px) {
+  .hero-buttons {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .hero-buttons .btn {
+    flex: 1 1 45%; /* two buttons per row */
+    min-width: 140px;
+  }
+
+  .hero-buttons .btn.btn-requirement {
+    flex-basis: 100%; /* force it to next line */
+    text-align: center;
+    margin-top: 6px;
+  }
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6); /* slightly dimmer overlay */
+  z-index: 1;
+}
+
+.hero-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
+.hero-text-box {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 30px 40px;
+  max-width: 700px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.hero-text-box h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.hero-text-box h1 .white {
+  color: #fff;
+}
+
+.hero-text-box h1 .red {
+  color: #e50914;
+}
+
+
+.hero-text-box .tagline {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #e50914;
+  margin-bottom: 12px;
+}
+
+.hero-text-box .intro {
+  font-size: 1rem;
+  color: #eee;
+  line-height: 1.6;
+}
+
+
 
     /* ✅ Banner Carousel */
     .banner-carousel {
@@ -202,12 +289,24 @@
   <section id="home" class="hero">
     <div id="heroSlides"></div>
     <div class="hero-content">
-      <h1>Find Your Dream Car</h1>
-      <p>Luxury. Speed. Style.</p>
-      <div>
-        <a href="pages/urgent.html" class="btn">Urgent Sale</a>
-        <a href="pages/more.html" class="btn">More Cars</a>
-      </div>
+  <div class="hero-content">
+  <div class="hero-text-box">
+    <h1><span class="white">Click</span><span class="red">Worx</span></h1>
+    <p class="tagline">Buy. Sell. Drive. All with a Click.</p>
+    <p class="intro">
+      ClickWorx is your trusted car marketplace. Connecting Buyers & Sellers for Urgent & Premium Car for Sales. 
+      Fast listings, verified sellers & secure deals — all in one place.
+    </p>
+  </div>
+</div>
+
+</div>
+      <div class="hero-buttons">
+		<a href="pages/urgent.html" class="btn">Urgent Sale</a>
+		<a href="pages/more.html" class="btn">More Cars</a>
+		<a href="pages/contact.html#requirement-box" class="btn btn-requirement">Urgent Requirement</a>
+	  </div>
+
     </div>
     <div class="dots" id="heroDots"></div>
   </section>
