@@ -92,14 +92,20 @@
     }
 
     /* ✅ Hero */
-    .hero { margin-top:70px; height:90vh; position:relative; overflow:hidden; }
-    .hero-slide {
-      position:absolute; inset:0;
-      background-size:contain; background-position:center;
-      background-repeat:no-repeat;
-      opacity:0; transition:opacity 1s ease-in-out;
-    }
-    .hero-slide.active { opacity:1; }
+    .hero {
+  margin-top:60px;
+  position: relative;
+  height: 100vh; /* full screen */
+  overflow: hidden;
+}
+.hero-slide {
+  position:absolute; inset:0;
+  background-size: cover; /* cover entire hero */
+  background-position: center;
+  opacity:0; transition:opacity 1s ease-in-out;
+  z-index:0;
+}
+.hero-slide.active { opacity:1; }
     .hero-content {
       position: absolute; inset: 0;
       display: flex; flex-direction: column;
@@ -124,12 +130,70 @@
     .dots span.active { opacity:1; background:var(--red); }
 	
 	/* ✅ Hero Buttons Layout */
+/* Hero Text Box - Grey Mirror/Blur Effect */
+.hero-text-box {
+  background: rgba(100, 100, 100, 0.4); /* grey semi-transparent */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px); /* glass/mirror effect */
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 30px 40px;
+  max-width: 700px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  margin-bottom: 20px;
+}
+
+.hero-text-box h1 { font-size:2.5rem; font-weight:700; margin-bottom:10px; }
+.hero-text-box h1 .white { color:#fff; }
+.hero-text-box h1 .red { color:#e50914; }
+.hero-text-box .tagline { font-size:1.3rem; font-weight:600; color:var(--red); margin-bottom:12px; }
+.hero-text-box .intro { font-size:1rem; color:#eee; line-height:1.6; }
+
+/* Hero Buttons - Placed below the box */
 .hero-buttons {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px;
+  gap: 12px;
+  margin-top: 10px;
 }
+
+.hero-buttons .btn {
+  padding: 12px 20px;
+  border-radius: 30px;
+  background: var(--red);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.hero-buttons .btn:hover {
+  background: var(--red-dark);
+  transform: scale(1.05);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .hero-buttons .btn {
+    flex: 1 1 45%;
+    min-width: 140px;
+  }
+  .hero-buttons .btn.btn-requirement {
+    flex-basis: 100%;
+    margin-top: 6px;
+  }
+}
+
+/* Hero Overlay for Darker Slides */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5); /* adjust opacity for darkness */
+  z-index: 1; /* below text but above slides */
+}
+
 
 /* On mobile and tablet: show first two in one row, third centered below */
 @media (max-width: 768px) {
@@ -151,118 +215,6 @@
   }
 }
 
-/* ✅ Hero Section Full Height (same as other pages) */
-.hero {
-  position: relative;
-  height: 100vh;
-  background-size: cover;
-  background-position: center;
-  overflow: hidden;
-}
-
-/* Slightly dim overlay for better text visibility */
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 0;
-}
-
-/* ✅ Centered hero content */
-.hero-content {
-  position: relative;
-  z-index: 1;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  height: 100%;
-  padding: 20px;
-}
-
-/* ✅ Glass / Mirror Style Box */
-.hero-text-box {
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
-  border-radius: 15px;
-  padding: 35px 40px;
-  max-width: 750px;
-  margin-bottom: 50px;
-  position: relative;
-  z-index: 1;
-  animation: fadeInBox 1.2s ease-in-out both;
-}
-
-/* ✅ Fade-in Animation */
-@keyframes fadeInBox {
-  from {
-    opacity: 0;
-    transform: translateY(25px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* ✅ Buttons always above the box */
-.hero-buttons {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  gap: 15px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-/* ✅ Text Styling */
-.hero-text-box h1 {
-  font-size: 2.8rem;
-  font-weight: 700;
-  margin-bottom: 10px;
-}
-
-.hero-text-box h1 .white {
-  color: #fff;
-}
-
-.hero-text-box h1 .red {
-  color: #e50914;
-}
-
-.hero-text-box .tagline {
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: #e50914;
-  margin-bottom: 10px;
-}
-
-.hero-text-box .intro {
-  font-size: 1rem;
-  color: #ddd;
-  line-height: 1.6;
-}
-
-/* ✅ Optional: Button Styling */
-.hero-buttons .btn {
-  background-color: #e50914;
-  border: none;
-  color: #fff;
-  font-size: 1rem;
-  padding: 10px 20px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.hero-buttons .btn:hover {
-  background-color: #c40710;
-  transform: scale(1.05);
-}
 
     /* ✅ Banner Carousel */
     .banner-carousel {
@@ -339,28 +291,33 @@
     <button class="menu-toggle" id="menuToggle">☰</button>
   </header>
 
+  
   <!-- ✅ Hero -->
-  <section id="home" class="hero">
-    <div id="heroSlides"></div>
-    <div class="hero-content">
-  <div class="hero-text-box">
-    <h1><span class="white">Click</span><span class="red">Worx</span></h1>
-    <p class="tagline">Buy. Sell. Drive. All with a Click.</p>
-    <p class="intro">
-      ClickWorx is your trusted car marketplace — connecting buyers and sellers for urgent and premium car sales. 
-      Fast listings, verified sellers, and secure deals — all in one place.
-    </p>
-  </div>
+<section class="hero">
+  <div id="heroSlides"></div>
+  <div class="hero-content">
 
-  <div class="hero-buttons">
-    <button class="btn urgent-sale">Urgent Sale</button>
-    <button class="btn more-cars">More Cars</button>
-    <button class="btn urgent-req">Urgent Requirements</button>
-  </div>
-</div>
+    <!-- Text Box with Grey Mirror/Blur Effect -->
+    <div class="hero-text-box">
+      <h1><span class="white">Click</span><span class="red">Worx</span></h1>
+      <p class="tagline">Buy. Sell. Drive. All with a Click.</p>
+      <p class="intro">
+        ClickWorx is your trusted car marketplace. Connecting Buyers & Sellers for Urgent & Premium Car for Sales. 
+        Fast listings, verified sellers & secure deals. All in one place.
+      </p>
+    </div>
 
-    <div class="dots" id="heroDots"></div>
-  </section>
+    <!-- Buttons Below the Box -->
+    <div class="hero-buttons">
+      <a href="pages/urgent.html" class="btn">Urgent Sale</a>
+      <a href="pages/more.html" class="btn">More Cars</a>
+      <a href="pages/contact.html#requirement-box" class="btn btn-requirement">Urgent Requirement</a>
+    </div>
+
+  </div>
+  <div class="dots" id="heroDots"></div>
+</section>
+
 
   <!-- ✅ Banner Carousel -->
   <section class="banner-carousel">
