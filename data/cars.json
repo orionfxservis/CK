@@ -1,6 +1,30 @@
 [
   {
     "category": "urgent",
+    "name": "Lincoln Lincoln MKX",
+    "model": "2013",
+    "specs": "Japan",
+    "color": "Black",
+    "mileage": "90000",
+    "milkiya": "Available",
+    "accident": "No",
+    "location": "Dubai",
+    "price": "26000",
+    "negotiable": false,
+    "ribbon": "",
+    "details": "Lincoln Lincoln MKX -\nModel: 2013 -\nSpecs: Japan -\nMileage: 90,000 km -\nExcellent Condition -\nLuxury Comfort eather Interior -\nPanoramic Roof -\nLuxury Package comes with a V6, 3.7L -\nNo scratches or defects -\nLocation: Dubai -\nFor 26,000 AED -\n🔥⭐️Interested Buyers kindly DM plz ✨💥",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/lincoln-2013/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/lincoln-2013/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/lincoln-2013/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/lincoln-2013/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/lincoln-2013/05.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/lincoln-2013/09.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/lincoln-2013/10.jpg"
+    ]
+  },
+  {
+    "category": "urgent",
     "name": "Ford Mustang (V6)",
     "model": "2014",
     "specs": "GCC",
