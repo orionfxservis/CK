@@ -1,5 +1,30 @@
 [
   {
+    "category": "urgent",
+    "name": "Mercedes A220",
+    "model": "2019",
+    "specs": "US",
+    "color": "Golden Brown",
+    "mileage": "120000 mls",
+    "milkiya": "Available",
+    "accident": "No",
+    "location": "Abu Dhabi",
+    "price": "80,000",
+    "negotiable": false,
+    "ribbon": "",
+    "details": "Mercedes A220 -\nModel: 2019 -\nColor: Golden Brown -\nFull Options with Starlight -\nMileage: 120,000 KM -\nSpecs: USA -\nFully Automatic -\nSun Roof -\nMulkiya will end by December -\nLocation in Al Mushrif Abu Dhabi -\nDemand: 80,000 AED",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/mercedes-a220-golden-brown-2019/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mercedes-a220-golden-brown-2019/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mercedes-a220-golden-brown-2019/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mercedes-a220-golden-brown-2019/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mercedes-a220-golden-brown-2019/05.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mercedes-a220-golden-brown-2019/06.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mercedes-a220-golden-brown-2019/07.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mercedes-a220-golden-brown-2019/08.jpg"
+    ]
+  },
+  {
     "category": "more",
     "name": "Hyundai Veloster",
     "model": "2016",
