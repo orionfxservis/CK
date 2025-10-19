@@ -1,5 +1,29 @@
 [
   {
+    "category": "more",
+    "name": "Hyundai Veloster",
+    "model": "2016",
+    "specs": "American",
+    "color": "Orange",
+    "mileage": "141600 mls",
+    "milkiya": "Yes",
+    "accident": "No",
+    "location": "Sharjah",
+    "price": "18500",
+    "negotiable": false,
+    "ribbon": "",
+    "details": "🔥⭐️ FAMILY USED CAR FOR URGENT SALE ✨💥 -\nHyundai Veloster -\nModel: 2016 -\nMileage: 141600 miles -\nColor: Orange -\nSpecs : American -\nWell-maintained and regularly serviced -\nThe car runs well -\nLocation: TRC Resident Sharjah -\nDemand: 18,500 AED -\n🔥⭐️Interested Buyers kindly DM plz ✨💥",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/hyundai-veloster-orange-2016/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/hyundai-veloster-orange-2016/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/hyundai-veloster-orange-2016/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/hyundai-veloster-orange-2016/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/hyundai-veloster-orange-2016/05.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/hyundai-veloster-orange-2016/06.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/hyundai-veloster-orange-2016/07.jpg"
+    ]
+  },
+  {
     "category": "urgent",
     "name": "Ford Explorer",
     "model": "2014",
