@@ -1,6 +1,28 @@
 [
   {
     "category": "urgent",
+    "name": "Ford Explorer",
+    "model": "2014",
+    "specs": "Japan",
+    "color": "White",
+    "mileage": "85000 km",
+    "milkiya": "No",
+    "accident": "No",
+    "location": "Dubai",
+    "price": "35000",
+    "negotiable": false,
+    "ribbon": "Fresh Import Car",
+    "details": "🔥⭐️ FRESH IMPORT CAR FOR SALE ✨💥 -\nFord Explorer -\nModel: 2014 -\nColor: White -\nEngine: 2.0 L Eco Boost -\nMileage: 85,000 kms -\nJapan Imported -\nMulkiya not yet because it's recently imported -\nLocation: Tulip Oasis 7 Building, Dubai -\nDemand: 35,000 AED - \n🔥⭐️Interested Buyers kindly DM plz ✨💥",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/ford-explorer-white-2014/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/ford-explorer-white-2014/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/ford-explorer-white-2014/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/ford-explorer-white-2014/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/ford-explorer-white-2014/05.jpg"
+    ]
+  },
+  {
+    "category": "urgent",
     "name": "Lincoln Lincoln MKX",
     "model": "2013",
     "specs": "Japan",
