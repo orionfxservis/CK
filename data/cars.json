@@ -1,6 +1,31 @@
 [
   {
     "category": "urgent",
+    "name": "Mercedes-Benz E300",
+    "model": "2018",
+    "specs": "American",
+    "color": "Grey Metallic",
+    "mileage": "80000 miles",
+    "milkiya": "No",
+    "accident": "No",
+    "location": "Sharjah",
+    "price": "80000",
+    "negotiable": false,
+    "ribbon": "Fresh Import",
+    "details": "🔥⭐️ FRESH IMPORT CAR FOR SALE ✨💥 \nMercedes-Benz E300 \nModel: 2018  \nFull Original Condition \nColor: Grey Metallic \nMileage: 80k milage only \nOriginal Airbags \nOriginal Inside & Outside \nJust like a brand new car \nLow Mileage \nLocation Al Nahda, Dubai \nPrice: 80,000 AED \n🔥⭐️Interested Buyers kindly DM plz ✨💥",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/mercedes-benz-e300-2018/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mercedes-benz-e300-2018/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mercedes-benz-e300-2018/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mercedes-benz-e300-2018/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mercedes-benz-e300-2018/05.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mercedes-benz-e300-2018/06.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mercedes-benz-e300-2018/07.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mercedes-benz-e300-2018/08.jpg"
+    ]
+  },
+  {
+    "category": "urgent",
     "name": "Nissan Rogue SV AWD",
     "model": "2017",
     "specs": "American",
