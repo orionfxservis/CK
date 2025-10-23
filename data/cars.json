@@ -1,6 +1,29 @@
 [
   {
     "category": "urgent",
+    "name": "Nissan Rogue SV AWD",
+    "model": "2017",
+    "specs": "American",
+    "color": "Black",
+    "mileage": "150000",
+    "milkiya": "No",
+    "accident": "No",
+    "location": "Sharjah",
+    "price": "30000",
+    "negotiable": false,
+    "ribbon": "Fresh Import",
+    "details": "🔥⭐️ FRESH IMPORT CAR FOR SALE ✨💥 -\nNissan Rogue SV AWD - \nModel: 2017 -\nColor: Black \nMileage: 150k miles -\nVery Good Condition -\nLooks Like New -\nNon Registered - \nNo Accident History -\nMedia Control Steering - \nBack camery & Sencors -\nLocation: Sharjah -\nDemand: 30,000 AED -\n🔥⭐️Interested Buyers kindly DM plz ✨💥",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/nissan-rogue-black-2017/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/nissan-rogue-black-2017/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/nissan-rogue-black-2017/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/nissan-rogue-black-2017/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/nissan-rogue-black-2017/05.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/nissan-rogue-black-2017/06.jpg"
+    ]
+  },
+  {
+    "category": "urgent",
     "name": "Honda Civic Sport",
     "model": "2020",
     "specs": "American",
