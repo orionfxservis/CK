@@ -1,6 +1,28 @@
 [
   {
     "category": "more",
+    "name": "Nissan Tida Hatchback",
+    "model": "2011",
+    "specs": "GCC",
+    "color": "Black",
+    "mileage": "226879 kms",
+    "milkiya": "Yes",
+    "accident": "No",
+    "location": "Sharjah",
+    "price": "12000",
+    "negotiable": true,
+    "ribbon": "",
+    "details": "Nissan Tida Hatchback -\nColour: Black -\nModel: 2011 - \nOwner: 2nd -\nOptions: Mid -\nParking Sensors -\nReverse Camera -\nPower Window -\nSpecs: GCC -\nOdometer Original: 226879 Kms -\nAutomatic Gear -\nLCD Android Screen -\nNo any single Fault -\nNo Accident -\nNo Water flooded -\nEngine, Chassis, Gear OK -\nPerfect Inside & Outside Battery & Tyres New -\nAC & Heater Perfect -\nSimply Buy & Drive -\nPrice 12,000 Dhs -\n🔥 Interested Buyers DM plz 🔥",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/ford-figo-hatchback-black-2011/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/ford-figo-hatchback-black-2011/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/ford-figo-hatchback-black-2011/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/ford-figo-hatchback-black-2011/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/ford-figo-hatchback-black-2011/05.jpg"
+    ]
+  },
+  {
+    "category": "more",
     "name": "CHEVROLET CRUZE",
     "model": "2015",
     "specs": "South Korea",
