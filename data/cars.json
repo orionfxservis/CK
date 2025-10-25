@@ -1,5 +1,30 @@
 [
   {
+    "category": "urgent",
+    "name": "Suzuki Ertiga XL7",
+    "model": "2008",
+    "specs": "GCC",
+    "color": "White",
+    "mileage": "350000",
+    "milkiya": "Yes",
+    "accident": "No",
+    "location": "Sharjah",
+    "price": "13500",
+    "negotiable": true,
+    "ribbon": "Family Used Car",
+    "details": "Personal Used Car For Sale -\nSuzuki Ertiga XL7 -\nModel: 2008 -\nColor: White -\nMileage: 350,000 km -\nSeating Capacity: 7 seats -\nFeatures: Sunroof -\nRTA Passing: Valid -\nPrice: 13,500/- Negotiable -\nLocation: Sharjah Muwailah, near Safari Mall - \n🔥 Interested Buyers DM plz 🔥",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/suzuki-ertiga-xl7-white-2008/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/suzuki-ertiga-xl7-white-2008/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/suzuki-ertiga-xl7-white-2008/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/suzuki-ertiga-xl7-white-2008/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/suzuki-ertiga-xl7-white-2008/05.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/suzuki-ertiga-xl7-white-2008/06.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/suzuki-ertiga-xl7-white-2008/07.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/suzuki-ertiga-xl7-white-2008/08.jpg"
+    ]
+  },
+  {
     "category": "more",
     "name": "Nissan Tida Hatchback",
     "model": "2011",
