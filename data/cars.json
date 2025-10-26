@@ -1,6 +1,28 @@
 [
   {
     "category": "urgent",
+    "name": "Nissan Versa Harchback",
+    "model": "2016",
+    "specs": "GCC",
+    "color": "White",
+    "mileage": "140000 kms",
+    "milkiya": "Available",
+    "accident": "No",
+    "location": "Dubai",
+    "price": "15,000",
+    "negotiable": true,
+    "ribbon": "Family Used Car",
+    "details": "Personal Used Car for Urgent Sale -\nNissan Versa Hatchback -\nModel: 2016 -\nColor: White -\n5 Seater -\nSpecs: GCC - \nMileage: 1,40,000 km -\nMulkia next year, July 2026 Will Expire -\nNo Accident -\nLocation: Rashidiya, Dubai -\nPrice: 15.000 AED - \n🔥⭐️Interested Buyers kindly DM plz ✨💥",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/nissan-versa-hatchback-white-2016/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/nissan-versa-hatchback-white-2016/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/nissan-versa-hatchback-white-2016/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/nissan-versa-hatchback-white-2016/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/nissan-versa-hatchback-white-2016/05.jpg"
+    ]
+  },
+  {
+    "category": "urgent",
     "name": "Toyota Corolla",
     "model": "2015",
     "specs": "GCC",
