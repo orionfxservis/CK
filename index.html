@@ -272,57 +272,79 @@
   footer {
   background: #000;
   border-top: 2px solid var(--red-dark);
-  padding: 20px 0;
-  text-align: center;
+  padding: 0;
 }
 
 .footer-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  color: #fff;
-}
-
-.footer-left .logo {
-  font-size: 1.5rem;
-  font-weight: 700;
-}
-
-.footer-left .logo span {
-  color: var(--red);
-}
-
-/* The bottom line (© + counter) */
-.footer-bottom-line {
   display: flex;
   justify-content: center;
-  align-items: center;
-  gap: 20px; /* spacing between text and counter */
-  margin-top: 5px;
-  flex-wrap: wrap; /* wraps neatly on mobile */
+  align-items: flex-end; /* align baseline horizontally */
+  max-width: 1200px;
+  height: 60px;
+  margin: 0 auto;
+  padding: 0 20px;
+  gap: 20px;
+  position: relative;
 }
 
-.footer-bottom-line p {
-  color: var(--text-muted);
-  font-size: 0.95rem;
-  margin: 0;
+.footer-left {
+  position: absolute;
+  left: 20px;
+  bottom: 10px;
 }
 
 .visitor-counter {
   font-size: 0.9rem;
-  color: var(--text-muted);  /* same tone as copyright text */
-  padding: 4px 10px;
-  border-radius: 20px;
+  color: var(--text-muted);
   background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0 0 5px rgba(255, 255, 255, 0.05);
-  white-space: nowrap;
+  border-radius: 20px;
+  padding: 4px 10px;
+  opacity: 0;
+  transform: translateY(5px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.visitor-counter.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.footer-center {
+  text-align: center;
+}
+
+.footer-center .logo {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.footer-center .logo span {
+  color: var(--red);
+}
+
+.footer-center p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin: 0;
 }
 
 @media (max-width: 600px) {
-  .footer-bottom-line {
+  .footer-container {
     flex-direction: column;
-    gap: 5px;
+    height: auto;
+    gap: 10px;
+    padding: 10px 0;
+  }
+
+  .footer-left {
+    position: static;
+  }
+
+  .footer-center {
+    text-align: center;
   }
 }
+
   </style>
 </head>
 <body>
@@ -384,11 +406,12 @@
 <footer>
   <div class="footer-container">
     <div class="footer-left">
+      <div class="visitor-counter" id="visitorCount">Visitors: ...</div>
+    </div>
+
+    <div class="footer-center">
       <div class="logo">CLICK<span>WORX</span></div>
-      <div class="footer-bottom-line">
-        <p>Luxury, Speed, Style. © 2025 ClickWorx</p>
-        <div class="visitor-counter" id="visitorCount">Visitors: ...</div>
-      </div>
+      <p>Luxury, Speed, Style. © 2025 ClickWorx</p>
     </div>
   </div>
 </footer>
@@ -518,20 +541,18 @@
 	<!-- ✅ Global Visitor Counter (CountAPI) -->
 async function updateVisitorCounter() {
   const counterEl = document.getElementById("visitorCount");
-  const endpoint = "https://api.countapi.xyz/hit/clickworx_site/visitors";
-
   try {
-    const res = await fetch(endpoint, { cache: "no-store" });
+    const res = await fetch("https://api.countapi.xyz/hit/clickworx.github.io/visits", { cache: "no-store" });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
     counterEl.textContent = `Visitors: ${data.value.toLocaleString()}`;
   } catch (err) {
     counterEl.textContent = "Visitors: Offline";
-    console.warn("Visitor counter error:", err);
+  } finally {
+    counterEl.classList.add("visible");
   }
 }
 updateVisitorCounter();
-
   </script>
 </body>
 </html>
