@@ -267,6 +267,36 @@
         margin: 6px 0;
       }
     }
+	
+	<!-- Global Visitor Counter (ClickWorx) -->
+<div class="visitor-counter">
+  <span>Visitors:</span>
+  <span id="visitorCount">–</span>
+</div>
+
+<style>
+  .visitor-counter {
+      position: fixed;
+      bottom: 15px;
+      right: 15px;
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 14px;
+      z-index: 9999;
+      font-family: 'Poppins', sans-serif;
+      box-shadow: 0 0 8px rgba(255,255,255,0.3);
+      backdrop-filter: blur(5px);
+    }
+    @media (max-width: 600px) {
+      .visitor-counter {
+        font-size: 12px;
+        bottom: 10px;
+        right: 10px;
+        padding: 4px 10px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -329,6 +359,14 @@
     <div class="logo">CLICK<span>WORX</span></div>
     <p>Luxury, Speed, Style. © 2025 ClickWorx</p>
   </footer>
+<!-- Font Awesome -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+
+  <!-- ✅ Global Visitor Counter -->
+  <div class="visitor-counter">
+    <span>Visitors:</span>
+    <span id="visitorCount">–</span>
+  </div>
 
   <script>
     let whatsappNumber = "";
@@ -450,6 +488,17 @@
       loadData();
       loadHeroSlides();
     });
+	
+	// Real Global Visitor Counter — Using 6Developer API
+  // ✅ Real Global Visitor Counter using 6Developer API
+    fetch("https://api.countapi.xyz/hit/clickworx/global-visits")
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("visitorCount").textContent = data.value.toLocaleString();
+      })
+      .catch(() => {
+        document.getElementById("visitorCount").textContent = "Offline";
+      });
   </script>
 </body>
 </html>
