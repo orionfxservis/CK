@@ -293,58 +293,64 @@
   bottom: 10px;
 }
 
-.visitor-counter {
-  font-size: 0.9rem;
-  color: var(--text-muted);
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 20px;
-  padding: 4px 10px;
+/* ✅ Floating International Visitor Counter */
+.visitor-counter-fixed {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 2000;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+  padding: 10px 16px;
+  border-radius: 50px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  gap: 8px;
   opacity: 0;
-  transform: translateY(5px);
-  transition: opacity 1s ease, transform 1s ease;
+  transform: translateY(15px);
+  animation: fadeUp 1.2s ease forwards 1.2s;
+  transition: transform 0.3s ease, background 0.3s ease;
 }
 
-.visitor-counter.visible {
-  opacity: 1;
-  transform: translateY(0);
+.visitor-counter-fixed:hover {
+  transform: scale(1.05);
+  background: rgba(255, 255, 255, 0.15);
 }
 
-.footer-center {
-  text-align: center;
-}
-
-.footer-center .logo {
+/* 🌐 Rotating Globe Icon */
+.globe-icon {
+  display: inline-block;
   font-size: 1.2rem;
-  font-weight: 700;
+  animation: spinGlobe 6s linear infinite;
 }
 
-.footer-center .logo span {
-  color: var(--red);
+@keyframes spinGlobe {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
-.footer-center p {
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  margin: 0;
+/* Smooth fade-up animation */
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
 }
 
+/* Responsive: smaller on mobile */
 @media (max-width: 600px) {
-  .footer-container {
-    flex-direction: column;
-    height: auto;
-    gap: 10px;
-    padding: 10px 0;
-  }
-
-  .footer-left {
-    position: static;
-  }
-
-  .footer-center {
-    text-align: center;
+  .visitor-counter-fixed {
+    font-size: 0.8rem;
+    padding: 8px 12px;
+    bottom: 15px;
+    left: 15px;
   }
 }
-
   </style>
 </head>
 <body>
@@ -404,10 +410,7 @@
  
 
 <footer>
-  <div class="footer-container">
-    <div class="footer-left">
-      <div class="visitor-counter" id="visitorCount">Visitors: ...</div>
-    </div>
+  
 
     <div class="footer-center">
       <div class="logo">CLICK<span>WORX</span></div>
@@ -415,6 +418,12 @@
     </div>
   </div>
 </footer>
+
+<!-- ✅ Floating Visitor Counter (International Style) -->
+<div class="visitor-counter-fixed" id="visitorCount">
+  <span class="globe-icon">🌐</span>
+  <span class="counter-text">Visitors: ...</span>
+</div>
 
 
   <script>
@@ -538,21 +547,32 @@
       loadHeroSlides();
     });
 	
-	<!-- ✅ Global Visitor Counter (CountAPI) -->
+	
+const counterURL = "https://api.npoint.io/bf56c140e981463d6fa5";
+
 async function updateVisitorCounter() {
   const counterEl = document.getElementById("visitorCount");
+  const textEl = counterEl.querySelector(".counter-text");
   try {
-    const res = await fetch("https://api.countapi.xyz/hit/clickworx.github.io/visits", { cache: "no-store" });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const res = await fetch(counterURL, { cache: "no-store" });
     const data = await res.json();
-    counterEl.textContent = `Visitors: ${data.value.toLocaleString()}`;
+    const newCount = (data.visits || 0) + 1;
+
+    textEl.textContent = `Visitors: ${newCount.toLocaleString('en-US')}`;
+
+    await fetch(counterURL, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ visits: newCount })
+    });
   } catch (err) {
-    counterEl.textContent = "Visitors: Offline";
-  } finally {
-    counterEl.classList.add("visible");
+    console.error("Visitor counter error:", err);
+    textEl.textContent = "Visitors: Offline";
   }
 }
+
 updateVisitorCounter();
+
   </script>
 </body>
 </html>
