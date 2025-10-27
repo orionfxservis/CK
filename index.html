@@ -556,19 +556,28 @@
 	
 	
 
-async function updateVisitorCounter() {
-  const counterEl = document.getElementById("visitorCount");
-  const textEl = counterEl.querySelector(".counter-text");
-  const namespace = "clickworx";  // You can change this to your site name
-  const key = "visits";
+const counterURL = "https://api.npoint.io/bf56c140e981463d6fa5"; // 🔁 Replace with your own URL
+const counterEl = document.getElementById("visitorCount");
 
+async function updateVisitorCounter() {
   try {
-    const res = await fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`);
+    const res = await fetch(counterURL + "?t=" + Date.now(), { cache: "no-store" });
+    if (!res.ok) throw new Error("Network issue");
     const data = await res.json();
-    textEl.textContent = `Visitors: ${data.value.toLocaleString('en-US')}`;
+
+    const current = data.visits ?? 0;
+    const newCount = current + 1;
+
+    counterEl.textContent = `🌐 Visitors: ${newCount.toLocaleString()}`;
+
+    await fetch(counterURL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ visits: newCount })
+    });
   } catch (err) {
     console.error("Visitor counter error:", err);
-    textEl.textContent = "Visitors: Offline";
+    counterEl.textContent = "Visitors: Offline";
   }
 }
 
