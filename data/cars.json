@@ -1,5 +1,25 @@
 [
   {
+    "category": "more",
+    "name": "Hyundai Elantra Coupe",
+    "model": "2015",
+    "specs": "GCC",
+    "color": "Silver",
+    "mileage": "250000 kms",
+    "milkiya": "Available",
+    "accident": "No Major Accident",
+    "location": "Sharjah",
+    "price": "13000",
+    "negotiable": false,
+    "ribbon": "",
+    "details": "Female-Driven Car -\nHyundai Elantra Coupe -\nModel: 2015 -\nColor: Silver -\nMileage: 250,000 KM -\nSpecs: GCC -\nGood Condition -\nNo Major Accident -\nNo Work Requires -\nJust Buy & Drive -\nLocation: Al Nahda, Sharjah -\nPrice: 13,000 AED -\n🔥⭐️Interested Buyers kindly DM plz ✨💥",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/elantra-coupe-silver-2015/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/elantra-coupe-silver-2015/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/elantra-coupe-silver-2015/03.jpg"
+    ]
+  },
+  {
     "category": "urgent",
     "name": "Toyota Corolla LE",
     "model": "2021",
