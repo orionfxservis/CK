@@ -1,6 +1,30 @@
 [
   {
     "category": "urgent",
+    "name": "Nissan Patrol Se Platinum V6",
+    "model": "2021",
+    "specs": "GCC",
+    "color": "White",
+    "mileage": "27000 km",
+    "milkiya": "No",
+    "accident": "No",
+    "location": "Dubai",
+    "price": "190,000",
+    "negotiable": false,
+    "ribbon": "Low Mileage",
+    "details": "Nissan Patrol SE Platinum V6 - \nColor: White -\nMileage: 27,000 km -\nRental Used Car - \nModel: 2021 -\nNo Accident or flooded - \nSpecs: GCC -\nWell Maintained -\nSun Roof -\nComes with a warranty of Engine, Gearbox & Oil Change free Service for 1 Year warranty contract on my garage company name\nPrice: 190,000 AED  \n🔥⭐️Interested Buyers kindly DM plz ✨💥",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/nissan-patrol-se-platinum-v6/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/nissan-patrol-se-platinum-v6/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/nissan-patrol-se-platinum-v6/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/nissan-patrol-se-platinum-v6/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/nissan-patrol-se-platinum-v6/05.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/nissan-patrol-se-platinum-v6/06.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/nissan-patrol-se-platinum-v6/07.jpg"
+    ]
+  },
+  {
+    "category": "urgent",
     "name": "DODGE CHARGER RT",
     "model": "2012",
     "specs": "Canadian",
