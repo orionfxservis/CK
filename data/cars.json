@@ -1,6 +1,29 @@
 [
   {
-    "category": "more",
+    "category": "urgent",
+    "name": "Chevrolet Cruze",
+    "model": "2014",
+    "specs": "South Korean",
+    "color": "Grey",
+    "mileage": "195000",
+    "milkiya": "No",
+    "accident": "No",
+    "location": "Dubai",
+    "price": "9500",
+    "negotiable": false,
+    "ribbon": "Family Used Car",
+    "details": "Chevrolet Cruze -\nModel: 2014 -\nColor: Grey -\nEngine: 1.8 -\nSpecs: South Korea -\nMileage: 195000 -\nNo Mulkia - \nBrand New Condition -\nlocation: Al Quoz, Dubai -\nPrice: 9,500 AED Final -\n🔥⭐️Interested Buyers kindly DM plz ✨💥",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/chevrolet-cruze-grey-2014/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/chevrolet-cruze-grey-2014/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/chevrolet-cruze-grey-2014/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/chevrolet-cruze-grey-2014/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/chevrolet-cruze-grey-2014/05.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/chevrolet-cruze-grey-2014/06.jpg"
+    ]
+  },
+  {
+    "category": "urgent",
     "name": "Mercedes C200",
     "model": "2010",
     "specs": "GCC",
