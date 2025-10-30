@@ -1,6 +1,28 @@
 [
   {
     "category": "urgent",
+    "name": "DODGE CHARGER RT",
+    "model": "2012",
+    "specs": "Canadian",
+    "color": "Black",
+    "mileage": "197000",
+    "milkiya": "",
+    "accident": "No Major Accident",
+    "location": "Dubai",
+    "price": "21,000",
+    "negotiable": false,
+    "ribbon": "Family Used Car",
+    "details": "DODGE CHARGER RT FOR URGENT SALE -\nModel: 2012 -\nMileage: 1,97,000 km - \nColor: Black -\nSpecs: Canadian -\nSeat: Leather Seats -\nEngine: 5700 CC -\nusing from last 2 years -\nHorse Power: 370 -\nDoors: 4 -\nSeats: 5 -\nPower Steering -\nSunroof -\nCar Location: Nad Al Hamar, Dubai -\nNo Accident History -\nChessis # Engine Gear Guarantee - \nDemand:21,500 \n🔥⭐️Interested Buyers kindly DM plz ✨💥",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/dodge-charger-rt-black-2012/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/dodge-charger-rt-black-2012/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/dodge-charger-rt-black-2012/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/dodge-charger-rt-black-2012/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/dodge-charger-rt-black-2012/05.jpg"
+    ]
+  },
+  {
+    "category": "urgent",
     "name": "Chevrolet Cruze",
     "model": "2014",
     "specs": "South Korean",
