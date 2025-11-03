@@ -1,5 +1,30 @@
 [
   {
+    "category": "urgent",
+    "name": "Mercedex E300",
+    "model": "2017",
+    "specs": "GCC",
+    "color": "Red",
+    "mileage": "103000",
+    "milkiya": "No",
+    "accident": "No",
+    "location": "Dubai",
+    "price": "70,000",
+    "negotiable": true,
+    "ribbon": "Urgent Sale",
+    "details": "Mercedes E300 -\nModel: 2017 -\nColor: Red -\nSpecs: GCC -\nMileage: 103,000 km -\nDemand: 70,000 AED -",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/mercedes-e300-red-2017/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mercedes-e300-red-2017/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mercedes-e300-red-2017/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mercedes-e300-red-2017/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mercedes-e300-red-2017/05.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mercedes-e300-red-2017/06.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mercedes-e300-red-2017/07.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mercedes-e300-red-2017/08.jpg"
+    ]
+  },
+  {
     "category": "more",
     "name": "Daihatsu Serin",
     "model": "2008",
