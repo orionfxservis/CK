@@ -313,10 +313,10 @@ async function loadCars() {
       </div>
       <div class="car-info">
         <h3>${c.name}</h3>
-        <p>${c.model}</p>
-        <p>${c.specs}</p>
-		<p>${c.location}</p>
-        <p>${c.price}${c.negotiable?" (Negotiable)":""}</p>
+        <p>Model: ${c.model}</p>
+        <p>Specs: ${c.specs}</p>
+		<p>Location: ${c.location}</p>
+        <p>Price: ${c.price}${c.negotiable?" (Negotiable)":""}</p>
         <button class="details-btn" onclick="showDetails(${i})">Details</button>
       </div>`;
     grid.appendChild(card);
