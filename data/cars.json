@@ -1,6 +1,27 @@
 [
   {
     "category": "more",
+    "name": "Mitsubishi Lancer",
+    "model": "2009",
+    "specs": "Japan",
+    "color": "White",
+    "mileage": "376370",
+    "milkiya": "Expire",
+    "accident": "No Major Accident",
+    "location": "Abu Dhabi",
+    "price": "8000",
+    "negotiable": false,
+    "ribbon": "",
+    "details": "Mitsubishi Lancer Urgent Sale -\nModel: 2009 -\nColor: White -\nSpecs: Japan -\n4 Cylander Car - \nMileage: 376370 mls -\nMulkia Expire -\nLocation: Abu Dhabi -\nPrice: 8,000 AED Final -\n🔥⭐️Interested Buyers kindly DM plz ✨💥",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/lancer-white-2009/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/lancer-white-2009/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/lancer-white-2009/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/lancer-white-2009/04.jpg\n"
+    ]
+  },
+  {
+    "category": "more",
     "name": "Ford Figo",
     "model": "2011",
     "specs": "GCC",
