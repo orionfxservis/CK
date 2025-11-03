@@ -57,6 +57,42 @@
       display: flex; align-items: center; justify-content: center;
       z-index: 10000;
     }
+	
+	/* Inline Ref Code + Car Name layout */
+.inline-fields {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 6px;
+  width: 100%;
+}
+
+/* Make both inputs equal width (like other fields) */
+.inline-fields input {
+  flex: 1;
+  width: 100%;
+  padding: 10px 10px;
+  font-size: 12px;
+  background: #fff;
+  color: #111;
+  border: 1px solid #333;
+  border-radius: 6px;
+}
+
+/* Responsive stacking on smaller screens */
+@media (max-width: 520px) {
+  .inline-fields { flex-direction: column; }
+  .inline-fields input { width: 100%; }
+}
+
+
+/* small responsive tweak */
+@media (max-width: 520px) {
+  .inline-fields { flex-direction: column; }
+  .inline-fields #carName,
+  .inline-fields #carRef { flex: 1 1 100%; width: 100%; }
+}
+
     #loginBox {
       background: var(--bg-card);
       padding: 20px;
@@ -120,7 +156,12 @@
       <h2>Add / Manage Cars</h2>
       <label>Category</label>
       <select id="carCategory"><option value="urgent">Urgent Sale</option><option value="more">More Cars</option></select>
-      <label>Car Name</label><input type="text" id="carName">
+      <label>Ref. Code & Car Name</label>
+<div class="inline-fields">
+  <input type="text" id="carRef" placeholder="Ref. Code">
+  <input type="text" id="carName" placeholder="Car Name">
+</div>
+
       <label>Model</label><input type="text" id="carModel">
       <label>Specs</label><input type="text" id="carSpecs">
       <label>Color</label><input type="text" id="carColor">
@@ -196,22 +237,31 @@
     </div>
   </div>
 
+  <!-- ✅ Updated Car Table -->
   <div class="section" style="margin:15px;">
     <h2>Cars List</h2>
-    <table id="carTable"><thead><tr><th>Images</th><th>Name</th><th>Model</th><th>Specs</th><th>Location</th><th>Price</th><th>Actions</th></tr></thead><tbody></tbody></table>
+    <table id="carTable">
+      <thead>
+        <tr>
+          <th>Images</th>
+          <th>Name</th>
+          <th>Ref. Code</th>
+          <th>Model</th>
+          <th>Specs</th>
+          <th>Location</th>
+          <th>Price</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
   </div>
 
 <script>
-/* ==========================================================
-   ✅ NAVIGATION
-========================================================== */
 document.getElementById("menu-toggle").addEventListener("click", () => {
   document.querySelector(".navbar ul").classList.toggle("show");
 });
 
-/* ==========================================================
-   ✅ GLOBAL STORAGE
-========================================================== */
 let cars = JSON.parse(localStorage.getItem("cars")) || [];
 let banners = JSON.parse(localStorage.getItem("banners")) || {
   left: "", right: "", horizontal: "",
@@ -219,9 +269,6 @@ let banners = JSON.parse(localStorage.getItem("banners")) || {
 };
 let storedPassword = localStorage.getItem("adminPassword") || "admin123";
 
-/* ==========================================================
-   ✅ AUTHENTICATION
-========================================================== */
 function checkLogin() {
   const p = document.getElementById("loginPassword").value;
   if (p === storedPassword) {
@@ -238,42 +285,25 @@ function setPassword() {
   } else alert("Password cannot be empty.");
 }
 
-/* ==========================================================
-   ✅ UNIVERSAL IMAGE PATH NORMALIZER
-========================================================== */
 function cleanImagePath(url) {
   if (!url) return "";
-
-  // Step 1: remove local drive or blob URLs
-  url = url.replace(/^file:\/\/\/[A-Z]:/i, "");  // remove D:/ or C:/ paths
-  url = url.replace(/^blob:.*/, "");             // remove blob URLs
-  url = url.replace(/\\/g, "/");                 // backslashes to forward slashes
-
-  // Step 2: remove everything before 'images/'
+  url = url.replace(/^file:\/\/\/[A-Z]:/i, "");
+  url = url.replace(/^blob:.*/, "");
+  url = url.replace(/\\/g, "/");
   const idx = url.indexOf("images/");
-  if (idx !== -1) {
-    url = url.substring(idx);
-  }
-
-  // Step 3: ensure the path starts correctly for GitHub Pages
+  if (idx !== -1) url = url.substring(idx);
   const baseURL = "https://orionfxservis.github.io/CK/";
-  if (!url.startsWith("images/")) {
-    url = "images/" + url.replace(/^\/?images\//, "");
-  }
-
+  if (!url.startsWith("images/")) url = "images/" + url.replace(/^\/?images\//, "");
   return baseURL + url;
 }
 
-
-/* ==========================================================
-   ✅ CAR MANAGEMENT
-========================================================== */
 let editIndex = -1;
 
 function addCar() {
   const car = {
     category: carCategory.value,
     name: carName.value.trim(),
+    ref: carRef.value.trim(),
     model: carModel.value.trim(),
     specs: carSpecs.value.trim(),
     color: carColor.value.trim(),
@@ -285,10 +315,7 @@ function addCar() {
     negotiable: carNegotiable.checked,
     ribbon: carRibbon.value.trim(),
     details: carDetails.value.trim(),
-    images: carImageUrls.value
-      .split(",")
-      .map(u => cleanImagePath(u))
-      .filter(Boolean)
+    images: carImageUrls.value.split(",").map(u => cleanImagePath(u)).filter(Boolean)
   };
 
   if (editIndex >= 0) {
@@ -309,8 +336,10 @@ function editCar(i) {
   if (!confirm("Edit this car?")) return;
   const c = cars[i];
   editIndex = i;
+  document.getElementById("carRef").value = c.ref || "";
   carCategory.value = c.category;
   carName.value = c.name;
+  carRef.value = c.ref || "";
   carModel.value = c.model;
   carSpecs.value = c.specs;
   carColor.value = c.color;
@@ -342,6 +371,7 @@ function renderCarTable() {
     tr.innerHTML = `
       <td>${c.images.map(img => `<img src="${cleanImagePath(img)}">`).join(" ")}</td>
       <td>${c.name}</td>
+      <td>${c.ref || '-'}</td>
       <td>${c.model}</td>
       <td>${c.specs}</td>
       <td>${c.location || ""}</td>
@@ -355,18 +385,16 @@ function renderCarTable() {
 }
 
 function resetForm() {
-  document.querySelectorAll("#carName,#carModel,#carSpecs,#carColor,#carMileage,#carMilkiya,#carAccident,#carLocation,#carPrice,#carRibbon,#carDetails,#carImageUrls").forEach(e => e.value = "");
+  document.querySelectorAll("#carName,#carRef,#carModel,#carSpecs,#carColor,#carMileage,#carMilkiya,#carAccident,#carLocation,#carPrice,#carRibbon,#carDetails,#carImageUrls").forEach(e => e.value = "");
   carNegotiable.checked = false;
 }
 
 function exportCars() {
-  // Clean image paths before export
   cars.forEach(car => {
     if (Array.isArray(car.images)) {
       car.images = car.images.map(cleanImagePath);
     }
   });
-
   const blob = new Blob([JSON.stringify(cars, null, 2)], { type: "application/json" });
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
@@ -376,32 +404,6 @@ function exportCars() {
   alert("✅ cars.json downloaded. Upload it to /data/ on GitHub Pages.");
 }
 
-
-function cleanCarImagePath(path) {
-  if (!path) return "";
-
-  // Fix Windows "file:///" or drive letters (local testing)
-  path = path.replace(/^file:\/\/\/[A-Z]:/i, "");
-  path = path.replace(/\\/g, "/");
-
-  // Remove accidental /pages/ or leading slashes
-  path = path.replace(/\/pages\//g, "/");
-  path = path.replace(/^\/+/, "");
-
-  // Make sure it starts from 'images/'
-  const imgIndex = path.indexOf("images/");
-  if (imgIndex !== -1) {
-    path = path.substring(imgIndex);
-  }
-
-  // Return final normalized path
-  return path.trim();
-}
-
-
-/* ==========================================================
-   ✅ BANNERS & HERO IMAGES
-========================================================== */
 function previewBanner(inputId, key) {
   const f = document.getElementById(inputId).files[0];
   if (!f) return;
@@ -421,7 +423,7 @@ function previewHero(inputId, previewId) {
   if (!f) return;
   const r = new FileReader();
   r.onload = e => {
-    const heroKey = inputId; // hero1, hero2...
+    const heroKey = inputId;
     banners[heroKey] = e.target.result;
     document.getElementById(previewId).src = e.target.result;
     document.getElementById(previewId).style.display = "block";
@@ -435,7 +437,6 @@ function saveAllBannersAndHero() {
   localStorage.setItem("banners", JSON.stringify(banners));
   renderBannerTable();
   renderHeroTable();
-
   const data = JSON.stringify(banners, null, 2);
   const blob = new Blob([data], { type: "application/json" });
   const a = document.createElement("a");
@@ -443,53 +444,59 @@ function saveAllBannersAndHero() {
   a.download = "banners.json";
   a.click();
   URL.revokeObjectURL(a.href);
-
-  alert("✅ banners.json downloaded. Upload to /data/banners.json.");
+  alert("✅ banners.json downloaded.");
 }
 
 function renderBannerTable() {
   const tbody = document.querySelector("#bannerTable tbody");
   tbody.innerHTML = "";
-  const list = [["left", "Left"], ["right", "Right"], ["horizontal", "Horizontal"]];
-  list.forEach(([k, label]) => {
-    if (banners[k]) {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `<td>${label}</td><td><img src="${banners[k]}" class="preview"></td>`;
-      tbody.appendChild(tr);
-    }
+  ["left", "right", "horizontal"].forEach(k => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${k}</td><td>${banners[k] ? `<img src="${banners[k]}" style="max-width:100px;">` : "-"}</td>`;
+    tbody.appendChild(tr);
   });
 }
 
 function renderHeroTable() {
   const tbody = document.querySelector("#heroTable tbody");
   tbody.innerHTML = "";
-  ["hero1", "hero2", "hero3", "hero4"].forEach((k, idx) => {
-    if (banners[k]) {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `<td>${idx + 1}</td><td><img src="${banners[k]}" class="preview"></td>`;
-      tbody.appendChild(tr);
-      const pid = k + "Preview";
-      const el = document.getElementById(pid);
-      if (el) { el.src = banners[k]; el.style.display = "block"; }
-    }
+  ["hero1","hero2","hero3","hero4"].forEach(k => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${k}</td><td>${banners[k] ? `<img src="${banners[k]}" style="max-width:100px;">` : "-"}</td>`;
+    tbody.appendChild(tr);
   });
 }
 
-/* ==========================================================
-   ✅ WHATSAPP
-========================================================== */
-function saveWhatsApp() {
-  localStorage.setItem("whatsappNumber", whatsappNumber.value);
-  alert("WhatsApp number saved!");
+function exportBanners() {
+  const data = JSON.stringify(banners, null, 2);
+  const blob = new Blob([data], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "banners.json";
+  a.click();
+  URL.revokeObjectURL(a.href);
+  alert("✅ banners.json downloaded.");
 }
 
-/* ==========================================================
-   ✅ INIT
-========================================================== */
-renderCarTable();
-renderBannerTable();
-renderHeroTable();
-document.getElementById("whatsappNumber").value = localStorage.getItem("whatsappNumber") || "";
+function syncCars() {
+  localStorage.setItem("cars", JSON.stringify(cars));
+  alert("✅ Cars synced!");
+}
+
+function saveWhatsApp() {
+  const num = document.getElementById("whatsappNumber").value.trim();
+  if (!num) return alert("Enter WhatsApp number");
+  localStorage.setItem("whatsappNumber", num);
+  alert("✅ WhatsApp number saved!");
+}
+
+window.onload = () => {
+  renderCarTable();
+  renderBannerTable();
+  renderHeroTable();
+  const num = localStorage.getItem("whatsappNumber");
+  if (num) document.getElementById("whatsappNumber").value = num;
+};
 </script>
 </body>
 </html>
