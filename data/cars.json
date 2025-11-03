@@ -1,6 +1,29 @@
 [
   {
     "category": "more",
+    "name": "Daihatsu Serin",
+    "model": "2008",
+    "specs": "Japan",
+    "color": "Black",
+    "mileage": "359097 mls",
+    "milkiya": "Available",
+    "accident": "No Major Accident",
+    "location": "Al Ain",
+    "price": "9000",
+    "negotiable": false,
+    "ribbon": "",
+    "details": "Daihatsu Serin -\nColor: Black -\nModel: 2008 -\nSpecs: Japan -\nMileage: 359097 mls -\nClean Car -\n1 year Mulkiya -\nLocation: Al Ain City, Dubai - \nFinal Price: 9,000 AED - \n🔥⭐️Interested Buyers kindly DM plz ✨💥",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/daihatsu-serin-black-2008/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/daihatsu-serin-black-2008/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/daihatsu-serin-black-2008/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/daihatsu-serin-black-2008/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/daihatsu-serin-black-2008/05.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/daihatsu-serin-black-2008/06.jpg"
+    ]
+  },
+  {
+    "category": "more",
     "name": "Mitsubishi Lancer",
     "model": "2009",
     "specs": "Japan",
