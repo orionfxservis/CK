@@ -1,6 +1,30 @@
 [
   {
     "category": "urgent",
+    "name": "Dodge Charger",
+    "model": "2013",
+    "specs": "Canadian",
+    "color": "White",
+    "mileage": "306000",
+    "milkiya": "Expire",
+    "accident": "No",
+    "location": "",
+    "price": "15,000",
+    "negotiable": true,
+    "ribbon": "Personal Used Good Condition",
+    "details": "Dodge Charger -\nModel: 2013 -\nColor: White -\nCylinder: 6 -\nMileage: Expire -\nSpecs: Canadian -\nFull Serviced -\nClean the interior and exterior -\nLocation: Al Qadisiya, Sharjah -\nPrice: 14,000 AED negotiable -\n🔥⭐️Interested Buyers kindly DM plz ✨💥",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/dodge-charger-white-2013/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/dodge-charger-white-2013/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/dodge-charger-white-2013/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/dodge-charger-white-2013/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/dodge-charger-white-2013/05.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/dodge-charger-white-2013/06.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/dodge-charger-white-2013/07.jpg"
+    ]
+  },
+  {
+    "category": "urgent",
     "name": "Mercedex E300",
     "model": "2017",
     "specs": "GCC",
