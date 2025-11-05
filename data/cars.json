@@ -1,6 +1,29 @@
 [
   {
     "category": "urgent",
+    "name": "Nissan Tida",
+    "ref": "",
+    "model": "2008",
+    "specs": "GCC",
+    "color": "Silver",
+    "mileage": "",
+    "milkiya": "",
+    "accident": "No",
+    "location": "Sharjah",
+    "price": "8500",
+    "negotiable": false,
+    "ribbon": "Low Budget Urgent Sale",
+    "details": "Nissan Tida -\nModel: 2008 -\nColor: Silver Metallic -\nSpecs: GCC -\nNon Accident -\nNew Tyres almost -\nClean Body -\nBuy & Drive -\nLocation: Sharjah -\nFinal Price: 8500 AED",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/nissan-tida-2008/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/nissan-tida-2008/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/nissan-tida-2008/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/nissan-tida-2008/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/nissan-tida-2008/05.jpg"
+    ]
+  },
+  {
+    "category": "urgent",
     "name": "Dodge Charger",
     "model": "2013",
     "specs": "Canadian",
