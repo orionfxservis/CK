@@ -1,6 +1,32 @@
 [
   {
     "category": "urgent",
+    "name": "Lexus GS 430",
+    "ref": "Mohammed Fahim",
+    "model": "2001",
+    "specs": "Japan",
+    "color": "Light Blue",
+    "mileage": "354602 km",
+    "milkiya": "Available",
+    "accident": "No Major Accident",
+    "location": "Sharjah",
+    "price": "16,000",
+    "negotiable": true,
+    "ribbon": "Urgent Sale",
+    "details": "Personal Used Car Urgently Selling -\nLexus GS 430 -\nModel: 2001 - \nmileage: 354602 km -\nColor: Light Blue -\nV8 Engine - \nSpecs: Japan -\nAutomatic -\nPerfect Condition -\nMulkia Available -\nJust & Drive -\nLocation: Sharjah -\nPrice: 16,000 AED -\n🔥⭐️Interested Buyers kindly DM plz ✨💥",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/lexus-gs-430_2001/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/lexus-gs-430_2001/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/lexus-gs-430_2001/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/lexus-gs-430_2001/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/lexus-gs-430_2001/05.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/lexus-gs-430_2001/06.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/lexus-gs-430_2001/07.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/lexus-gs-430_2001/08.jpg"
+    ]
+  },
+  {
+    "category": "urgent",
     "name": "Mitsubishi Lancer",
     "ref": "+971 50 457 2259",
     "model": "2007",
