@@ -1,6 +1,30 @@
 [
   {
     "category": "urgent",
+    "name": "Ford Edge",
+    "ref": "Waqas Ali",
+    "model": "2007",
+    "specs": "Canadian",
+    "color": "Black",
+    "mileage": "220000",
+    "milkiya": "Available",
+    "accident": "No",
+    "location": "Dubai",
+    "price": "6500",
+    "negotiable": false,
+    "ribbon": "Low Budget, Urgent Sale",
+    "details": "Ford Edge -\nModel: 2007 -\nColor: Black -\nSpecs: Canadian -\nMileage: 220,000 -\nGood Condition -\nMulkia available -\nLocation Al Khail Al Qouz, Dubai -\nFinal Price 6,500 AED - \n🔥⭐️Interested Buyers kindly DM plz ✨💥",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/ford-edge-black-2007/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/ford-edge-black-2007/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/ford-edge-black-2007/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/ford-edge-black-2007/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/ford-edge-black-2007/05.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/ford-edge-black-2007/06.jpg"
+    ]
+  },
+  {
+    "category": "urgent",
     "name": "Lexus GS 430",
     "ref": "Mohammed Fahim",
     "model": "2001",
