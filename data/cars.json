@@ -1,6 +1,33 @@
 [
   {
     "category": "urgent",
+    "name": "Lexus ES 300",
+    "ref": "",
+    "model": "2003",
+    "specs": "Japan",
+    "color": "Black",
+    "mileage": "",
+    "milkiya": "",
+    "accident": "No",
+    "location": "Al Ain",
+    "price": "9000",
+    "negotiable": false,
+    "ribbon": "Urgent Sale",
+    "details": "Urgent for Sale -\nLexus ES 300 -\nModel: 2003 -\nColor: Black -\nFull Option -\nFamily Used Car -\nSpace: Japan -\nFull Optional with Sunroof -\nAndroid Touch Screen -\nCar don't have single scratches -\nAC Good Condition -\nLocation Al Ain, UAE - \nFinal Price: 9,000 AED -\n🔥⭐️Interested Buyers kindly DM plz ✨💥",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/lexus-es-300-black-2003/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/lexus-es-300-black-2003/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/lexus-es-300-black-2003/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/lexus-es-300-black-2003/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/lexus-es-300-black-2003/05.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/lexus-es-300-black-2003/06.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/lexus-es-300-black-2003/07.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/lexus-es-300-black-2003/08.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/lexus-es-300-black-2003/09.jpg"
+    ]
+  },
+  {
+    "category": "urgent",
     "name": "Nissan Tida Hatchback",
     "ref": "+971 50 305 1124",
     "model": "2007",
