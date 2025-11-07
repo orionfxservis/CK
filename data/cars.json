@@ -1,6 +1,29 @@
 [
   {
     "category": "urgent",
+    "name": "Nissan Tida Hatchback",
+    "ref": "+971 50 305 1124",
+    "model": "2007",
+    "specs": "GCC",
+    "color": "Golden",
+    "mileage": "3000 km",
+    "milkiya": "Available",
+    "accident": "No",
+    "location": "Sharjah",
+    "price": "",
+    "negotiable": false,
+    "ribbon": "Lady-Driven Car",
+    "details": "Very Good Condition, Lady Driven Car for Urgent Sale -\nTida Hatchback -\nModel: 2007 -\nColor: Golden -\nMileage: 3000 km -\nSpecs: GCC -\nVery Good Condition -\nMulkia available -\nCar Location: Mansoura, Sharjah -\nDemand: 7,500 AED -\n🔥⭐️Interested Buyers kindly DM plz ✨💥",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/tida-hatchback-golden-2007/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/tida-hatchback-golden-2007/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/tida-hatchback-golden-2007/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/tida-hatchback-golden-2007/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/tida-hatchback-golden-2007/05.jpg"
+    ]
+  },
+  {
+    "category": "urgent",
     "name": "Ford Edge",
     "ref": "Waqas Ali",
     "model": "2007",
