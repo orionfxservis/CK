@@ -1,6 +1,34 @@
 [
   {
     "category": "urgent",
+    "name": "Nissan Sunny",
+    "ref": "Nabeel Khan",
+    "model": "2015",
+    "specs": "GCC",
+    "color": "White",
+    "mileage": "150000 km",
+    "milkiya": "Available",
+    "accident": "No",
+    "location": "Dubai",
+    "price": "13500",
+    "negotiable": false,
+    "ribbon": "Family Used Car",
+    "details": "Family Used Car -\nNissan Sunny -\nModel: 2015 -\nColor: White -\nSpecs: GCC -\nMileage: 150k km driven -\nmulkia available -\nNo major accident -\nNeat & Clean Car -\nNew Tires -\nGood Condition -\nAl. Khail gate, Dubai - \nPrice: 13,500 AED - \n🔥⭐️Interested Buyers kindly DM plz ✨💥",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/sunny-white-2015/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/sunny-white-2015/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/sunny-white-2015/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/sunny-white-2015/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/sunny-white-2015/05.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/sunny-white-2015/06.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/sunny-white-2015/07.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/sunny-white-2015/08.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/sunny-white-2015/09.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/sunny-white-2015/10.jpg"
+    ]
+  },
+  {
+    "category": "urgent",
     "name": "MITSUBISHI LANCER GLS",
     "ref": "Nawab Zadaa",
     "model": "2008",
