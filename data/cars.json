@@ -1,6 +1,34 @@
 [
   {
     "category": "urgent",
+    "name": "Lincoln MKC",
+    "ref": "+971 50 140 2578",
+    "model": "2019",
+    "specs": "GCC",
+    "color": "Black",
+    "mileage": "116200 km",
+    "milkiya": "Yes",
+    "accident": "No",
+    "location": "Dubai",
+    "price": "45,000",
+    "negotiable": false,
+    "ribbon": "",
+    "details": "Lincoln MKC -\nModel: 2019 - \nSpecs: GCC -\nMilage: 116200 KM -\nColor: Black -\nCruise control -\nVery Good Condition -\nLooks Like New -\nCompany-Maintained Car - \nFull Airbags -\nPower steering -\nTiptronic gears, paddle shifts -\nBluetooth System -\nApple car play -\nAndroid auto -\nKeyless entry -\nKeyless start -\nLeather seats -\nPower seats -\nHeated seats -\nMemory seat -\nPower mirrors -\nPower window - \nLocation: DSO -\nDemand: 45,000 AED (Negotiable) -\n🔥⭐️Interested Buyers kindly DM plz ✨💥",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/lincoln-mkc-black-2019/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/lincoln-mkc-black-2019/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/lincoln-mkc-black-2019/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/lincoln-mkc-black-2019/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/lincoln-mkc-black-2019/05.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/lincoln-mkc-black-2019/06.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/lincoln-mkc-black-2019/07.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/lincoln-mkc-black-2019/08.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/lincoln-mkc-black-2019/09.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/lincoln-mkc-black-2019/10.jpg"
+    ]
+  },
+  {
+    "category": "urgent",
     "name": "Nissan Sunny",
     "ref": "Nabeel Khan",
     "model": "2015",
