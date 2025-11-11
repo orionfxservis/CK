@@ -1,6 +1,34 @@
 [
   {
     "category": "urgent",
+    "name": "Chevrolet Malibu LT",
+    "ref": "0527770148",
+    "model": "2015",
+    "specs": "GCC",
+    "color": "Golden Brown",
+    "mileage": "23532 km",
+    "milkiya": "No",
+    "accident": "No",
+    "location": "Ajman",
+    "price": "11.500",
+    "negotiable": false,
+    "ribbon": "Investor Deal",
+    "details": "Investor Deal, due to an urgent need to sell at a Low Price -  \nChevrolet Malibu LT -\nModel: 2015 -\nSpecs: GCC - \nMileage: 23532 km -\nFull Automatic -\nColor: Golden Brown -\nVery Good Condition - \nEverything is working great -\nDemand: 11,500 AED Cash only -\n🔥⭐️Interested Buyers kindly DM plz ✨💥",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/malibu-lt-golden-brown-2015/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/malibu-lt-golden-brown-2015/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/malibu-lt-golden-brown-2015/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/malibu-lt-golden-brown-2015/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/malibu-lt-golden-brown-2015/05.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/malibu-lt-golden-brown-2015/06.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/malibu-lt-golden-brown-2015/07.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/malibu-lt-golden-brown-2015/08.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/malibu-lt-golden-brown-2015/09.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/malibu-lt-golden-brown-2015/10.jpg"
+    ]
+  },
+  {
+    "category": "urgent",
     "name": "Infinity EX35 Hatchback",
     "ref": "+971 52 494 3149",
     "model": "2008",
