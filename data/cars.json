@@ -1,6 +1,30 @@
 [
   {
     "category": "urgent",
+    "name": "KIA K3",
+    "ref": "+971 56 467 1527",
+    "model": "2014",
+    "specs": "Korean",
+    "color": "Silver",
+    "mileage": "220000",
+    "milkiya": "Not Available",
+    "accident": "No",
+    "location": "Dubai",
+    "price": "18000",
+    "negotiable": true,
+    "ribbon": "Fresh Import Car",
+    "details": "KIA K3 \nModel: 2014\nColor: Silver \nEngine Capacity: 1600 CC\nFull Option \nSpecs: Korean \nCar walk: 220k \nFully Automatic \nHazaya Available \nFresh Import Car \nSpeed Stabilizer\nFront & Background Sensors\nBluetooth \nNo accident in history \nNo work, just buy and drive \nsuccessful RTA inspection passing \nFront and rear sensors\nSteering wheel control and cruise control\nTouch air conditioning\nPrice 18,000 AED",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/kia-k3-silver-2014/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/kia-k3-silver-2014/05.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/kia-k3-silver-2014/06.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/kia-k3-silver-2014/07.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/kia-k3-silver-2014/09.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/kia-k3-silver-2014/11.jpg"
+    ]
+  },
+  {
+    "category": "urgent",
     "name": "Chevrolet Malibu LT",
     "ref": "0527770148",
     "model": "2015",
