@@ -1,6 +1,30 @@
 [
   {
     "category": "urgent",
+    "name": "Dodge Challenger SXT Plus",
+    "ref": "",
+    "model": "2019",
+    "specs": "American",
+    "color": "Black",
+    "mileage": "105000 mls",
+    "milkiya": "",
+    "accident": "No Major Accident",
+    "location": "Dubai",
+    "price": "45,000 AED",
+    "negotiable": true,
+    "ribbon": "Personal Used Car for Urgent Sale",
+    "details": "DODGE CHALLENGER SXT PLUS -\nModel: 2019 -\nNAPPA Leather Seats -\n20inch Alloy Wheels -\nHeated Steering Wheel -\nVentilated Seats -\nAlpine Premium Music System -\nMileage: 105k miles -\nNeat & Clean Car -\nEngine, Chassis, Transmission all excellent  condition -\nNo Major Accidents -\nOriginal Airbags -\nAsking Price 45,000 AED (slightly negotiable for serious buyers)-",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/challenger-sxt-plus-black-2019/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/challenger-sxt-plus-black-2019/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/challenger-sxt-plus-black-2019/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/challenger-sxt-plus-black-2019/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/challenger-sxt-plus-black-2019/05.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/challenger-sxt-plus-black-2019/06.jpg"
+    ]
+  },
+  {
+    "category": "urgent",
     "name": "Toyota Camry",
     "ref": "+971 56 570 6201",
     "model": "2012",
