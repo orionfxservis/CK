@@ -1,6 +1,33 @@
 [
   {
     "category": "urgent",
+    "name": "Toyota Camry",
+    "ref": "+971 56 570 6201",
+    "model": "2012",
+    "specs": "Australian",
+    "color": "Grey",
+    "mileage": "350000 km",
+    "milkiya": "Available",
+    "accident": "No",
+    "location": "Dubai",
+    "price": "13,500 AED",
+    "negotiable": false,
+    "ribbon": "Family Used Car",
+    "details": "Toyota Camery -\nSpecs: Australian -\nModel: 2012 -\nColor: Grey -\nMileage: 3500000 km -\nNo Accident -\nNo Issue -\nWell Maintained - \nMulkia Available -\nNot used in taxi with full guarantee -\nLocation: Satwa, Dubai -\nFinal Price: 13,500 AED",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/camery-grey-2012/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/camery-grey-2012/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/camery-grey-2012/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/camery-grey-2012/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/camery-grey-2012/05.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/camery-grey-2012/06.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/camery-grey-2012/07.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/camery-grey-2012/08.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/camery-grey-2012/09.jpg"
+    ]
+  },
+  {
+    "category": "urgent",
     "name": "Chevrolet Impala",
     "ref": "London Hendrix",
     "model": "2016",
@@ -235,7 +262,7 @@
     "location": "Ajman",
     "price": "11.500",
     "negotiable": false,
-    "ribbon": "Investor Deal",
+    "ribbon": "SOLD OUT",
     "details": "Investor Deal, due to an urgent need to sell at a Low Price -  \nChevrolet Malibu LT -\nModel: 2015 -\nSpecs: GCC - \nMileage: 23532 km -\nFull Automatic -\nColor: Golden Brown -\nVery Good Condition - \nEverything is working great -\nDemand: 11,500 AED Cash only -\n🔥⭐️Interested Buyers kindly DM plz ✨💥",
     "images": [
       "https://orionfxservis.github.io/CK/images/cars/malibu-lt-golden-brown-2015/01.jpg",
