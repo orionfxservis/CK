@@ -1,6 +1,30 @@
 [
   {
     "category": "urgent",
+    "name": "Nissan Maxima",
+    "ref": "",
+    "model": "2014",
+    "specs": "GCC",
+    "color": "Golden Brown",
+    "mileage": "270000 km",
+    "milkiya": "Not Registered",
+    "accident": "No",
+    "location": "Sharjah",
+    "price": "17,000 AED",
+    "negotiable": false,
+    "ribbon": "Available on Instalment",
+    "details": "Nissan Maxima\nModel 2014\nGcc Specs\nMileage: 270000 km \nColor: Golden Brown \nFresh Import \nNot Registered \nLocation: Sharjah \nPrice: 17,000 AED \nInstalment dead final 23,000 AED",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/maxima-golden-brown-2014/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/maxima-golden-brown-2014/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/maxima-golden-brown-2014/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/maxima-golden-brown-2014/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/maxima-golden-brown-2014/05.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/maxima-golden-brown-2014/06.jpg"
+    ]
+  },
+  {
+    "category": "urgent",
     "name": "Toyota Corolla plug-in Hybrid",
     "ref": "+971 50 537 4142",
     "model": "2019",
