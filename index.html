@@ -359,6 +359,30 @@
   }
   .globe-icon { font-size: 1rem; }
 }
+
+	  /* Floating Instalment Badge */
+.floating-instalment-badge {
+    position: fixed;
+    right: 20px;
+    bottom: 90px;
+    background: #1d8f45;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    z-index: 999;
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+.floating-instalment-badge:hover {
+    background: #167637;
+    transform: translateY(-4px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.35);
+}
+
   </style>
 </head>
 <body>
@@ -383,7 +407,10 @@
     </nav>
     <button class="menu-toggle" id="menuToggle">☰</button>
   </header>
-
+	
+<a href="pages/instalment.html" class="floating-instalment-badge">
+    Instalment Cars
+</a>
   
   <!-- ✅ Hero -->
 <section class="hero">
@@ -587,4 +614,5 @@ updateVisitorCounter();
   </script>
 </body>
 </html>
+
 
