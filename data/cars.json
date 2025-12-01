@@ -157,7 +157,7 @@
     ]
   },
   {
-    "category": "urgent",
+    "category": "instalment",
     "name": "Chevrolet Impala",
     "ref": "London Hendrix",
     "model": "2016",
@@ -889,8 +889,9 @@
     ]
   },
   {
-    "category": "urgent",
+    "category": "instalment",
     "name": "Mercedes C200",
+    "ref": "+92 333 0390015",
     "model": "2010",
     "specs": "GCC",
     "color": "White",
@@ -1151,8 +1152,9 @@
     ]
   },
   {
-    "category": "urgent",
+    "category": "instalment",
     "name": "Honda Civic Sport",
+    "ref": "+92 333 0390015",
     "model": "2020",
     "specs": "American",
     "color": "Red",
