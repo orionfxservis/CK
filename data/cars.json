@@ -1,6 +1,30 @@
 [
   {
     "category": "urgent",
+    "name": "Nissan Kicks",
+    "ref": "+971 52 883 9711",
+    "model": "2020",
+    "specs": "GCC",
+    "color": "Silver",
+    "mileage": "148885",
+    "milkiya": "Available",
+    "accident": "No",
+    "location": "Umm Al Quwain",
+    "price": "33,000 AED",
+    "negotiable": false,
+    "ribbon": "Family Used Car",
+    "details": "Nissan Kicks -\nModel: 2020 -\nColor: Silver -\nSpecs: GCC -\nMileage: 148885 km -\nEngine Capacity 1.6 -\nFull Option -\nMulkia Available -\nLocation: Umm Al Quwain \nPrice: 33,000 AED",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/kicks-silver-2020/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/kicks-silver-2020/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/kicks-silver-2020/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/kicks-silver-2020/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/kicks-silver-2020/05.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/kicks-silver-2020/06.jpg"
+    ]
+  },
+  {
+    "category": "urgent",
     "name": "Toyota Corolla",
     "ref": "+971 56 136 9692",
     "model": "2015",
@@ -765,6 +789,7 @@
   {
     "category": "urgent",
     "name": "Mercedex E300",
+    "ref": "+971 58 662 2099",
     "model": "2017",
     "specs": "GCC",
     "color": "Red",
@@ -774,7 +799,7 @@
     "location": "Dubai",
     "price": "70,000",
     "negotiable": true,
-    "ribbon": "Urgent Sale",
+    "ribbon": "SOLD OUT",
     "details": "Mercedes E300 -\nModel: 2017 -\nColor: Red -\nSpecs: GCC -\nMileage: 103,000 km -\nDemand: 70,000 AED -",
     "images": [
       "https://orionfxservis.github.io/CK/images/cars/mercedes-e300-red-2017/01.jpg",
