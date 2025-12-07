@@ -1,6 +1,30 @@
 [
   {
     "category": "urgent",
+    "name": "Nissan Altima",
+    "ref": "+971 50 583 7763",
+    "model": "2015",
+    "specs": "GCC",
+    "color": "White exterior / Beige interior",
+    "mileage": "240000 km",
+    "milkiya": "",
+    "accident": "No",
+    "location": "Sharjah",
+    "price": "",
+    "negotiable": false,
+    "ribbon": "Personal Used Car",
+    "details": "Nissan Altima - \nModel: 2015 - \nSpecs: GCC - \nExcellent Condition -\nTransmission: CVT -\nTrim: Mid Option -\nMileage: 240,000 km -\nColor: White exterior / Beige interior -\nOwnership: Second owner -\nCruise control -\nBluetooth system -\nKeyless entry & push start -\nParking sensors -\nRear camera -\nClimate control -\nAccident-free (minor scratches only) -\nVery clean interior and exterior -\nLocation: Sharjah, Al Taawun",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/altima-white-2015/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/altima-white-2015/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/altima-white-2015/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/altima-white-2015/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/altima-white-2015/05.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/altima-white-2015/06.jpg"
+    ]
+  },
+  {
+    "category": "urgent",
     "name": "Nissan Kicks",
     "ref": "+971 52 883 9711",
     "model": "2020",
