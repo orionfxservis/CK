@@ -1,5 +1,33 @@
 [
   {
+    "category": "instalment",
+    "name": "Nissan Kicks",
+    "ref": "+971 56 167 7805",
+    "model": "2023",
+    "specs": "GCC",
+    "color": "Light Blue",
+    "mileage": "222000 kms",
+    "milkiya": "No",
+    "accident": "No",
+    "location": "Sharjah",
+    "price": "48,000 AED",
+    "negotiable": false,
+    "ribbon": "Cash / Instalment",
+    "details": "Nissan Kicks -\nModel: 2023 -\nGcc specs -\nMid options -\nMileage: 22200 Kms -\nAlloy rims, Rear Camera, Touch LCD Screen -\nRun & Drive 🚗-\nCar Location: Sharjah -\nCash Price: 48,000 AED -\nInstalment Price: 55,000 AED",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/kicks-light-blue-2023/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/kicks-light-blue-2023/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/kicks-light-blue-2023/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/kicks-light-blue-2023/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/kicks-light-blue-2023/05.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/kicks-light-blue-2023/06.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/kicks-light-blue-2023/07.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/kicks-light-blue-2023/08.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/kicks-light-blue-2023/09.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/kicks-light-blue-2023/10.jpg"
+    ]
+  },
+  {
     "category": "urgent",
     "name": "Nissan Altima",
     "ref": "+971 50 583 7763",
