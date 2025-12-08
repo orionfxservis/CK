@@ -1,5 +1,25 @@
 [
   {
+    "category": "instalment",
+    "name": "Nissan Tida Hatchback",
+    "ref": "+971 56 167 7805",
+    "model": "2015",
+    "specs": "GCC",
+    "color": "White",
+    "mileage": "226000 km",
+    "milkiya": "",
+    "accident": "No",
+    "location": "Sharjah",
+    "price": "14,000 AED",
+    "negotiable": false,
+    "ribbon": "Personal Used Car",
+    "details": "Nissan Tidda Hatchback \nMileage 226k km \nModel 2015 \nColor: White \nSpecs: GCC\nDemand 14,000 AED \nInstalment 17,000 AED \nAdv 6,000 AED \nRest 8 Months Instalments.",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/tida-hatchback-white-2015/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/tida-hatchback-white-2015/02.jpg"
+    ]
+  },
+  {
     "category": "more",
     "name": "Nissan Sunny",
     "ref": "OB OB",
