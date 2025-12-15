@@ -1,5 +1,28 @@
 [
   {
+    "category": "instalment",
+    "name": "Chevrolet Cruze Lacetti",
+    "ref": "+971 54 383 5981",
+    "model": "2009",
+    "specs": "Korean",
+    "color": "Grey",
+    "mileage": "145000 km",
+    "milkiya": "Available",
+    "accident": "No",
+    "location": "Alkhail Gate Al Quoz 2",
+    "price": "13,000 AED",
+    "negotiable": false,
+    "ribbon": "Cash / Instalment",
+    "details": "Chevrolet Cruze Lacetti \nAvailable on Cash / Instalment \nModel: 2009  \nMileage: 145000 km \nChevrolet Korean variant \nMulkia is available till March 2026 \nLocation: Alkhail Gate Al Quoz 2 \nCash Price: 11,000 AED \nInstalment Price: 13,000 AED \n(Adv 3,000 AED & Instalment as per Client )",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/cruze-lacetti-grey-2009/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/cruze-lacetti-grey-2009/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/cruze-lacetti-grey-2009/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/cruze-lacetti-grey-2009/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/cruze-lacetti-grey-2009/05.jpg"
+    ]
+  },
+  {
     "category": "urgent",
     "name": "Toyota Corolla XLI",
     "ref": "",
