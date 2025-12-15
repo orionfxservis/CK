@@ -1,6 +1,29 @@
 [
   {
     "category": "urgent",
+    "name": "Mazda 3",
+    "ref": "+971 52 455 9885",
+    "model": "2007",
+    "specs": "GCC",
+    "color": "Light Blue",
+    "mileage": "236000 km",
+    "milkiya": "Available",
+    "accident": "No Major Accident",
+    "location": "",
+    "price": "10,000 AED",
+    "negotiable": false,
+    "ribbon": "Family Used Car",
+    "details": "Mazda 3 \nSpecs: GCC  \nVery Good Condition \nFull Option \nModel: 2007\nMileage: Km...236 \nColor: Light Blue \nFast Owner \nPrice: 10,000 AED",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/mazda3-blue-2007/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mazda3-blue-2007/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mazda3-blue-2007/07.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mazda3-blue-2007/08.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mazda3-blue-2007/09.jpg"
+    ]
+  },
+  {
+    "category": "urgent",
     "name": "Toyota Camry",
     "ref": "+971 56 167 7805",
     "model": "2017",
