@@ -1,6 +1,26 @@
 [
   {
     "category": "urgent",
+    "name": "Toyota Camry SE",
+    "ref": "Kamal Bhai",
+    "model": "2022",
+    "specs": "American",
+    "color": "Black",
+    "mileage": "67,000 mls",
+    "milkiya": "No",
+    "accident": "No",
+    "location": "Sharjah",
+    "price": "50,000 AED",
+    "negotiable": true,
+    "ribbon": "Fresh Import, Non Register",
+    "details": "Toyota Camry SE in Excellent condition \nModel: 2022 \n2.5L Engine \nSpecs: American \nColor: Black \nMileage: 67,000 mls \nMulkia No, Not Register  \nClean & Reliable \nPassing Done\nSmooth & fuel-efficient \nOriginal Airbags\nCruise control \nAnd many more features \nJust serviced: Oil, filter and fluids \nNo issue, no warning light \nlocation: Sharjah \nPrice: 50,000 AED (Negotiable)",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/camry-se-black-2022/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/camry-se-black-2022/02.jpg"
+    ]
+  },
+  {
+    "category": "urgent",
     "name": "Hyundai Sonata Sport",
     "ref": "Nahhas",
     "model": "2016",
@@ -873,7 +893,7 @@
     "milkiya": "Available",
     "accident": "No",
     "location": "Sharjah",
-    "price": "",
+    "price": "8,500 AED",
     "negotiable": false,
     "ribbon": "Lady-Driven Car",
     "details": "Very Good Condition, Lady Driven Car for Urgent Sale -\nTida Hatchback -\nModel: 2007 -\nColor: Golden -\nMileage: 3000 km -\nSpecs: GCC -\nVery Good Condition -\nMulkia available -\nCar Location: Mansoura, Sharjah -\nDemand: 7,500 AED -\n🔥⭐️Interested Buyers kindly DM plz ✨💥",
