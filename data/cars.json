@@ -1,6 +1,35 @@
 [
   {
     "category": "urgent",
+    "name": "Mini Cooper S",
+    "ref": "+971 55 551 1482",
+    "model": "2013",
+    "specs": "GCC",
+    "color": "Light Cream",
+    "mileage": "175000 km",
+    "milkiya": "Available",
+    "accident": "No",
+    "location": "Abu Dhabi",
+    "price": "22,000 AED",
+    "negotiable": false,
+    "ribbon": "Family Used Car",
+    "details": "Mini Cooper S  \nModel: 2013 \nSpecs: GCC  \nColor: Light Cream \nFull option\nMileage: 175k km \nLocation: Shamkha city, Abu Dhabi \nPrice 22,000 AED (Negotiable)",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/mini-cooper-s-light-cream-2013/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mini-cooper-s-light-cream-2013/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mini-cooper-s-light-cream-2013/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mini-cooper-s-light-cream-2013/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mini-cooper-s-light-cream-2013/05.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mini-cooper-s-light-cream-2013/06.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mini-cooper-s-light-cream-2013/07.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mini-cooper-s-light-cream-2013/08.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mini-cooper-s-light-cream-2013/09.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mini-cooper-s-light-cream-2013/10.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mini-cooper-s-light-cream-2013/11.jpg"
+    ]
+  },
+  {
+    "category": "urgent",
     "name": "Toyota Camry",
     "ref": "+971 50 996 8634",
     "model": "2006",
