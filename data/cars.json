@@ -1,6 +1,35 @@
 [
   {
     "category": "urgent",
+    "name": "Chrysler 200",
+    "ref": "+971 52 686 5591",
+    "model": "2012",
+    "specs": "GCC",
+    "color": "Black",
+    "mileage": "",
+    "milkiya": "Available",
+    "accident": "No",
+    "location": "Dubai",
+    "price": "19,000 AED",
+    "negotiable": false,
+    "ribbon": "Family Used Car",
+    "details": "Chrysler 200 with Sunroof\nYear: 2012\nEngine: 3.6L V6\nTransmission: Automatic \nColor: Black \nBody Style: 4-Door Sedan (5-seater) \nSpecs: GCC\nFeatures:\nCold A/C \nPower windows & power locks\nCruise control\nSteering wheel controls\nQuality safety features including airbags & ABS\nFuel Efficiency (full tank: 130 AED for 600km)\nNew Tires & Brakes \nOil Changed \nSpacious Trunk\nLeather Seats\nClean, comfortable interior & well-kept exterior\nMulkia is still valid until October 2026 \nPrice: 19,000 AED",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/chrysler-200-black-2012/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/chrysler-200-black-2012/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/chrysler-200-black-2012/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/chrysler-200-black-2012/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/chrysler-200-black-2012/05.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/chrysler-200-black-2012/06.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/chrysler-200-black-2012/07.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/chrysler-200-black-2012/08.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/chrysler-200-black-2012/09.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/chrysler-200-black-2012/10.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/chrysler-200-black-2012/11.jpg"
+    ]
+  },
+  {
+    "category": "urgent",
     "name": "Ford Edge",
     "ref": "+971 52 290 8877",
     "model": "2013",
