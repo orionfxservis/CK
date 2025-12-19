@@ -29,7 +29,7 @@
     ]
   },
   {
-    "category": "urgent",
+    "category": "more",
     "name": "Toyota Camry",
     "ref": "+971 50 996 8634",
     "model": "2006",
@@ -81,7 +81,7 @@
     ]
   },
   {
-    "category": "urgent",
+    "category": "more",
     "name": "Ford Edge",
     "ref": "+971 52 290 8877",
     "model": "2013",
@@ -154,7 +154,7 @@
     ]
   },
   {
-    "category": "urgent",
+    "category": "more",
     "name": "Mazda 3",
     "ref": "+971 52 455 9885",
     "model": "2007",
