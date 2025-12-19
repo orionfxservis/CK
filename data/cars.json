@@ -1,6 +1,34 @@
 [
   {
     "category": "urgent",
+    "name": "Ford Edge",
+    "ref": "+971 52 290 8877",
+    "model": "2013",
+    "specs": "GCC",
+    "color": "Black",
+    "mileage": "217723 km",
+    "milkiya": "Not Available",
+    "accident": "No",
+    "location": "Dubai",
+    "price": "9,500 AED",
+    "negotiable": false,
+    "ribbon": "Family Used Car Urgent Sale",
+    "details": "Ford Edge \nModel: 2013 \nSpecs: GCC \nMileage: 217723 km \nColor: Black \nPerfect Working Condition \nNeat and Clean Car \nJust buy & drive  \nEngine Gear Ac all are in Very good working condition \nHazaya Papers available \nLocation: Dubai \nFinal Price: 9,500 AED",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/ford-edge-black-2013/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/ford-edge-black-2013/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/ford-edge-black-2013/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/ford-edge-black-2013/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/ford-edge-black-2013/05.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/ford-edge-black-2013/06.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/ford-edge-black-2013/07.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/ford-edge-black-2013/08.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/ford-edge-black-2013/09.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/ford-edge-black-2013/11.jpg"
+    ]
+  },
+  {
+    "category": "urgent",
     "name": "Toyota Camry SE",
     "ref": "Kamal Bhai",
     "model": "2022",
