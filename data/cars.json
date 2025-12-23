@@ -1,6 +1,33 @@
 [
   {
     "category": "urgent",
+    "name": "Chevrolet Cruze",
+    "ref": "Kiran Patil",
+    "model": "2017",
+    "specs": "GCC",
+    "color": "White",
+    "mileage": "160000 km",
+    "milkiya": "Available",
+    "accident": "No",
+    "location": "Ajman",
+    "price": "22,000 AED",
+    "negotiable": false,
+    "ribbon": "Lady Driven, Family Used Car",
+    "details": "Family Used Lady Driven Car \nChevrolet Cruze\nEngine 1.8 LT Premium \nSpecs: GCC \nModel: 2017 \nMileage: 160K km  \nColor: White \nAl Ghandi Showroom History \nVery Good Condition \nNo Work Requires \nJust Buy & Drive \nFull Option Premium Car\nLocation: Ajman \nPrice: 22,000 AED",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/cruze-lt-premium-white-2017/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/cruze-lt-premium-white-2017/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/cruze-lt-premium-white-2017/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/cruze-lt-premium-white-2017/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/cruze-lt-premium-white-2017/05.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/cruze-lt-premium-white-2017/06.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/cruze-lt-premium-white-2017/07.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/cruze-lt-premium-white-2017/08.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/cruze-lt-premium-white-2017/09.jpg"
+    ]
+  },
+  {
+    "category": "urgent",
     "name": "Dodge Charger RT",
     "ref": "+971 58 593 6305",
     "model": "2013",
@@ -297,7 +324,7 @@
     "location": "Alkhail Gate Al Quoz 2",
     "price": "13,000 AED",
     "negotiable": false,
-    "ribbon": "Cash / Instalment",
+    "ribbon": "SOLD OUT",
     "details": "Chevrolet Cruze Lacetti \nAvailable on Cash / Instalment \nModel: 2009  \nMileage: 145000 km \nChevrolet Korean variant \nMulkia is available till March 2026 \nLocation: Alkhail Gate Al Quoz 2 \nCash Price: 11,000 AED \nInstalment Price: 13,000 AED \n(Adv 3,000 AED & Instalment as per Client )",
     "images": [
       "https://orionfxservis.github.io/CK/images/cars/cruze-lacetti-grey-2009/01.jpg",
