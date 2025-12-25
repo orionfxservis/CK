@@ -1,6 +1,34 @@
 [
   {
     "category": "urgent",
+    "name": "Toyota Corolla Hybrid",
+    "ref": "Mohammed Shibu",
+    "model": "2019",
+    "specs": "Chinese",
+    "color": "White",
+    "mileage": "132000 km",
+    "milkiya": "Hazaya Papers",
+    "accident": "No",
+    "location": "Sharjah",
+    "price": "35,000 AED",
+    "negotiable": false,
+    "ribbon": "Fresh Import",
+    "details": "Toyota Corolla Plug-in Hybrid (Imported Chinese Specs)\nMileage: 132,000 km\nModel: 2019 \nSpecs: Chinese \nCondition: Almost like new, non-accident, non-taxi, all original paint\nTrim/Features: Full option — alloy wheels, leather seats, sunroof\nFuel Efficiency: High mileage per km (plug-in hybrid)\nEngine: 1.8 L V4 petrol + electric motor, CVT\nSafety: ABS, stability control, airbags \nHazaya Paper available \nLocation: Sharjah \nPrice: 35,000 AED",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/corolla-plug-in-hybrid-white-2019/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/corolla-plug-in-hybrid-white-2019/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/corolla-plug-in-hybrid-white-2019/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/corolla-plug-in-hybrid-white-2019/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/corolla-plug-in-hybrid-white-2019/05.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/corolla-plug-in-hybrid-white-2019/06.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/corolla-plug-in-hybrid-white-2019/07.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/corolla-plug-in-hybrid-white-2019/08.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/corolla-plug-in-hybrid-white-2019/09.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/corolla-plug-in-hybrid-white-2019/10.jpg"
+    ]
+  },
+  {
+    "category": "urgent",
     "name": "Chevrolet Cruze",
     "ref": "Kiran Patil",
     "model": "2017",
