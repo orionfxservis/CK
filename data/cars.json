@@ -1,5 +1,28 @@
 [
   {
+    "category": "urgent",
+    "name": "Ford Figo",
+    "ref": "Souad Blk",
+    "model": "2016",
+    "specs": "GCC",
+    "color": "White",
+    "mileage": "116000 km",
+    "milkiya": "Available",
+    "accident": "No Major Accident",
+    "location": "Dubai Financial Centre",
+    "price": "12,000 AED",
+    "negotiable": false,
+    "ribbon": "Family Used Car",
+    "details": "Ford Figo\nModel: 2016\nMileage: 116000 km \nSpecs: GCC \nColor: White \nMulkiya till March \nCar is very good \nAll Working \nAll In Original Condition  \nLocation: Dubai Financial Centre \nPrice 12,000 AED",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/fig-white-2016/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/fig-white-2016/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/fig-white-2016/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/fig-white-2016/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/fig-white-2016/05.jpg"
+    ]
+  },
+  {
     "category": "more",
     "name": "Nissan Sunny",
     "ref": "+971 52 570 2715",
