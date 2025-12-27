@@ -1,5 +1,31 @@
 [
   {
+    "category": "instalment",
+    "name": "Chevrolet Aveo",
+    "ref": "Moheet Cars",
+    "model": "2018",
+    "specs": "GCC",
+    "color": "Grey",
+    "mileage": "123000 km",
+    "milkiya": "No",
+    "accident": "No",
+    "location": "Sharjah",
+    "price": "22,000 AED",
+    "negotiable": false,
+    "ribbon": "Cash / Instalment",
+    "details": "Chevrolet Aveo \nModel: 2018\nSpecs: GCC  \nMid Options\nEngine V4 \nMileage: 123000 km \nChasis: KL1JD5CE1JB025256\n-------------\nPrice: 22,000 AED \n*Instalments without bank*\n=> Pay 40% down-payment\n=> 10% Monthly, 6 months plan\nEngine Gear passing guarantee 💯 \nRun & Drive Condition 🚗",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/chevrolet-aveo-grey-2018/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/chevrolet-aveo-grey-2018/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/chevrolet-aveo-grey-2018/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/chevrolet-aveo-grey-2018/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/chevrolet-aveo-grey-2018/05.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/chevrolet-aveo-grey-2018/06.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/chevrolet-aveo-grey-2018/07.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/chevrolet-aveo-grey-2018/08.jpg"
+    ]
+  },
+  {
     "category": "urgent",
     "name": "Ford Figo",
     "ref": "Souad Blk",
