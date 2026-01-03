@@ -1,6 +1,28 @@
 [
   {
     "category": "more",
+    "name": "Renult Symbol",
+    "ref": "+971 56 255 9568",
+    "model": "2016",
+    "specs": "GCC",
+    "color": "Black",
+    "mileage": "120324 km",
+    "milkiya": "Expire",
+    "accident": "No Major Accident",
+    "location": "Dubai",
+    "price": "9,000 AED",
+    "negotiable": false,
+    "ribbon": "",
+    "details": "Low-Budget, Family Used Car for Urgent Sale \nRenult Symbol \nModel: 2016 \nSpecs: GCC \nColor: Black \nMileage: 120324 km  \nEngine, Chassis, Gear AC All Good working \nLocation: International City, Dubai \nPrice: 9,000 AED \nMust Sell Today \n⭐️Only a Serious Buyer will contact plz ✨💥",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/renult-symbol-black-2016/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/renult-symbol-black-2016/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/renult-symbol-black-2016/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/renult-symbol-black-2016/04.jpg"
+    ]
+  },
+  {
+    "category": "more",
     "name": "Toyota Camery",
     "ref": "Muhammad Arif",
     "model": "2005",
