@@ -1,5 +1,31 @@
 [
   {
+    "category": "urgent",
+    "name": "Chevrolet Cruze",
+    "ref": "+971 56 221 2435",
+    "model": "2014",
+    "specs": "Korean",
+    "color": "White",
+    "mileage": "187000 km",
+    "milkiya": "Available",
+    "accident": "No Major Accident",
+    "location": "Ras al Khaimah",
+    "price": "13,500 AED",
+    "negotiable": false,
+    "ribbon": "Family Used Car",
+    "details": "Chevrolet Cruze \nThis personal vehicle is in good condition, offering a comfortable and efficient drive. \nModel: 2014 \nColor: White \nMileage: 187k km \nSpecs: Korean \nAndroid Display\nRear Camera\nCruze Mode\nMirror Controls\nGPS Installed \nPaint protection diamond coat (No need for Polish) \nFull service done and Maintenance on time \nLocation: Nakheel Ras al Khaimah \nReason for selling: Moving to another country \nPrice: 13,500 AED",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/cruze-white-2014/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/cruze-white-2014/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/cruze-white-2014/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/cruze-white-2014/06.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/cruze-white-2014/07.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/cruze-white-2014/10.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/cruze-white-2014/12.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/cruze-white-2014/13.jpg"
+    ]
+  },
+  {
     "category": "more",
     "name": "Renult Symbol",
     "ref": "+971 56 255 9568",
