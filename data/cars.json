@@ -1,6 +1,32 @@
 [
   {
     "category": "more",
+    "name": "Honda Citi",
+    "ref": "0555124904",
+    "model": "2006",
+    "specs": "GCC",
+    "color": "Black",
+    "mileage": "299137 km",
+    "milkiya": "Not Available",
+    "accident": "No Major Accident",
+    "location": "Umm Al Qwein",
+    "price": "8,500 AED",
+    "negotiable": false,
+    "ribbon": "",
+    "details": "Honda Citi\nColor: Black\nModel: 2006 \nMileage: 299137 km \nEngine 1500 CC\nSpecs: GCC \nPassing Done \nMulkia not Available \nLocation: Umm Al Qwein \nFinal Price: 8,500 AED",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/citi-black-2006/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/citi-black-2006/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/citi-black-2006/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/citi-black-2006/05.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/citi-black-2006/06.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/citi-black-2006/07.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/citi-black-2006/09.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/citi-black-2006/11.jpg"
+    ]
+  },
+  {
+    "category": "more",
     "name": "Nissan Altima",
     "ref": "+971 58 102 7414",
     "model": "2011",
