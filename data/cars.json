@@ -1,6 +1,34 @@
 [
   {
     "category": "urgent",
+    "name": "Kia Optima",
+    "ref": "+971502569642",
+    "model": "2015",
+    "specs": "USA",
+    "color": "White",
+    "mileage": "95,000 mls",
+    "milkiya": "",
+    "accident": "No History",
+    "location": "Dubai",
+    "price": "18,500 AED",
+    "negotiable": false,
+    "ribbon": "Family Used Car with Low Mileage",
+    "details": "KIA OPTIMA \nMODEL 2015\nSpecs: USA \nMiles.95/000 mls \nColor: White \nDescription.. Original Option to,,cruise control,,,Allow reems ,,Full Automatic,,new battery,,Power Lock \nEngine gear chassis guarantee\nNo mechanical issues\nVery Clean Inside and Outside\nPrice 18,500 AED",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/kia-optima-white-2015/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/kia-optima-white-2015/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/kia-optima-white-2015/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/kia-optima-white-2015/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/kia-optima-white-2015/05.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/kia-optima-white-2015/06.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/kia-optima-white-2015/07.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/kia-optima-white-2015/08.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/kia-optima-white-2015/09.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/kia-optima-white-2015/10.jpg"
+    ]
+  },
+  {
+    "category": "urgent",
     "name": "Toyota Corolla SE Sport Edition",
     "ref": "+971 56 136 9692",
     "model": "2016",
