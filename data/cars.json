@@ -1,6 +1,33 @@
 [
   {
     "category": "more",
+    "name": "Gell GX2",
+    "ref": "+971 50 345 7350",
+    "model": "2015",
+    "specs": "Chinese",
+    "color": "Black",
+    "mileage": "26844 mls",
+    "milkiya": "Sale without Mulkia",
+    "accident": "No Major Accident",
+    "location": "Ajman",
+    "price": "6,500 AED",
+    "negotiable": false,
+    "ribbon": "",
+    "details": "Family Used Car for Urgent Sale \nGell GX2 Hatchback \nModel: 2015 \nMileage: 226844 mls \nSpecs: Chinese \nColor: Black \nSelling without Mulkia \nLocation: Ajman \nFinal Price: 6,500 AED",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/gell-gx2-black-2015/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/gell-gx2-black-2015/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/gell-gx2-black-2015/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/gell-gx2-black-2015/05.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/gell-gx2-black-2015/07.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/gell-gx2-black-2015/08.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/gell-gx2-black-2015/09.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/gell-gx2-black-2015/10.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/gell-gx2-black-2015/11.jpg"
+    ]
+  },
+  {
+    "category": "more",
     "name": "Nissan Sunny",
     "ref": "",
     "model": "2009",
