@@ -1,5 +1,34 @@
 [
   {
+    "category": "urgent",
+    "name": "Mercedes GLA",
+    "ref": "+971 56 445 5266",
+    "model": "2016",
+    "specs": "GCC",
+    "color": "Black",
+    "mileage": "175000 km",
+    "milkiya": "Available",
+    "accident": "No Major Acciedent",
+    "location": "",
+    "price": "40,000 AED",
+    "negotiable": false,
+    "ribbon": "Personal Used Car for Urgent Sale",
+    "details": "Mercedes GLA \nModel: 2016 \nSpecs: GCC \nColor: Black \nMileage: 175k km\nChassis number WDCTG4GB0GJ202276\nNo Accident \n4 cylinders 2.0\nCamera, sensors…\nPanoramic sunroof \nEconomic, Sport, Comfort Driving System \nNo Issues\nPrice: 40,000 AED",
+    "images": [
+      "https://orionfxservis.github.io/CK/images/cars/mercedes-gla-black-2016/01.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mercedes-gla-black-2016/02.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mercedes-gla-black-2016/03.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mercedes-gla-black-2016/04.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mercedes-gla-black-2016/05.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mercedes-gla-black-2016/06.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mercedes-gla-black-2016/07.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mercedes-gla-black-2016/08.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mercedes-gla-black-2016/09.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mercedes-gla-black-2016/10.jpg",
+      "https://orionfxservis.github.io/CK/images/cars/mercedes-gla-black-2016/11.jpg"
+    ]
+  },
+  {
     "category": "more",
     "name": "Gell GX2",
     "ref": "+971 50 345 7350",
